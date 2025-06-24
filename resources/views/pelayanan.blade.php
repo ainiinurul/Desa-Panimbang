@@ -55,7 +55,23 @@
                         <select id="jenis_permohonan" name="jenis_permohonan" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" @change="showLainnya = ($event.target.value === 'Lainnya')" required>
                             <option value="" disabled selected>Pilih Jenis Permohonan</option>
                             <option value="Surat Pengantar SKCK">Surat Pengantar SKCK</option>
-                            <option value="Surat Keterangan">Surat Keterangan</option>
+                            <option value="Surat Keterangan Domisili">Surat Keterangan Domisili</option>
+                            <option value="Surat Keterangan Usaha">Surat Keterangan Usaha</option>
+                            <option value="Surat Keterangan Tidak Mampu">Surat Keterangan Tidak Mampu</option>
+                            <option value="Surat Keterangan Belum Menikah">Surat Keterangan Belum Menikah</option>
+                            <option value="Surat Keterangan Penghasilan">Surat Keterangan Penghasilan</option>
+                            <option value="Surat Keterangan Kelahiran">Surat Keterangan Kelahiran</option>
+                            <option value="Surat Keterangan Kematian">Surat Keterangan Kematian</option>
+                            <option value="Surat Keterangan Kehilangan">Surat Keterangan Kehilangan</option>
+                            <option value="Surat Keterangan Janda/Duda">Surat Keterangan Janda/Duda</option>
+                            <option value="Surat Keterangan Beda Identitas">Surat Keterangan Beda Identitas</option>
+                            <option value="Surat Keterangan Waris">Surat Keterangan Waris</option>
+                            <option value="Surat Keterangan Tanah">Surat Keterangan Tanah</option>
+                            <option value="Surat Pengantar Nikah">Surat Pengantar Nikah</option>
+                            <option value="Surat Pengantar Cerai">Surat Pengantar Cerai</option>
+                            <option value="Surat Pengantar Pindah">Surat Pengantar Pindah</option>
+                            <option value="Surat Pengantar Rujuk">Surat Pengantar Rujuk</option>
+                            <option value="Surat Rekomendasi">Surat Rekomendasi</option>
                             <option value="Lainnya">Lainnya</option>
                         </select>
                     </div>
