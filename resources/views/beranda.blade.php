@@ -80,22 +80,13 @@
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/3 flex justify-center">
                     <div class="w-64 h-auto transform transition-all duration-500 hover:scale-105">
-                        <img src="img/scoups.jpg" alt="S.COUPS - Kepala Desa" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/' . setting('foto_kepala_desa')) }}" alt="{{ setting('nama_kepala_desa') }} - Kepala Desa" class="w-full h-full object-cover">
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
                     <h2 class="text-3xl font-bold text-blue-800 mb-4">"Selamat Datang di Website Desa Kami"</h2>
-                    <p class="text-gray-700 mb-6 leading-relaxed">
-                        Kami senang Anda sudah berkunjung ke website desa kami, semoga melalui situs
-                        web ini kami dapat memberikan segala informasi yang aktual dan terperbarui
-                        langsung dari Desa kami. Situs web ini merupakan salah satu wujud dari
-                        komitmen pemerintah Desa, pada pentingnya komunikasi dan transparansi
-                        public.
-                    </p>
-                    <p class="text-right font-semibold text-blue-700">
-                        S.COUPS,<br>
-                        Kepala Desa Panimbang
-                    </p>
+                    <p class="text-gray-700 mb-6 leading-relaxed">{{ setting('sambutan_kepala_desa') }}</p>
+                    <p class="text-right font-semibold text-blue-700">{{ setting('nama_kepala_desa') }},<br>Kepala Desa Panimbang</p>
                 </div>
             </div>
         </div>
@@ -172,133 +163,67 @@
     <!-- Program Desa -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Program Desa Panimbang</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Program 1: Kampung KB -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/kampung-kb.png" alt="Kampung KB" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs mb-2">Kesehatan</span>
-                        <h3 class="text-xl font-semibold mb-2">Kampung KB</h3>
-                        <p class="text-gray-600 mb-4">Kampung Keluarga Berkualitas (Kampung KB) merupakan program yang dicanangkan oleh pemerintah untuk meningkatkan...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2025</span>
-                            <a href="program/kampung-kb.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Program 2: Inovasi Desa -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/inovasi-desa.jpg" alt="Inovasi Desa" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs mb-2">Pembangunan</span>
-                        <h3 class="text-xl font-semibold mb-2">Inovasi Desa</h3>
-                        <p class="text-gray-600 mb-4">Inovasi merupakan kunci dalam menghadapi tantangan dan memanfaatkan peluang di era modern. Program Inovasi Desa bertujuan...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2026</span>
-                            <a href="program/inovasi-desa.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Program 3: Pemberdayaan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/pemberdayaan.png" alt="Pemberdayaan" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs mb-2">Ekonomi</span>
-                        <h3 class="text-xl font-semibold mb-2">Pemberdayaan</h3>
-                        <p class="text-gray-600 mb-4">Pemberdayaan desa adalah proses meningkatkan kapasitas masyarakat desa agar mampu mengelola sumber daya secara mandiri...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2023-2025</span>
-                            <a href="program/pemberdayaan.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Program 4: Literasi Digital -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/literasi-digital.jpg" alt="Literasi Digital" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs mb-2">Pendidikan</span>
-                        <h3 class="text-xl font-semibold mb-2">Literasi Digital</h3>
-                        <p class="text-gray-600 mb-4">Di era digital yang serba cepat ini, kemampuan untuk memahami, menilai, dan menggunakan teknologi informasi dengan bijak menjadi..</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2026</span>
-                            <a href="program/literasi-digital.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Program 5: Anti Narkoba -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/anti-narkoba.jpg" alt="Anti Narkoba" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs mb-2">Kesehatan</span>
-                        <h3 class="text-xl font-semibold mb-2">Anti Narkoba</h3>
-                        <p class="text-gray-600 mb-4">Penyalahgunaan narkoba menjadi salah satu ancaman serius bagi masa depan generasi muda dan stabilitas sosial. Narkoba tidak hanya merusak kesehatan individu tetapi...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2023-2025</span>
-                            <a href="program/anti-narkoba.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Program 6: Siskamling -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/siskamling.jpeg" alt="Siskamling" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs mb-2">Keamanan</span>
-                        <h3 class="text-xl font-semibold mb-2">Siskamling</h3>
-                        <p class="text-gray-600 mb-4">Sistem Keamanan Lingkungan (Siskamling) adalah bentuk partisipasi masyarakat dalam menjaga keamanan dan ketertiban di lingkungan tempat tinggalnya...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2025</span>
-                            <a href="program/siskamling.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Program Unggulan Desa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-                <!-- Program 7: Pencegahan Stunting -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/pencegahan-stunting.png" alt="Pencegahan Stunting" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs mb-2">Kesehatan</span>
-                        <h3 class="text-xl font-semibold mb-2">Pencegahan Stunting</h3>
-                        <p class="text-gray-600 mb-4">Stunting merupakan kondisi gagal tumbuh pada anak akibat kekurangan gizi kronis dalam jangka panjang, terutama pada 1.000 hari pertama...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2025</span>
-                            <a href="program/pencegahan-stunting.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
-                    </div>
-                </div>
+                @forelse($programDesa as $program)
+                    @php
+                        // Logika untuk menentukan kelas warna Tailwind CSS berdasarkan kategori
+                        $kategoriClasses = '';
+                        switch (strtolower($program->kategori)) {
+                            case 'pembangunan':
+                                $kategoriClasses = 'bg-blue-100 text-blue-800';
+                                break;
+                            case 'ekonomi':
+                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
+                                break;
+                            case 'kesehatan':
+                                $kategoriClasses = 'bg-green-100 text-green-800';
+                                break;
+                            case 'pendidikan':
+                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
+                                break;
+                            case 'keamanan':
+                                $kategoriClasses = 'bg-red-100 text-red-800';
+                                break;
+                            case 'kegiatan':
+                            case 'pemerintahan':
+                            default:
+                                $kategoriClasses = 'bg-gray-100 text-gray-800';
+                                break;
+                        }
+                    @endphp
 
-                <!-- Program 8: Ketahanan Pangan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/ketahanan-pangan.jpg" alt="Ketahanan Pangan" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs mb-2">Ekonomi</span>
-                        <h3 class="text-xl font-semibold mb-2">Ketahanan Pangan</h3>
-                        <p class="text-gray-600 mb-4">Ketahanan pangan desa merupakan upaya untuk memastikan bahwa masyarakat desa memiliki akses yang cukup terhadap makanan yang...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2025</span>
-                            <a href="program/ketahanan-pangan.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col">
+                        <a href="{{ $program->link ? url($program->link) : '#' }}" target="_blank" rel="noopener noreferrer">
+                            @if($program->gambar)
+                                <img src="{{ asset('storage/' . $program->gambar) }}" alt="{{ $program->judul }}" class="w-full h-48 object-cover">
+                            @else
+                                {{-- Gambar default jika tidak ada gambar program --}}
+                                <img src="https://via.placeholder.com/600x400.png/28a745/FFFFFF?text=Program+Desa" alt="Default Image" class="w-full h-48 object-cover">
+                            @endif
+                        </a>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <span class="inline-block px-3 py-1 text-xs mb-2 rounded-full self-start {{ $kategoriClasses }}">{{ $program->kategori }}</span>
+                            <h3 class="text-xl font-semibold mb-2 mt-2">
+                                <a href="{{ $program->link ? url($program->link) : '#' }}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors duration-300">{{ $program->judul }}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 flex-grow">{{ Str::limit(strip_tags($program->deskripsi), 100) }}</p>
+                            <div class="flex justify-between items-center text-sm text-gray-500 mt-auto">
+                                <span>Periode: {{ $program->periode }}</span>
+                                @if($program->link)
+                                    <a href="{{ url($program->link) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya →</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Program 9: PAUD -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    <img src="img/program/paud.jpeg" alt="PAUD" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs mb-2">Pendidikan</span>
-                        <h3 class="text-xl font-semibold mb-2">PAUD</h3>
-                        <p class="text-gray-600 mb-4">Program sistem keamanan lingkungan yang melibatkan partisipasi warga untuk menjaga keamanan dan ketertiban desa...</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">Periode: 2024-2025</span>
-                            <a href="program/paud.html" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
-                        </div>
+                @empty
+                    {{-- Tampilan jika tidak ada program sama sekali --}}
+                    <div class="col-span-1 md:col-span-3 text-center py-12">
+                        <p class="text-gray-500 text-lg">Saat ini belum ada program unggulan yang ditampilkan.</p>
                     </div>
-                </div>
+                @endforelse
 
             </div>
         </div>
@@ -310,22 +235,52 @@
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Berita Terbaru</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 @foreach($berita as $item)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                    @if($item->gambar)
-                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-48 object-cover">
-                    @else
-                    <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-48 object-cover">
-                    @endif
-                    <div class="p-4">
-                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs mb-2">{{ $item->kategori }}</span>
-                        <h3 class="text-xl font-semibold mb-2">{{ $item->judul }}</h3>
-                        <p class="text-gray-600 mb-4">{{ Str::limit($item->deskripsi, 150) }}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</span>
-                            <a href="{{ route('berita.show', $item->slug) }}" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
+                    @php
+                        // Logika untuk menentukan kelas warna Tailwind CSS berdasarkan nama kategori.
+                        // strtolower() digunakan agar tidak terpengaruh huruf besar/kecil (misal: "Kesehatan" dan "kesehatan" akan sama).
+                        $kategoriClasses = '';
+                        switch (strtolower($item->kategori)) {
+                            case 'pembangunan':
+                                $kategoriClasses = 'bg-blue-100 text-blue-800';
+                                break;
+                            case 'kesehatan':
+                                $kategoriClasses = 'bg-green-100 text-green-800';
+                                break;
+                            case 'ekonomi':
+                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
+                                break;
+                            case 'pendidikan':
+                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
+                                break;
+                            case 'keamanan':
+                                $kategoriClasses = 'bg-red-100 text-red-800';
+                                break;
+                            case 'pemerintahan':
+                                $kategoriClasses = 'bg-gray-100 text-gray-800';
+                                break;
+                            default:
+                                // Warna default jika kategori tidak ada dalam daftar di atas.
+                                $kategoriClasses = 'bg-purple-100 text-purple-800';
+                                break;
+                        }
+                    @endphp
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
+                        @if($item->gambar)
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-48 object-cover">
+                        @else
+                        <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-48 object-cover">
+                        @endif
+                        <div class="p-4">
+                            {{-- Kelas warna sekarang dinamis dari variabel $kategoriClasses --}}
+                            <span class="inline-block px-3 py-1 {{ $kategoriClasses }} rounded-full text-xs mb-2">{{ $item->kategori }}</span>
+                            <h3 class="text-xl font-semibold mb-2">{{ $item->judul }}</h3>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($item->deskripsi, 150) }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</span>
+                                <a href="{{ route('berita.show', $item->slug) }}" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
             <div class="text-center mt-8">

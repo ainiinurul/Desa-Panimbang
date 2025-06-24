@@ -1,16 +1,16 @@
-<!-- resources/views/layouts/admin.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Desa Panimbang</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Tailwind CSS -->
+
+    {{-- SAYA GANTI @VITE DENGAN LINK LANGSUNG UNTUK MENJAMIN SEMUANYA BERFUNGSI --}}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    {{-- -------------------------------------------------------------------------- --}}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50 font-sans">
@@ -21,19 +21,46 @@
                 <img src="{{ asset('img/logo_cilacap.png') }}" alt="Logo" class="h-10">
                 <span class="text-xl font-bold">Admin Desa</span>
             </div>
+
             <nav class="space-y-1">
+                <!-- 1. Dashboard (Menu Utama) -->
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
                     <i class="fas fa-tachometer-alt mr-3 {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="{{ route('admin.berita.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.berita.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
-                    <i class="fas fa-newspaper mr-3 {{ request()->routeIs('admin.berita.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
-                    <span>Manajemen Berita</span>
-                </a>
-                <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.pengguna.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
-                    <i class="fas fa-users mr-3 {{ request()->routeIs('admin.pengguna.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+
+                {{-- 2. Manajemen Beranda (Menu Dropdown) - FINAL --}}
+                <div x-data="{ open: {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'true' : 'false' }} }">
+                    {{-- Tombol Utama Dropdown --}}
+                    <button @click="open = !open" class="flex items-center justify-between w-full py-2.5 px-4 rounded transition duration-200 group {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }}">
+                        <div class="flex items-center">
+                            <i class="fas fa-home mr-3 {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                            <span>Manajemen Beranda</span>
+                        </div>
+                        <i class="fas text-sm transition-transform duration-300" :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    </button>
+
+                    {{-- Submenu yang bisa buka-tutup --}}
+                    <div x-show="open" x-transition class="pl-8 py-2 space-y-1">
+                        <a href="{{ route('admin.berita.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.berita.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Berita
+                        </a>
+                        <a href="{{ route('admin.programs.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.programs.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Program Desa
+                        </a>
+                        <a href="{{ route('admin.settings.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.settings.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Pengaturan Website
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Manajemen Pengguna (Menu Utama) -->
+                <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.user.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
+                    <i class="fas fa-users mr-3 {{ request()->routeIs('admin.user.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Manajemen Pengguna</span>
                 </a>
+
+                <!-- 4. Logout (Menu Utama) -->
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <button type="submit" class="flex items-center w-full py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:shadow-md group text-left">
@@ -42,12 +69,13 @@
                     </button>
                 </form>
             </nav>
+            
             <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-blue-700">
                 <div class="flex items-center">
-                    <img class="h-10 w-10 rounded-full mr-3" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}" alt="Profile">
+                    <img class="h-10 w-10 rounded-full mr-3" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4A90E2&color=fff" alt="Profile">
                     <div>
                         <p class="font-medium">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-blue-300">Administrator</p>
+                        <p class="text-xs text-blue-300 capitalize">{{ Auth::user()->role }}</p>
                     </div>
                 </div>
             </div>
@@ -55,31 +83,39 @@
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- Topbar -->
+            <!-- Topbar dengan Header yang Paten -->
             <header class="bg-white shadow-sm z-10">
-                <div class="flex items-center justify-between px-6 py-3">
+                <div class="flex items-center justify-between px-6 py-4">
                     <div class="flex items-center">
-                        <button class="md:hidden text-gray-600 focus:outline-none hover:text-blue-600 transition-colors">
+                        <button id="sidebar-toggle" class="md:hidden text-gray-600 focus:outline-none hover:text-blue-600 transition-colors mr-4">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
-                        <h1 class="text-xl font-semibold text-gray-800 ml-4">@yield('title')</h1>
+                        <!-- Header Paten sesuai saran -->
+                        <div class="flex items-center">
+                            <i class="fas fa-tachometer-alt text-blue-600 text-xl mr-3"></i>
+                            <div>
+                                <h1 class="text-xl font-bold text-gray-800">DASHBOARD ADMIN</h1>
+                                <p class="text-sm text-gray-500">Sistem Manajemen Desa Panimbang</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex items-center space-x-6">
+                        <!-- Notifikasi -->
                         <div class="relative">
                             <button class="text-gray-600 hover:text-blue-600 focus:outline-none transition-colors relative">
                                 <i class="fas fa-bell text-xl"></i>
-                                <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                             </button>
                         </div>
-                        <div class="relative group">
-                            <button class="flex items-center space-x-2 focus:outline-none">
-                                <span class="text-gray-700 font-medium">{{ Auth::user()->name }}</span>
-                                <img class="h-8 w-8 rounded-full border-2 border-blue-500" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}" alt="Profile">
-                                <i class="fas fa-chevron-down text-xs text-gray-500 group-hover:text-blue-600 transition-colors"></i>
+                        <!-- Dropdown Profile User -->
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                                <span class="text-gray-700 font-medium hidden sm:block">{{ Auth::user()->name }}</span>
+                                <img class="h-8 w-8 rounded-full border-2 border-blue-500" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4A90E2&color=fff" alt="Profile">
+                                <i class="fas fa-chevron-down text-xs text-gray-500 transition-transform" :class="{'rotate-180': open}"></i>
                             </button>
-                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-20">
+                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Profile</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Settings</a>
+                                <a href="{{ route('admin.settings.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Settings</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Logout</button>
@@ -93,17 +129,7 @@
             <!-- Content -->
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
                 <div class="container mx-auto px-6 py-8">
-                    <!-- Breadcrumb -->
-                    <div class="flex items-center text-sm text-gray-600 mb-6">
-                        <a href="{{ route('admin.dashboard') }}" class="hover:text-blue-600">Dashboard</a>
-                        <span class="mx-2">/</span>
-                        <span class="font-medium text-blue-600">@yield('title')</span>
-                    </div>
-                    
-                    <!-- Page Content -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        @yield('content')
-                    </div>
+                    @yield('content')
                 </div>
             </main>
         </div>
@@ -112,20 +138,10 @@
     <!-- Scripts -->
     <script>
         // Mobile sidebar toggle
-        document.querySelector('.md\\:hidden').addEventListener('click', function() {
-            document.querySelector('.transform').classList.toggle('-translate-x-full');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdowns = document.querySelectorAll('.group');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target)) {
-                    const menu = dropdown.querySelector('.group-hover\\:block');
-                    if (menu) menu.classList.add('hidden');
-                }
-            });
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.querySelector('.md\\:relative').classList.toggle('-translate-x-full');
         });
     </script>
+    @yield('scripts')
 </body>
 </html>

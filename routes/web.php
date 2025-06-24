@@ -6,60 +6,67 @@ use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProgramController;
+use App\Http\Controllers\Admin\SettingController;
 
-// Rute Publik
-Route::get('/', function () {
-    return view('beranda');
-})->name('beranda');
+/*
+|--------------------------------------------------------------------------
+| Rute Publik
+|--------------------------------------------------------------------------
+*/
 
+// Halaman utama (beranda)
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
-Route::get('/beranda', [BerandaController::class, 'index']);
 
-Route::get('/sejarah', function () {
-    return view('sejarah');
-})->name('sejarah');
+// Halaman statis lainnya
+Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
+Route::get('/wilayah', function () { return view('wilayah'); })->name('wilayah');
+Route::get('/statistik', function () { return view('statistik'); })->name('statistik');
+Route::get('/pelayanan', function () { return view('pelayanan'); })->name('pelayanan');
+Route::get('/pengaduan', function () { return view('pengaduan'); })->name('pengaduan');
+Route::get('/lembaga', function () { return view('lembaga'); })->name('lembaga');
 
-Route::get('/wilayah', function () {
-    return view('wilayah');
-})->name('wilayah');
+// Rute untuk Berita (Publik)
+Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
+Route::get('/berita/{berita:slug}', [BerandaController::class, 'showBerita'])->name('berita.show');
 
-Route::get('/statistik', function () {
-    return view('statistik');
-})->name('statistik');
 
-Route::get('/pelayanan', function () {
-    return view('pelayanan');
-})->name('pelayanan');
-
-Route::get('/pengaduan', function () {
-    return view('pengaduan');
-})->name('pengaduan');
-
-Route::get('/lembaga', function () {
-    return view('lembaga');
-})->name('lembaga');
-
-// Rute Autentikasi
+/*
+|--------------------------------------------------------------------------
+| Rute Autentikasi
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rute Admin
+
+/*
+|--------------------------------------------------------------------------
+| Rute Admin
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function() {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
-    // Berita routes dengan parameter custom
+    // Manajemen Berita
     Route::resource('berita', BeritaController::class)->parameters([
         'berita' => 'berita'
     ]);
+
     // Manajemen User
     Route::resource('user', UserController::class)->except(['show']);
+
+    // --- INI PERBAIKANNYA ---
+    // Manajemen Program Desa (tanpa /admin/ di dalamnya)
+    Route::resource('programs', ProgramController::class);
+
+    // Manajemen Setting Beranda
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
-Route::get('/berita/{id}', [App\Http\Controllers\Admin\BeritaController::class, 'show'])->name('berita.show');
-// Rute Publik
-Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
-Route::get('/berita/{berita:slug}', [BerandaController::class, 'showBerita'])->name('berita.show');
+// Kurung kurawal ekstra di akhir file sudah dihapus

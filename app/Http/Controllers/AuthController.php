@@ -24,7 +24,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/beranda');
+            
+            // --- PERBAIKAN DI SINI ---
+            // Menggunakan route('beranda') sebagai fallback untuk intended()
+            return redirect()->intended(route('beranda'));
         }
 
         return back()->withErrors([
@@ -54,7 +57,9 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/beranda')->with('success', 'Registrasi berhasil!');
+        // --- PERBAIKAN DI SINI ---
+        // Menggunakan nama rute 'beranda'
+        return redirect()->route('beranda')->with('success', 'Registrasi berhasil!');
     }
 
     // Proses logout
