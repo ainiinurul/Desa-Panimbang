@@ -138,7 +138,7 @@
                     
                     <div class="space-y-2">
                         <label for="keterangan" class="block text-md font-medium text-gray-700">Keterangan atau deskripsi keperluan surat</label>
-                        <textarea id="keterangan" name="keterangan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Mundur'"></textarea>
+                        <textarea id="keterangan" name="keterangan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Makmur'"></textarea>
                     </div>
                     
                     <div class="pt-4">

@@ -96,12 +96,11 @@
                         <button id="sidebar-toggle" class="md:hidden text-gray-600 focus:outline-none hover:text-blue-600 transition-colors mr-4">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
-                        <!-- Header Paten sesuai saran -->
-                        <div class="flex items-center">
-                            <i class="fas fa-tachometer-alt text-blue-600 text-xl mr-3"></i>
-                            <div>
-                                <h1 class="text-xl font-bold text-gray-800">DASHBOARD ADMIN</h1>
-                                <p class="text-sm text-gray-500">Sistem Manajemen Desa Panimbang</p>
+                        <!-- Header yang diperbaiki -->
+                        <div class="flex items-center bg-gradient-to-r from-blue-600 to-blue-800 px-4 py-2 rounded-lg shadow">
+                            <div class="text-white">
+                                <h1 class="text-xl font-bold tracking-wide">DASHBOARD ADMIN</h1>
+                                <p class="text-xs font-light opacity-90">Sistem Manajemen Desa Panimbang</p>
                             </div>
                         </div>
                     </div>
@@ -110,6 +109,7 @@
                         <div class="relative">
                             <button class="text-gray-600 hover:text-blue-600 focus:outline-none transition-colors relative">
                                 <i class="fas fa-bell text-xl"></i>
+                                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
                             </button>
                         </div>
                         <!-- Dropdown Profile User -->

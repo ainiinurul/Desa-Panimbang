@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\PelayananController;
 */
 
 // Halaman utama (beranda)
-Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
 
 // Halaman statis lainnya
 Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');

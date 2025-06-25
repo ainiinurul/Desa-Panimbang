@@ -288,13 +288,6 @@
                     </div>
                 @endforelse
             </div>
-            @if($berita->count() > 0)
-            <div class="text-center mt-8">
-                <a href="{{ route('berita.index') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors">
-                    Lihat Semua Berita
-                </a>
-            </div>
-            @endif
         </div>
     </section>
 
