@@ -9,6 +9,24 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="font-sans antialiased text-gray-800">
+
+{{-- LETAKKAN KODE NOTIFIKASI BARU DI SINI --}}
+@if (session('success'))
+    <div
+        x-data="{ show: true }"
+        x-init="setTimeout(() => { show = false }, 5000)"
+        x-show="show"
+        x-transition
+        class="fixed top-24 right-5 bg-green-600 text-white py-3 px-6 rounded-lg shadow-lg z-50 flex items-center"
+        style="display: none;"
+    >
+        <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>{{ session('success') }}</span>
+        <button @click="show = false" class="ml-4 text-xl font-semibold hover:text-gray-200">&times;</button>
+    </div>
+@endif
+{{-- SAMPAI SINI --}}
+
 <x-navbar></x-navbar>
 
     <header class="bg-blue-900 text-white py-12">
@@ -20,6 +38,7 @@
         </div>
     </header>
 
+    {{-- Form Permohonan Online --}}
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 hover:shadow-xl">
@@ -27,25 +46,67 @@
                     <h2 class="text-2xl font-bold">Form Permohonan Online</h2>
                     <p class="mt-2">Silakan isi formulir di bawah ini untuk mengajukan permohonan</p>
                 </div>
-                
-                <form class="p-6 space-y-6" x-data="{ showLainnya: false }">
-                    <div class="space-y-2">
-                        <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
-                        <input type="text" id="nik" name="nik" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan NIK Anda" required>
-                    </div>
+
+                {{-- Ganti seluruh blok form Anda dengan kode ini --}}
+                <form method="POST" action="{{ route('pelayanan.store') }}" class="p-6 space-y-6" x-data="{ 
+                    showLainnya: false,
+                    nikValue: '',
+                    isNikValid: false,
+                    nikError: '',
                     
+                    validateNik() {
+                        // Hanya izinkan angka
+                        this.nikValue = this.nikValue.replace(/[^0-9]/g, '');
+                        
+                        // Cek panjang NIK
+                        if (this.nikValue.length > 0 && this.nikValue.length < 16) {
+                            this.nikError = 'NIK harus terdiri dari 16 digit angka.';
+                            this.isNikValid = false;
+                        } else if (this.nikValue.length === 16) {
+                            this.nikError = ''; // Hilangkan pesan error jika sudah 16 digit
+                            this.isNikValid = true;
+                        } else {
+                            this.nikError = '';
+                            this.isNikValid = false;
+                        }
+                    }
+                }">
+                @csrf {{-- Token keamanan Laravel, wajib ada --}}
                     <div class="space-y-2">
-                        <label for="no_kk" class="block text-sm font-medium text-gray-700">Nomor Kartu Keluarga</label>
-                        <input type="text" id="no_kk" name="no_kk" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan Nomor KK Anda" required>
-                    </div>
-                    
-                    <div class="space-y-2">
-                        <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                        <label for="nama" class="block text-md font-medium text-gray-700">Nama Lengkap</label>
                         <input type="text" id="nama" name="nama" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan Nama Lengkap Anda" required>
                     </div>
+
+                    {{-- BAGIAN NIK YANG DIMODIFIKASI --}}
+                    <div class="space-y-2">
+                        <label for="nik" class="block text-md font-medium text-gray-700">NIK</label>
+                        <input 
+                            type="text" 
+                            id="nik" 
+                            name="nik"
+                            maxlength="16"
+                            x-model="nikValue"
+                            @input="validateNik()"
+                            :class="{ 'border-red-500 focus:ring-red-500': nikError, 'border-gray-300 focus:ring-blue-500': !nikError }"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 transition-all duration-300" 
+                            placeholder="Masukkan NIK 16 digit Anda" required>
+                        
+                        {{-- Pesan error akan muncul di sini --}}
+                        <div x-show="nikError" x-transition>
+                            <p x-text="nikError" class="text-red-600 text-sm mt-1"></p>
+                        </div>
+                        <div class="text-right text-xs" :class="nikValue.length === 16 ? 'text-green-600' : 'text-gray-500'">
+                            <span x-text="nikValue.length"></span>/16
+                        </div>
+                    </div>
                     
                     <div class="space-y-2">
-                        <label for="jenis_permohonan" class="block text-sm font-medium text-gray-700">Jenis Permohonan</label>
+                        <label for="telepon" class="block text-md font-medium text-gray-700">Telepon</label>
+                        <input type="text" id="telepon" name="telepon" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan nomor telepon aktif Anda" required>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="jenis_permohonan" class="block text-md font-medium text-gray-700">Jenis Surat Permohonan</label>
                         <select id="jenis_permohonan" name="jenis_permohonan" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" @change="showLainnya = ($event.target.value === 'Lainnya')" required>
                             <option value="" disabled selected>Pilih Jenis Permohonan</option>
                             <option value="Surat Pengantar SKCK">Surat Pengantar SKCK</option>
@@ -71,17 +132,21 @@
                     </div>
                     
                     <div x-show="showLainnya" class="space-y-2" x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
-                        <label for="lainnya" class="block text-sm font-medium text-gray-700">Sebutkan Jenis Permohonan</label>
+                        <label for="lainnya" class="block text-md font-medium text-gray-700">Sebutkan Jenis Permohonan</label>
                         <input type="text" id="lainnya" name="lainnya" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Jelaskan permohonan Anda">
                     </div>
                     
                     <div class="space-y-2">
-                        <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan Tambahan (Opsional)</label>
-                        <textarea id="keterangan" name="keterangan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan"></textarea>
+                        <label for="keterangan" class="block text-md font-medium text-gray-700">Keterangan atau deskripsi keperluan surat</label>
+                        <textarea id="keterangan" name="keterangan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Mundur'"></textarea>
                     </div>
                     
                     <div class="pt-4">
-                        <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-300 hover:scale-105">
+                        <button 
+                            type="submit" 
+                            :disabled="!isNikValid"
+                            :class="{ 'bg-gray-400 cursor-not-allowed': !isNikValid, 'bg-blue-600 hover:bg-blue-700 hover:scale-105': isNikValid }"
+                            class="w-full px-6 py-3 text-white font-medium rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300">
                             Ajukan Permohonan
                         </button>
                     </div>
@@ -90,8 +155,161 @@
         </div>
     </section>
 
-    
+    {{-- Persyaratan Dokumen untuk Setiap Jenis Layanan --}}
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-blue-800 mb-10">Persyaratan Dokumen untuk Setiap Jenis Layanan</h2>
 
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4" x-data="{ open: '' }">
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'skck' ? '' : 'skck'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>1. Surat Pengantar SKCK</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'skck' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'skck'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP yang masih berlaku</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Pas foto 4x6 (2 lembar) background merah</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'domisili' ? '' : 'domisili'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>2. Surat Keterangan Domisili</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'domisili' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'domisili'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW</li><li>Surat keterangan kontrak/sewa (jika mengontrak)</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'usaha' ? '' : 'usaha'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>3. Surat Keterangan Usaha</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'usaha' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'usaha'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP pemilik usaha</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW</li><li>Foto lokasi usaha</li><li>Surat keterangan domisili usaha (jika diperlukan)</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'tidak_mampu' ? '' : 'tidak_mampu'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>4. Surat Keterangan Tidak Mampu</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'tidak_mampu' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'tidak_mampu'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW</li><li>Surat keterangan penghasilan (jika ada)</li><li>Fotokopi tagihan listrik/air</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'belum_menikah' ? '' : 'belum_menikah'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>5. Surat Keterangan Belum Menikah</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'belum_menikah' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'belum_menikah'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP yang masih berlaku</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Akta Kelahiran</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'penghasilan' ? '' : 'penghasilan'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>6. Surat Keterangan Penghasilan</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'penghasilan' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'penghasilan'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW</li><li>Slip gaji/bukti penghasilan (jika karyawan)</li><li>Surat keterangan usaha (jika wiraswasta)</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'kelahiran' ? '' : 'kelahiran'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>7. Surat Keterangan Kelahiran</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'kelahiran' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'kelahiran'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP kedua orang tua</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Buku Nikah/Akta Nikah orang tua</li><li>Surat keterangan lahir dari Rumah Sakit/Bidan</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'kematian' ? '' : 'kematian'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>8. Surat Keterangan Kematian</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'kematian' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'kematian'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP almarhum</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat keterangan kematian dari Rumah Sakit/dokter</li><li>Fotokopi KTP pelapor (ahli waris)</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'kehilangan' ? '' : 'kehilangan'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>9. Surat Keterangan Kehilangan</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'kehilangan' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'kehilangan'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW</li><li>Surat laporan kehilangan dari Polsek (jika diperlukan)</li><li>Mengisi formulir permohonan dengan detail barang yang hilang</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'janda_duda' ? '' : 'janda_duda'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>10. Surat Keterangan Janda/Duda</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'janda_duda' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'janda_duda'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Akta Kematian suami/istri (jika meninggal)</li><li>Fotokopi Akta Cerai (jika bercerai)</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'beda_identitas' ? '' : 'beda_identitas'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>11. Surat Keterangan Beda Identitas</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'beda_identitas' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'beda_identitas'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Akta Kelahiran</li><li>Dokumen yang menunjukkan perbedaan identitas</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'waris' ? '' : 'waris'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>12. Surat Keterangan Waris</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'waris' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'waris'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP para ahli waris</li><li>Fotokopi Kartu Keluarga (KK) almarhum</li><li>Fotokopi Akta Kematian</li><li>Fotokopi Buku Nikah/Akta Nikah (jika ada)</li><li>Fotokopi Akta Kelahiran anak-anak (jika ada)</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'tanah' ? '' : 'tanah'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>13. Surat Keterangan Tanah</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'tanah' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'tanah'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP pemilik tanah</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi sertifikat tanah/girik/letter C</li><li>Fotokopi SPPT PBB tahun terakhir</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'nikah' ? '' : 'nikah'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>14. Surat Pengantar Nikah</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'nikah' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'nikah'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP calon pengantin</li><li>Fotokopi Kartu Keluarga (KK) kedua belah pihak</li><li>Fotokopi Akta Kelahiran calon pengantin</li><li>Surat keterangan belum menikah</li><li>Pas foto 2x3 (masing-masing 2 lembar)</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'cerai' ? '' : 'cerai'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>15. Surat Pengantar Cerai</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'cerai' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'cerai'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP suami-istri</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Buku Nikah/Akta Nikah</li><li>Fotokopi Akta Kelahiran anak (jika ada)</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'pindah' ? '' : 'pindah'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>16. Surat Pengantar Pindah</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'pindah' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'pindah'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP seluruh anggota keluarga yang pindah</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Surat pengantar dari RT/RW asal</li><li>Surat keterangan akan pindah</li><li>Mengisi formulir permohonan pindah</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'rujuk' ? '' : 'rujuk'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>17. Surat Pengantar Rujuk</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'rujuk' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'rujuk'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP suami-istri</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Fotokopi Akta Cerai</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <button @click="open = open === 'rekomendasi' ? '' : 'rekomendasi'" class="w-full text-left p-4 flex justify-between items-center font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none">
+                        <span>18. Surat Rekomendasi</span>
+                        <svg class="h-6 w-6 transform transition-transform duration-300" :class="{ 'rotate-180': open === 'rekomendasi' }" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div x-show="open === 'rekomendasi'" x-transition class="p-4 bg-gray-50 border-t"><ul class="list-disc list-inside space-y-2 text-gray-700"><li>Fotokopi KTP</li><li>Fotokopi Kartu Keluarga (KK)</li><li>Dokumen pendukung sesuai kebutuhan rekomendasi</li><li>Surat pengantar dari RT/RW</li><li>Mengisi formulir permohonan</li><li>Meterai 10.000</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Lain - Lain --}}
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-10">Informasi Pelayanan</h2>
@@ -141,6 +359,7 @@
         </div>
     </section>
 
+    {{-- Footer --}}
     <footer class="bg-blue-900 text-white py-8">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">

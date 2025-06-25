@@ -54,13 +54,19 @@
                     </div>
                 </div>
 
-                <!-- 3. Manajemen Pengguna (Menu Utama) -->
+                <!-- 3. Manajemen Pelayanan (Menu Utama) -->
+                <a href="{{ route('admin.pelayanan.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.pelayanan.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
+                    <i class="fas fa-file-alt mr-3 {{ request()->routeIs('admin.pelayanan.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                    <span>Manajemen Pelayanan</span>
+                </a>
+
+                <!-- 4. Manajemen Pengguna (Menu Utama) -->
                 <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.user.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
                     <i class="fas fa-users mr-3 {{ request()->routeIs('admin.user.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Manajemen Pengguna</span>
                 </a>
 
-                <!-- 4. Logout (Menu Utama) -->
+                <!-- 5. Logout (Menu Utama) -->
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <button type="submit" class="flex items-center w-full py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:shadow-md group text-left">

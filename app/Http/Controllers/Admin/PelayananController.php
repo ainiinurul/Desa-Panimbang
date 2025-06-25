@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Pelayanan; // Jangan lupa impor model Pelayanan
+
+class PelayananController extends Controller
+{
+    /**
+     * Menampilkan halaman utama manajemen pelayanan.
+     */
+    public function index()
+    {
+        // Mengambil semua data pelayanan dari database, diurutkan dari yang terbaru
+        $pelayanans = Pelayanan::latest()->get();
+
+        // Mengirim data ke view
+        return view('admin.pelayanan.index', compact('pelayanans'));
+    }
+
+    /**
+     * Menyimpan permohonan pelayanan baru dari form publik.
+     */
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|size:16',
+            'telepon' => 'required|string|max:20',
+            'jenis_permohonan' => 'required|string|max:255',
+            'lainnya' => 'nullable|string|max:255',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        // Tentukan jenis surat yang akan disimpan
+        $jenis_surat = $request->jenis_permohonan;
+        if ($request->jenis_permohonan === 'Lainnya' && $request->lainnya) {
+            $jenis_surat = $request->lainnya;
+        }
+
+        // Simpan data ke database
+        Pelayanan::create([
+            'nama_pemohon' => $request->nama,
+            'nik_pemohon' => $request->nik,
+            'jenis_surat' => $jenis_surat,
+            'keperluan' => $request->keterangan ?? 'Tidak ada keterangan khusus',
+            'nomor_telepon' => $request->telepon,
+            'status' => 'Pending', // Status default
+        ]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Permohonan Anda berhasil diajukan! Silakan tunggu konfirmasi dari admin.');
+    }
+
+    /**
+     * Memperbarui status permohonan pelayanan.
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'status' => 'required|in:Diproses,Selesai,Ditolak',
+        ]);
+
+        // Cari data pelayanan berdasarkan ID
+        $pelayanan = Pelayanan::findOrFail($id);
+
+        // Update statusnya
+        $pelayanan->status = $request->status;
+        $pelayanan->save();
+
+        // Kembali ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Status permohonan berhasil diperbarui.');
+    }
+}

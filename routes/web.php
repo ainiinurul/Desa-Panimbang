@@ -8,6 +8,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\PelayananController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,9 @@ Route::get('/lembaga', function () { return view('lembaga'); })->name('lembaga')
 // Rute untuk Berita (Publik)
 Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
 Route::get('/berita/{berita:slug}', [BerandaController::class, 'showBerita'])->name('berita.show');
+
+// Tambahkan route ini di bagian rute publik (sebelum rute admin)
+Route::post('/pelayanan/store', [App\Http\Controllers\Admin\PelayananController::class, 'store'])->name('pelayanan.store');
 
 
 /*
@@ -67,6 +71,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // Manajemen Setting Beranda
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Rute untuk Manajemen Pelayanan
+    Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
+    Route::put('/pelayanan/{id}/status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
 });
 
 // Kurung kurawal ekstra di akhir file sudah dihapus
