@@ -16,8 +16,11 @@ use App\Http\Controllers\Admin\PelayananController;
 |--------------------------------------------------------------------------
 */
 
+// Ini rute untuk halaman utama (/)
+Route::get('/', [BerandaController::class, 'index']);
+
 // Halaman utama (beranda)
-Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda'); //
 
 // Halaman statis lainnya
 Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
@@ -75,6 +78,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // Rute untuk Manajemen Pelayanan
     Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
     Route::put('/pelayanan/{id}/status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
+});
+
+    // KODE INVESTIGASI SEMENTARA
+Route::get('/debug', function() {
+    dd(config('database.connections.mysql'));
 });
 
 // Kurung kurawal ekstra di akhir file sudah dihapus
