@@ -11,29 +11,39 @@ class SettingController extends Controller
 {
     public function index()
     {
-        $settings = Setting::all();
+        // Ambil SEMUA setting dari database, urutkan berdasarkan ID
+        $settings = Setting::orderBy('id')->get(); 
+
+        // Kirim koleksi 'settings' ke view
         return view('admin.settings.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
-        foreach ($request->except('_token') as $key => $value) {
-            $setting = Setting::where('key', $key)->first();
-            if ($setting) {
-                if ($setting->type == 'image' && $request->hasFile($key)) {
-                    // Hapus gambar lama
-                    if ($setting->value) {
-                        Storage::disk('public')->delete($setting->value);
-                    }
-                    // Upload gambar baru
-                    $path = $request->file($key)->store('settings-images', 'public');
-                    $setting->value = $path;
-                } else if ($setting->type != 'image') {
-                    $setting->value = $value;
-                }
-                $setting->save();
+        // Ambil semua input dari form
+        $inputs = $request->except('_token');
+
+        // Lakukan perulangan untuk setiap input yang dikirim
+        foreach ($inputs as $key => $value) {
+            // Jika input adalah file, tangani secara terpisah
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $path = $file->store('settings', 'public'); // Simpan file ke storage/app/public/settings
+
+                // Update path file di database
+                Setting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $path]
+                );
+            } else {
+                // Jika bukan file, langsung update nilainya
+                Setting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $value]
+                );
             }
         }
-        return back()->with('success', 'Pengaturan berhasil diperbarui!');
+
+        return redirect()->route('admin.settings.update')->with('success', 'Pengaturan berhasil diperbarui!');
     }
 }

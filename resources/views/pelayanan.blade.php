@@ -390,10 +390,10 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
                     <ul class="space-y-2 mb-6">
-                        <li><a href="sejarah.html" class="hover:text-blue-300 transition-colors">Sejarah Desa</a></li>
-                        <li><a href="pengaduan.html" class="hover:text-blue-300 transition-colors">Layanan Pengaduan</a></li>
-                        <li><a href="pelayanan.html" class="hover:text-blue-300 transition-colors">Pelayanan Online</a></li>
-                        <li><a href="statistik.html" class="hover:text-blue-300 transition-colors">Statistik Desa</a></li>
+                        <li><a href="{{ route('sejarah') }}" class="hover:text-blue-300 transition-colors">Sejarah Desa</a></li>
+                        <li><a href="{{ route('pengaduan') }}" class="hover:text-blue-300 transition-colors">Layanan Pengaduan</a></li>
+                        <li><a href="{{ route('pelayanan') }}" class="hover:text-blue-300 transition-colors">Pelayanan Online</a></li>
+                        <li><a href="{{ route('statistik') }}" class="hover:text-blue-300 transition-colors">Statistik Desa</a></li>
                     </ul>
                     
                     <h3 class="text-lg font-bold mb-4">Ikuti Kami</h3>

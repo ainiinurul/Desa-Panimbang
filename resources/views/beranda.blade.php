@@ -11,7 +11,6 @@
 <body class="font-sans antialiased text-gray-800">
 <x-navbar></x-navbar>
 
-    <!-- Header -->
     <header class="relative">
         <div class="bg-cover bg-center h-96" style="background-image: url('img/desa.jpg');">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -25,11 +24,9 @@
         </div>
     </header>
 
-    <!-- Maps & Weather Section -->
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-8">
-                <!-- Maps -->
                 <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:shadow-xl">
                     <h2 class="text-xl font-semibold p-4 border-b">Peta Desa Panimbang</h2>
                     <div class="aspect-w-16 aspect-h-9">
@@ -44,7 +41,6 @@
                     </div>
                 </div>
                 
-                <!-- Weather -->
                 <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:shadow-xl">
                     <h2 class="text-xl font-semibold p-4 border-b">Informasi Waktu & Cuaca</h2>
                     <div class="p-4 grid grid-cols-2 gap-6">
@@ -74,29 +70,26 @@
         </div>
     </section>
 
-    <!-- Sambutan Kepala Desa -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="w-full md:w-1/3 flex justify-center">
                     <div class="w-64 h-auto transform transition-all duration-500 hover:scale-105">
-                        <img src="{{ asset('storage/' . setting('foto_kepala_desa')) }}" alt="{{ setting('nama_kepala_desa') }} - Kepala Desa" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/' . ($settings['foto_kepala_desa'] ?? '')) }}" alt="{{ $settings['nama_kepala_desa'] ?? 'Kepala Desa' }} - Kepala Desa" class="w-full h-full object-cover rounded-lg shadow-md">
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
                     <h2 class="text-3xl font-bold text-blue-800 mb-4">"Selamat Datang di Website Desa Kami"</h2>
-                    <p class="text-gray-700 mb-6 leading-relaxed">{{ setting('sambutan_kepala_desa') }}</p>
-                    <p class="text-right font-semibold text-blue-700">{{ setting('nama_kepala_desa') }},<br>Kepala Desa Panimbang</p>
+                    <p class="text-gray-700 mb-6 leading-relaxed">{!! formatContent($settings['sambutan_kepala_desa'] ?? 'Sambutan belum diatur.') !!}</p>
+                    <p class="text-right font-semibold text-blue-700">{{ $settings['nama_kepala_desa'] ?? '' }},<br>Kepala Desa Panimbang</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Visi Misi Section -->
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Visi & Misi Desa Panimbang</h2>
-            
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="p-6">
                     <div class="mb-8">
@@ -110,49 +103,19 @@
                             Visi dan Misi ini adalah landasan kerja kami dan merupakan bagian integral dari komitmen kami untuk membangun tata kelola yang terbuka dan partisipatif. Kami mengundang Anda untuk menyimak lebih lanjut dan memahami arah dan tujuan kami dalam melayani komunitas Desa Panimbang.
                         </p>
                     </div>
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Visi -->
                         <div class="bg-blue-50 rounded-lg p-6 transform transition-all duration-500 hover:shadow-lg">
                             <h3 class="text-2xl font-bold text-blue-800 mb-4">Visi</h3>
-                            <p class="text-gray-700 leading-relaxed">
-                                Menjadi pelopor transparansi dan aksesibilitas informasi di tingkat desa, mendorong partisipasi aktif masyarakat dalam tata kelola pemerintahan yang akuntabel, inklusif, dan responsif.
-                            </p>
+                            <div class="text-gray-700 leading-relaxed">
+                                {!! formatContent($settings['visi_desa'] ?? 'Visi belum diatur.') !!}
+                            </div>
                         </div>
                         
-                        <!-- Misi -->
                         <div class="bg-blue-50 rounded-lg p-6 transform transition-all duration-500 hover:shadow-lg">
                             <h3 class="text-2xl font-bold text-blue-800 mb-4">Misi</h3>
-                            <ul class="text-gray-700 space-y-3">
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">1.</span>
-                                    <span>Meningkatkan Aksesibilitas Informasi Publik: Menyediakan informasi yang akurat, tepat waktu, dan relevan kepada seluruh warga desa dan pihak lain yang berkepentingan.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">2.</span>
-                                    <span>Mendorong Transparansi dan Akuntabilitas Pemerintahan: Mengembangkan dan mengimplementasikan mekanisme yang memastikan transparansi dalam proses pengambilan keputusan dan penggunaan sumber daya desa.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">3.</span>
-                                    <span>Memfasilitasi Partisipasi Publik: Membuka ruang dialog dan kolaborasi antara pemerintah desa dan warga, termasuk konsultasi publik dan forum diskusi.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">4.</span>
-                                    <span>Mengembangkan Kapasitas Masyarakat: Menyelenggarakan program edukasi dan pelatihan untuk meningkatkan pemahaman masyarakat tentang hak dan kewajiban mereka dalam mengakses informasi publik.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">5.</span>
-                                    <span>Mengelola Pengaduan dengan Efektif: Menyediakan saluran yang jelas dan responsif untuk pengaduan, saran, dan masukan dari masyarakat, serta menjamin penyelesaian yang adil dan tepat.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">6.</span>
-                                    <span>Mengadopsi Teknologi untuk Layanan yang Lebih Baik: Menggunakan teknologi informasi untuk memudahkan akses, pengolahan, dan distribusi informasi publik.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-blue-600 font-bold mr-2">7.</span>
-                                    <span>Mematuhi Hukum dan Peraturan: Menjamin bahwa seluruh operasi dan layanan PPID sesuai dengan peraturan yang berlaku, termasuk UU Keterbukaan Informasi Publik.</span>
-                                </li>
-                            </ul>
+                            <div class="text-gray-700 leading-relaxed space-y-3">
+                                {!! formatContent($settings['misi_desa'] ?? 'Misi belum diatur.') !!}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,7 +123,6 @@
         </div>
     </section>
 
-    <!-- Program Desa -->
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Program Unggulan Desa</h2>
@@ -229,7 +191,6 @@
         </div>
     </section>
 
-    <!-- Berita Terbaru -->
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Berita Terbaru</h2>
@@ -291,12 +252,9 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-blue-900 text-white py-8">
         <div class="container mx-auto px-4">
-            <!-- Main Footer Content -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
-                <!-- Kolom 1: Info Kontak -->
                 <div>
                     <div class="flex items-center mb-4">
                         <img src="img/logo_cilacap.png" alt="Logo Cilacap" class="h-14 w-auto mr-3">
@@ -328,7 +286,6 @@
                     </div>
                 </div>
                 
-                <!-- Kolom 2: Peta Mini -->
                 <div>
                     <h3 class="text-lg font-bold mb-4">Lokasi Kami</h3>
                     <div class="h-48 rounded-lg overflow-hidden">
@@ -344,14 +301,13 @@
                     <p class="text-sm mt-2">Klik pada peta untuk melihat lokasi lebih detail</p>
                 </div>
                 
-                <!-- Kolom 3: Link Cepat & Sosial Media -->
                 <div>
                     <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
                     <ul class="space-y-2 mb-6">
-                        <li><a href="sejarah.html" class="hover:text-blue-300 transition-colors">Sejarah Desa</a></li>
-                        <li><a href="pengaduan.html" class="hover:text-blue-300 transition-colors">Layanan Pengaduan</a></li>
-                        <li><a href="pelayanan.html" class="hover:text-blue-300 transition-colors">Pelayanan Online</a></li>
-                        <li><a href="statistik.html" class="hover:text-blue-300 transition-colors">Statistik Desa</a></li>
+                        <li><a href="{{ route('sejarah') }}" class="hover:text-blue-300 transition-colors">Sejarah Desa</a></li>
+                        <li><a href="{{ route('pengaduan') }}" class="hover:text-blue-300 transition-colors">Layanan Pengaduan</a></li>
+                        <li><a href="{{ route('pelayanan') }}" class="hover:text-blue-300 transition-colors">Pelayanan Online</a></li>
+                        <li><a href="{{ route('statistik') }}" class="hover:text-blue-300 transition-colors">Statistik Desa</a></li>
                     </ul>
                     
                     <h3 class="text-lg font-bold mb-4">Ikuti Kami</h3>
@@ -380,7 +336,6 @@
                 </div>
             </div>
             
-            <!-- Newsletter Subscription -->
             <div class="bg-blue-800 p-6 rounded-lg mb-6">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-4 md:mb-0">
@@ -396,7 +351,6 @@
                 </div>
             </div>
             
-            <!-- Jam Operasional -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-6">
                 <div>
                     <h3 class="text-lg font-bold mb-2">Jam Operasional Kantor Desa</h3>
@@ -415,11 +369,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- QR Code -->
                 <div class="mt-4 md:mt-0 text-center">
                     <p class="mb-2">Scan untuk informasi lebih lanjut</p>
                     <div class="bg-white p-2 inline-block rounded">
-                        <!-- Placeholder for QR Code - You can replace with actual QR code image -->
                         <svg class="h-24 w-24 text-blue-900" viewBox="0 0 100 100" fill="currentColor">
                             <rect x="20" y="20" width="60" height="60" fill="white"/>
                             <rect x="30" y="30" width="10" height="10"/>
@@ -436,10 +388,9 @@
                 </div>
             </div>
             
-            <!-- Copyright & Politik Privasi -->
             <div class="border-t border-blue-800 mt-6 pt-6">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p>&copy; 2025 Desa Panimbang. Hak Cipta Dilindungi.</p>
+                    <p>© 2025 Desa Panimbang. Hak Cipta Dilindungi.</p>
                     <div class="flex space-x-4 mt-2 md:mt-0">
                         <a href="#" class="hover:text-blue-300 transition-colors">Ketentuan Penggunaan</a>
                         <a href="#" class="hover:text-blue-300 transition-colors">Kebijakan Privasi</a>
@@ -450,7 +401,6 @@
         </div>
     </footer>
 
-    <!--<script src="js/script.js"></script>-->
     <script>
         // Update time and date
         function updateTime() {

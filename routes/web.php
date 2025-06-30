@@ -78,6 +78,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // Rute untuk Manajemen Pelayanan
     Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
     Route::put('/pelayanan/{id}/status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
+    
+    // TAMBAHKAN RUTE INI
+    Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
 });
 
     // KODE INVESTIGASI SEMENTARA

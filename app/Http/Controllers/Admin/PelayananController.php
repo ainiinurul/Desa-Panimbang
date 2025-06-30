@@ -75,4 +75,15 @@ class PelayananController extends Controller
         // Kembali ke halaman sebelumnya dengan pesan sukses
         return redirect()->back()->with('success', 'Status permohonan berhasil diperbarui.');
     }
+
+    /**
+     * Menghapus data permohonan dari database.
+     */
+    public function destroy(Pelayanan $pelayanan)
+    {
+        $pelayanan->delete();
+
+        return redirect()->route('admin.pelayanan.index')
+                         ->with('success', 'Permohonan berhasil dihapus.');
+    }
 }

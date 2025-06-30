@@ -5,33 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita;
 use App\Models\Program; // TAMBAHKAN INI: untuk memanggil model Program
+use App\Models\Setting;
 use Carbon\Carbon;
 
 class BerandaController extends Controller
 {
     /**
-     * FUNGSI INDEX YANG SUDAH DIGABUNG DAN DIPERBAIKI
-     * Menampilkan halaman beranda dengan data berita dan program desa.
+     * Menampilkan halaman beranda dengan semua data yang dibutuhkan.
      */
     public function index()
     {
-        // 1. Mengambil data berita dengan logika Anda yang sudah benar
+        // 1. Mengambil data berita
         $berita = Berita::where(function($query) {
                 $query->where('status', 'published')
-                      ->orWhere(function($q) {
-                          $q->where('status', 'scheduled')
+                        ->orWhere(function($q) {
+                            $q->where('status', 'scheduled')
                             ->where('published_at', '<=', Carbon::now());
-                      });
+                        });
             })
-            ->latest('published_at') // Urutkan berdasarkan tanggal publikasi terbaru
-            ->take(4) // Ambil 4 berita terbaru untuk halaman depan
+            ->latest('published_at')
+            ->take(4)
             ->get();
 
-        // 2. Mengambil data program desa dari database
+        // 2. Mengambil data program desa
         $programDesa = Program::latest()->get();
 
-        // 3. Mengirim kedua variabel ('berita' dan 'programDesa') ke view
-        return view('beranda', compact('berita', 'programDesa'));
+        // 3. Mengambil SEMUA pengaturan website (TERMASUK VISI & MISI)
+        $settings = Setting::all()->pluck('value', 'key')->toArray();
+
+        // 4. Mengirim SEMUA data ('berita', 'programDesa', dan 'settings') ke view secara bersamaan
+        return view('beranda', compact('berita', 'programDesa', 'settings'));
     }
     
     /**
@@ -86,6 +89,8 @@ class BerandaController extends Controller
         
         return view('berita.show', compact('berita', 'related'));
     }
+
+    
 
     // FUNGSI INDEX KEDUA YANG DUPLIKAT SUDAH DIHAPUS DARI SINI
 }

@@ -100,6 +100,14 @@
                                                 <i class="fas fa-times mr-2"></i>Ditolak
                                             </button>
                                         </form>
+                                        <div class="border-t border-gray-200"></div> {{-- Opsional: sebagai pemisah --}}
+                                        <form action="{{ route('admin.pelayanan.destroy', $pelayanan->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus permohonan ini? Tindakan ini tidak dapat dibatalkan.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 hover:text-red-800" role="menuitem">
+                                                <i class="fas fa-trash-alt mr-2"></i>Hapus
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
