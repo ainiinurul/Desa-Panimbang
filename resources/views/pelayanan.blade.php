@@ -102,12 +102,12 @@
                     
                     <div class="space-y-2">
                         <label for="telepon" class="block text-md font-medium text-gray-700">Telepon</label>
-                        <input type="text" id="telepon" name="telepon" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan nomor telepon aktif Anda" required>
+                        <input type="text" id="telepon" name=nomor_telepon" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan nomor telepon aktif Anda" required>
                     </div>
                     
                     <div class="space-y-2">
                         <label for="jenis_permohonan" class="block text-md font-medium text-gray-700">Jenis Surat Permohonan</label>
-                        <select id="jenis_permohonan" name="jenis_permohonan" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" @change="showLainnya = ($event.target.value === 'Lainnya')" required>
+                        <select id="jenis_permohonan" name="jenis_surat" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" @change="showLainnya = ($event.target.value === 'Lainnya')" required>
                             <option value="" disabled selected>Pilih Jenis Permohonan</option>
                             <option value="Surat Pengantar SKCK">Surat Pengantar SKCK</option>
                             <option value="Surat Keterangan Domisili">Surat Keterangan Domisili</option>
@@ -138,7 +138,7 @@
                     
                     <div class="space-y-2">
                         <label for="keterangan" class="block text-md font-medium text-gray-700">Keterangan atau deskripsi keperluan surat</label>
-                        <textarea id="keterangan" name="keterangan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Makmur'"></textarea>
+                        <textarea id="keterangan" name="keperluan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Makmur'"></textarea>
                     </div>
                     
                     <div class="pt-4">

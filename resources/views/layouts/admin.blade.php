@@ -55,16 +55,35 @@
                 </div>
 
                 <!-- 3. Manajemen Pelayanan (Menu Utama) -->
-                <a href="{{ route('admin.pelayanan.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.pelayanan.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
-                    <i class="fas fa-file-alt mr-3 {{ request()->routeIs('admin.pelayanan.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
-                    <span>Manajemen Pelayanan</span>
-                </a>
+                <div x-data="{ open: {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'true' : 'false' }} }">
+                    {{-- Tombol Utama Dropdown --}}
+                    <button @click="open = !open" class="flex items-center justify-between w-full py-2.5 px-4 rounded transition duration-200 group {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }}">
+                        <div class="flex items-center">
+                            {{-- Ganti ikonnya menjadi lebih sesuai --}}
+                            <i class="fas fa-hands-helping mr-3 {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                            <span>Manajemen Warga</span>
+                        </div>
+                        <i class="fas text-sm transition-transform duration-300" :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    </button>
 
-                <!-- 4. Manajemen Pengguna (Menu Utama) -->
+                    {{-- Submenu yang bisa buka-tutup --}}
+                    <div x-show="open" x-transition class="pl-8 py-2 space-y-1">
+                        <a href="{{ route('admin.pelayanan.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.pelayanan.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Pelayanan Online
+                        </a>
+                        <a href="{{ route('admin.pengaduan.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.pengaduan.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Pengaduan Warga
+                        </a>
+                    </div>
+                </div
+
+                <!-- 5. Manajemen Pengguna (Menu Utama) -->
                 <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.user.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
                     <i class="fas fa-users mr-3 {{ request()->routeIs('admin.user.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Manajemen Pengguna</span>
                 </a>
+
+                
 
                 <!-- 5. Logout (Menu Utama) -->
                 <form method="POST" action="{{ route('logout') }}" class="w-full">

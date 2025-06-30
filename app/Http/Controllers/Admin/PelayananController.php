@@ -86,4 +86,12 @@ class PelayananController extends Controller
         return redirect()->route('admin.pelayanan.index')
                          ->with('success', 'Permohonan berhasil dihapus.');
     }
+
+    /**
+     * Method untuk menampilkan detail permohonan via AJAX.
+     */
+    public function show(Pelayanan $pelayanan) // Ganti 'Pelayanan' jika nama Model Anda berbeda
+    {
+        return response()->json($pelayanan);
+    }
 }

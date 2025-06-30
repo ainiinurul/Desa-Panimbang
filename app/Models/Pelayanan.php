@@ -14,12 +14,13 @@ class Pelayanan extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+        protected $fillable = [
         'nama_pemohon',
         'nik_pemohon',
-        'jenis_surat',
-        'keperluan',
-        'nomor_telepon',
+        'jenis_surat',     // Kita akan gunakan ini sebagai acuan
+        'nomor_telepon',   // Kita akan gunakan ini sebagai acuan
+        'keterangan',      // <-- SAYA TAMBAHKAN INI
+        'lainnya',         // <-- SAYA TAMBAHKAN INI (untuk opsi permohonan lainnya)
         'status',
         'catatan_admin',
     ];

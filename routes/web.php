@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PelayananController;
+use App\Http\Controllers\Admin\PengaduanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +35,11 @@ Route::get('/lembaga', function () { return view('lembaga'); })->name('lembaga')
 Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
 Route::get('/berita/{berita:slug}', [BerandaController::class, 'showBerita'])->name('berita.show');
 
-// Tambahkan route ini di bagian rute publik (sebelum rute admin)
+// Rute untuk Pelayanan
 Route::post('/pelayanan/store', [App\Http\Controllers\Admin\PelayananController::class, 'store'])->name('pelayanan.store');
+
+// Rute untuk Pengaduan
+Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pengaduan.store');
 
 
 /*
@@ -75,12 +79,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
-    // Rute untuk Manajemen Pelayanan
+    // Rute untuk Pelayanan
     Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
-    Route::put('/pelayanan/{id}/status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
-    
-    // TAMBAHKAN RUTE INI
     Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
+    
+    // UBAH DARI PUT KE PATCH
+    Route::patch('/pelayanan/{pelayanan}/update-status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
+
+    // TAMBAHKAN ROUTE INI
+    Route::get('/pelayanan/{pelayanan}/detail', [PelayananController::class, 'show'])->name('pelayanan.detail');
+
+    // Rute untuk Manajemen Pengaduan
+    Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+    Route::patch('/pengaduan/{pengaduan}/update-status', [PengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
+    // ▼▼▼ TAMBAHKAN ROUTE DI BAWAH INI ▼▼▼
+    Route::delete('/pengaduan/{pengaduan}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
+    Route::get('/pengaduan/{pengaduan}/detail', [PengaduanController::class, 'show'])->name('pengaduan.detail');
 });
 
     // KODE INVESTIGASI SEMENTARA

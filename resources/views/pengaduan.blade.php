@@ -11,6 +11,22 @@
 <body class="font-sans antialiased text-gray-800">
 <x-navbar></x-navbar>
 
+{{-- Notifikasi Berhasil Kirim Aduan --}}
+@if (session('success'))
+    <div
+        x-data="{ show: true }"
+        x-init="setTimeout(() => { show = false }, 5000)"
+        x-show="show"
+        x-transition
+        class="fixed top-24 right-5 bg-green-600 text-white py-3 px-6 rounded-lg shadow-lg z-50 flex items-center"
+        style="display: none;"
+    >
+        <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>{{ session('success') }}</span>
+        <button @click="show = false" class="ml-4 text-xl font-semibold hover:text-gray-200">×</button>
+    </div>
+@endif
+
     <!-- Header -->
     <header class="bg-blue-900 text-white py-12">
         <div class="container mx-auto px-4 text-center">
@@ -24,43 +40,61 @@
     <!-- Form Pengaduan -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:shadow-xl">
-                <div class="p-6">
-                    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Form Pengaduan</h2>
-                    <form id="formPengaduan">
-                        <div class="mb-4">
-                            <label for="nama" class="block text-gray-700 font-medium mb-2">Nama Lengkap</label>
-                            <input type="text" id="nama" name="nama" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan nama lengkap Anda" required>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="whatsapp" class="block text-gray-700 font-medium mb-2">No. WhatsApp</label>
-                            <input type="tel" id="whatsapp" name="whatsapp" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: 08123456789" required>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label for="keperluan" class="block text-gray-700 font-medium mb-2">Keperluan</label>
-                            <select id="keperluan" name="keperluan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                                <option value="" disabled selected>Pilih keperluan</option>
-                                <option value="umum">Umum</option>
-                                <option value="permohonan">Permohonan</option>
-                                <option value="aduan">Aduan</option>
-                                <option value="saran">Saran</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="pesan" class="block text-gray-700 font-medium mb-2">Isi Pesan</label>
-                            <textarea id="pesan" name="pesan" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tuliskan pesan Anda secara detail..." required></textarea>
-                        </div>
-                        
-                        <div class="text-center">
-                            <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg">
-                                Kirim
-                            </button>
-                        </div>
-                    </form>
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-500 hover:shadow-xl">
+                <div class="p-6 bg-blue-700 text-white">
+                    <h2 class="text-2xl font-bold">Form Pengaduan</h2>
+                    <p class="mt-2">Silakan isi formulir di bawah ini untuk menyampaikan aduan, saran, atau pertanyaan Anda.</p>
                 </div>
+
+                <form action="{{ route('pengaduan.store') }}" method="POST" class="p-6 space-y-6">
+                    @csrf {{-- Token Keamanan Wajib Laravel --}}
+
+                    {{-- Notifikasi akan tetap muncul di pojok kanan atas dan tidak terpengaruh perubahan ini --}}
+                    
+                    {{-- Menampilkan pesan error validasi jika ada --}}
+                    @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md" role="alert">
+                            <strong class="font-bold">Oops! Terjadi kesalahan.</strong>
+                            <ul class="mt-2 list-disc list-inside text-sm">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="space-y-2">
+                        <label for="nama_lengkap" class="block text-md font-medium text-gray-700">Nama Lengkap</label>
+                        <input type="text" id="nama_lengkap" name="nama_lengkap" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan Nama Lengkap Anda" required value="{{ old('nama_lengkap') }}">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="no_whatsapp" class="block text-md font-medium text-gray-700">No. WhatsApp</label>
+                        <input type="tel" id="no_whatsapp" name="no_whatsapp" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Contoh: 08123456789" required value="{{ old('no_whatsapp') }}">
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="keperluan" class="block text-md font-medium text-gray-700">Keperluan</label>
+                        <select id="keperluan" name="keperluan" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" required>
+                            <option value="" disabled {{ old('keperluan') ? '' : 'selected' }}>Pilih keperluan</option>
+                            <option value="Aduan" {{ old('keperluan') == 'Aduan' ? 'selected' : '' }}>Aduan</option>
+                            <option value="Saran" {{ old('keperluan') == 'Saran' ? 'selected' : '' }}>Saran</option>
+                            <option value="Permohonan Informasi" {{ old('keperluan') == 'Permohonan Informasi' ? 'selected' : '' }}>Permohonan Informasi</option>
+                            <option value="Lainnya" {{ old('keperluan') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <label for="isi_pesan" class="block text-md font-medium text-gray-700">Isi Pesan</label>
+                        <textarea id="isi_pesan" name="isi_pesan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tuliskan pesan Anda secara detail..." required>{{ old('isi_pesan') }}</textarea>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300">
+                            Kirim Pengaduan
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -284,42 +318,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Form submission handler
-        document.getElementById('formPengaduan').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const nama = document.getElementById('nama').value;
-            const whatsapp = document.getElementById('whatsapp').value;
-            const keperluan = document.getElementById('keperluan').value;
-            const pesan = document.getElementById('pesan').value;
-            
-            // Here you would typically send the data to a server
-            // For demo purposes, we'll just show an alert
-            alert(`Terima kasih ${nama}! Pengaduan Anda telah diterima. Kami akan menghubungi Anda melalui WhatsApp ${whatsapp} segera.`);
-            
-            // Reset form
-            this.reset();
-        });
-        
-        // Scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                        entry.target.classList.remove('opacity-0', 'translate-y-10');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
-                observer.observe(section);
-            });
-        });
-    </script>
 </body>
 </html>
