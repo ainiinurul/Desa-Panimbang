@@ -139,9 +139,7 @@
                     </div>
                     
                     <div class="pt-4">
-                        <button
-                            type="submit"
-                            class="w-full px-6 py-3 text-white font-medium rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300 bg-blue-600 hover:bg-blue-700 hover:scale-105">
+                        <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-md hover:bg-blue-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300">
                             Ajukan Permohonan
                         </button>
                     </div>
