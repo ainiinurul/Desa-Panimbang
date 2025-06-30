@@ -25,33 +25,29 @@ class PelayananController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
             'nik' => 'required|string|size:16',
-            'telepon' => 'required|string|max:20',
-            'jenis_permohonan' => 'required|string|max:255',
+            'nomor_telepon' => 'required|string|max:20',
+            'jenis_surat' => 'required|string|max:255',
             'lainnya' => 'nullable|string|max:255',
-            'keterangan' => 'nullable|string',
+            'keperluan' => 'nullable|string',
         ]);
 
-        // Tentukan jenis surat yang akan disimpan
-        $jenis_surat = $request->jenis_permohonan;
-        if ($request->jenis_permohonan === 'Lainnya' && $request->lainnya) {
-            $jenis_surat = $request->lainnya;
+        $jenis_surat_final = $request->jenis_surat;
+        if ($request->jenis_surat === 'Lainnya' && $request->lainnya) {
+            $jenis_surat_final = $request->lainnya;
         }
 
-        // Simpan data ke database
         Pelayanan::create([
             'nama_pemohon' => $request->nama,
             'nik_pemohon' => $request->nik,
-            'jenis_surat' => $jenis_surat,
-            'keperluan' => $request->keterangan ?? 'Tidak ada keterangan khusus',
-            'nomor_telepon' => $request->telepon,
-            'status' => 'Pending', // Status default
+            'jenis_surat' => $jenis_surat_final,
+            'keperluan' => $request->keperluan ?? 'Tidak ada keterangan khusus',
+            'nomor_telepon' => $request->nomor_telepon,
+            'status' => 'Pending',
         ]);
 
-        // Redirect dengan pesan sukses
         return redirect()->back()->with('success', 'Permohonan Anda berhasil diajukan! Silakan tunggu konfirmasi dari admin.');
     }
 

@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     // Rute untuk Pelayanan
     Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
+    Route::post('/pelayanan/store', [PelayananController::class, 'store'])->name('pelayanan.store');
     Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
     Route::patch('/pelayanan/{pelayanan}/update-status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
     Route::get('/pelayanan/{pelayanan}/detail', [PelayananController::class, 'show'])->name('pelayanan.detail');

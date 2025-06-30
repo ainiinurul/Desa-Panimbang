@@ -55,15 +55,12 @@
                     nikError: '',
                     
                     validateNik() {
-                        // Hanya izinkan angka
                         this.nikValue = this.nikValue.replace(/[^0-9]/g, '');
-                        
-                        // Cek panjang NIK
                         if (this.nikValue.length > 0 && this.nikValue.length < 16) {
                             this.nikError = 'NIK harus terdiri dari 16 digit angka.';
                             this.isNikValid = false;
                         } else if (this.nikValue.length === 16) {
-                            this.nikError = ''; // Hilangkan pesan error jika sudah 16 digit
+                            this.nikError = '';
                             this.isNikValid = true;
                         } else {
                             this.nikError = '';
@@ -102,7 +99,7 @@
                     
                     <div class="space-y-2">
                         <label for="telepon" class="block text-md font-medium text-gray-700">Telepon</label>
-                        <input type="text" id="telepon" name=nomor_telepon" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan nomor telepon aktif Anda" required>
+                        <input type="text" id="telepon" name="nomor_telepon" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Masukkan nomor telepon aktif Anda" required>
                     </div>
                     
                     <div class="space-y-2">
@@ -138,19 +135,26 @@
                     
                     <div class="space-y-2">
                         <label for="keterangan" class="block text-md font-medium text-gray-700">Keterangan atau deskripsi keperluan surat</label>
-                        <textarea id="keterangan" name="keperluan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Makmur'"></textarea>
+                        <textarea id="keperluan" name="keperluan" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300" placeholder="Tambahkan keterangan jika diperlukan, misal: 'Untuk keperluan melamar pekerjaan di PT. Maju Makmur'"></textarea>
                     </div>
                     
                     <div class="pt-4">
-                        <button 
-                            type="submit" 
-                            :disabled="!isNikValid"
-                            :class="{ 'bg-gray-400 cursor-not-allowed': !isNikValid, 'bg-blue-600 hover:bg-blue-700 hover:scale-105': isNikValid }"
-                            class="w-full px-6 py-3 text-white font-medium rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300">
+                        <button
+                            type="submit"
+                            class="w-full px-6 py-3 text-white font-medium rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 transform transition-all duration-300 bg-blue-600 hover:bg-blue-700 hover:scale-105">
                             Ajukan Permohonan
                         </button>
                     </div>
                 </form>
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
