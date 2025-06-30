@@ -123,6 +123,7 @@
         </div>
     </section>
 
+    {{-- PROGRAM DESA --}}
     <section class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Program Unggulan Desa</h2>
@@ -191,6 +192,7 @@
         </div>
     </section>
 
+    {{-- BERITA DESA --}}
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-blue-800 mb-8">Berita Terbaru</h2>

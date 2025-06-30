@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ProgramController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PelayananController;
 use App\Http\Controllers\Admin\PengaduanController;
+use App\Http\Controllers\Admin\PerangkatDesaController;
+use App\Http\Controllers\LembagaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +19,9 @@ use App\Http\Controllers\Admin\PengaduanController;
 |--------------------------------------------------------------------------
 */
 
-// Ini rute untuk halaman utama (/)
-Route::get('/', [BerandaController::class, 'index']);
-
-// Halaman utama (beranda)
-Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda'); //
+// Halaman utama
+Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+Route::get('/beranda', [BerandaController::class, 'index']);
 
 // Halaman statis lainnya
 Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
@@ -29,7 +29,9 @@ Route::get('/wilayah', function () { return view('wilayah'); })->name('wilayah')
 Route::get('/statistik', function () { return view('statistik'); })->name('statistik');
 Route::get('/pelayanan', function () { return view('pelayanan'); })->name('pelayanan');
 Route::get('/pengaduan', function () { return view('pengaduan'); })->name('pengaduan');
-Route::get('/lembaga', function () { return view('lembaga'); })->name('lembaga');
+
+// INI ADALAH ROUTE PUBLIK UNTUK HALAMAN LEMBAGA
+Route::get('/lembaga', [LembagaController::class, 'lembaga'])->name('lembaga');
 
 // Rute untuk Berita (Publik)
 Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
@@ -64,15 +66,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Manajemen Berita
-    Route::resource('berita', BeritaController::class)->parameters([
-        'berita' => 'berita'
-    ]);
+    Route::resource('berita', BeritaController::class);
 
     // Manajemen User
     Route::resource('user', UserController::class)->except(['show']);
 
-    // --- INI PERBAIKANNYA ---
-    // Manajemen Program Desa (tanpa /admin/ di dalamnya)
+    // Manajemen Program Desa
     Route::resource('programs', ProgramController::class);
 
     // Manajemen Setting Beranda
@@ -82,24 +81,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // Rute untuk Pelayanan
     Route::get('/pelayanan', [PelayananController::class, 'index'])->name('pelayanan.index');
     Route::delete('/pelayanan/{pelayanan}', [PelayananController::class, 'destroy'])->name('pelayanan.destroy');
-    
-    // UBAH DARI PUT KE PATCH
     Route::patch('/pelayanan/{pelayanan}/update-status', [PelayananController::class, 'updateStatus'])->name('pelayanan.updateStatus');
-
-    // TAMBAHKAN ROUTE INI
     Route::get('/pelayanan/{pelayanan}/detail', [PelayananController::class, 'show'])->name('pelayanan.detail');
 
     // Rute untuk Manajemen Pengaduan
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
     Route::patch('/pengaduan/{pengaduan}/update-status', [PengaduanController::class, 'updateStatus'])->name('pengaduan.updateStatus');
-    // ▼▼▼ TAMBAHKAN ROUTE DI BAWAH INI ▼▼▼
     Route::delete('/pengaduan/{pengaduan}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     Route::get('/pengaduan/{pengaduan}/detail', [PengaduanController::class, 'show'])->name('pengaduan.detail');
-});
 
-    // KODE INVESTIGASI SEMENTARA
-Route::get('/debug', function() {
-    dd(config('database.connections.mysql'));
+    // Route untuk Manajemen Lembaga (INI YANG SUDAH DIPERBAIKI)
+    Route::resource('lembaga', PerangkatDesaController::class);
 });
-
-// Kurung kurawal ekstra di akhir file sudah dihapus

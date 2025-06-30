@@ -75,7 +75,12 @@
                             › Pengaduan Warga
                         </a>
                     </div>
-                </div
+                </div>
+                
+                <a href="{{ route('admin.lembaga.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.lembaga.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
+                    <i class="fas fa-sitemap mr-3 {{ request()->routeIs('admin.lembaga.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                    <span>Manajemen Lembaga</span>
+                </a>
 
                 <!-- 5. Manajemen Pengguna (Menu Utama) -->
                 <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.user.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">

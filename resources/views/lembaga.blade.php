@@ -14,176 +14,52 @@
     <!-- Header -->
     <header class="bg-blue-900 text-white py-12">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4 transform transition-all duration-500 translate-y-0 opacity-100">Perangkat Desa</h1>
-            <p class="text-lg max-w-2xl mx-auto transform transition-all duration-700 delay-100 translate-y-0 opacity-100">
+            <h1 class="text-4xl font-bold mb-4">Perangkat Desa</h1>
+            <p class="text-lg max-w-2xl mx-auto">
                 Mengenal lebih dekat para perangkat desa yang melayani masyarakat Desa Panimbang dengan dedikasi tinggi.
             </p>
         </div>
     </header>
 
     <!-- Kepala Desa -->
+    @if($kepalaDesa)
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="flex justify-center">
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center w-full md:w-1/4">
                     <div class="h-auto overflow-hidden">
-                        <img src="img/scoups.jpg" alt="S.COUPS" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
+                        <img src="{{ asset('storage/' . $kepalaDesa->foto) }}" alt="{{ $kepalaDesa->nama }}" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">S.SCOUPS</h3>
-                        <p class="text-blue-600 font-medium">Kepala Desa Panimbang</p>
+                        <h3 class="text-xl font-bold text-blue-800 mb-1">{{ strtoupper($kepalaDesa->nama) }}</h3>
+                        <p class="text-blue-600 font-medium">{{ $kepalaDesa->jabatan }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Perangkat Desa Lainnya -->
     <section class="py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-                <!-- Sekretaris Desa -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                
+                @forelse($perangkatLainnya as $perangkat)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/pharita.jpg" alt="Pharita" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
+                    <div class="h-auto overflow-hidden" style="height: 320px;">
+                        <img src="{{ asset('storage/' . $perangkat->foto) }}" alt="{{ $perangkat->nama }}" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">PHARITA</h3>
-                        <p class="text-blue-600 font-medium">Sekretaris Desa</p>
+                        <h3 class="text-xl font-bold text-blue-800 mb-1">{{ strtoupper($perangkat->nama) }}</h3>
+                        <p class="text-blue-600 font-medium">{{ $perangkat->jabatan }}</p>
                     </div>
                 </div>
-
-                <!-- Kasi Pemerintahan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/jaehyun.jpg" alt="Jeong Yun-o" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">JAEHYUN</h3>
-                        <p class="text-blue-600 font-medium">Kasi Pemerintahan</p>
-                    </div>
+                @empty
+                <div class="col-span-full text-center text-gray-500">
+                    <p>Data perangkat desa lainnya belum tersedia.</p>
                 </div>
-
-                <!-- Kasi Kesejahteraan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/taehyung.jpg" alt="TAEHYUNG" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">TAEHYUNG</h3>
-                        <p class="text-blue-600 font-medium">Kasi Kesejahteraan</p>
-                    </div>
-                </div>
-
-                <!-- Kaur Pelayanan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/mingyu.jpg" alt="MINGYU" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">MINGYU</h3>
-                        <p class="text-blue-600 font-medium">Kaur Pelayanan</p>
-                    </div>
-                </div>
-
-                <!-- Kaur Umum dan Perencanaan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/jisoo.jpg" alt="JISOO" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">JISOO</h3>
-                        <p class="text-blue-600 font-medium">Kaur Umum dan Perencanaan</p>
-                    </div>
-                </div>
-
-                <!-- Kaur Keuangan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/jennie.jpg" alt="JENNIE" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">JENNIE</h3>
-                        <p class="text-blue-600 font-medium">Kaur Keuangan</p>
-                    </div>
-                </div>
-
-                <!-- Staff Kasi Pemerintahan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/soobin.jpg" alt="SOOBIN" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">SOOBIN</h3>
-                        <p class="text-blue-600 font-medium">Staff Kasi Pemerintahan</p>
-                    </div>
-                </div>
-
-                <!-- Staff Kasi Kesejahteraan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/wendy.jpg" alt="WENDY" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">WENDY</h3>
-                        <p class="text-blue-600 font-medium">Staff Kasi Kesejahteraan</p>
-                    </div>
-                </div>
-
-                <!-- Staff Kasi Pelayanan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/heeseung.jpg" alt="HEESEUNG" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">HEESEUNG</h3>
-                        <p class="text-blue-600 font-medium">Staff Kasi Pelayanan</p>
-                    </div>
-                </div>
-
-                <!-- Kepala Dusun Cikondang -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/jay.jpg" alt="JAY" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">JAY</h3>
-                        <p class="text-blue-600 font-medium">Kepala Dusun Cikondang</p>
-                    </div>
-                </div>
-
-                <!-- Kepala Dusun Genteng Wetan -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/taeyong.jpg" alt="TAEYONG" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">TAEYONG</h3>
-                        <p class="text-blue-600 font-medium">Kepala Dusun Genteng Wetan</p>
-                    </div>
-                </div>
-
-                <!-- Kepala Dusun Genteng Kulon -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/jin.jpg" alt="JIN" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">JIN</h3>
-                        <p class="text-blue-600 font-medium">Kepala Dusun Genteng Kulon</p>
-                    </div>
-                </div>
-
-                <!-- Kepala Dusun Cikadu -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl text-center">
-                    <div class="h-auto overflow-hidden">
-                        <img src="img/felix.jpg" alt="FELIX" class="w-full h-full object-cover transition-transform duration-500 transform hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-blue-800 mb-1">FELIX</h3>
-                        <p class="text-blue-600 font-medium">Kepala Dusun Cikadu</p>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
         </div>

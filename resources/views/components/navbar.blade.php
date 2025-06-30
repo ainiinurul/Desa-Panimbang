@@ -14,7 +14,7 @@
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
                 <!-- Beranda menu item -->
-                <a href="/beranda" class="{{ request()->is('beranda') || request()->is('/') ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-700 hover:text-blue-600' }} py-2 font-medium">Beranda</a>
+                <a href="{{ route('beranda') }}" class="{{ request()->routeIs('beranda') ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-700 hover:text-blue-600' }} py-2 font-medium">Beranda</a>
                 
                 <!-- Tentang dropdown -->
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
