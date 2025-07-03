@@ -9,20 +9,24 @@ class PerangkatDesa extends Model
 {
     use HasFactory;
 
-    // TAMBAHKAN NAMA KOLOM BARU DI SINI
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nama',
         'jabatan',
-        'nip', // <- Baru
-        'tempat_lahir', // <- Baru
-        'tanggal_lahir', // <- Baru
-        'jenis_kelamin', // <- Baru
-        'agama', // <- Baru
+        'urutan',
+        'foto',
+        'nip',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'agama',
         'pendidikan',
         'alamat',
         'telepon',
         'deskripsi',
-        'foto',
-        'urutan', // asumsikan urutan juga ada
     ];
 }

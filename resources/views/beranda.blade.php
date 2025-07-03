@@ -12,19 +12,40 @@
 <x-navbar></x-navbar>
 
     <header class="relative">
-        <div class="bg-cover bg-center h-96" style="background-image: url('img/desa.jpg');">
-            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-            <div class="relative container mx-auto px-4 h-full flex flex-col justify-center text-white">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 transform transition-all duration-500 translate-y-0 opacity-100">Selamat Datang di Desa Panimbang</h1>
-                <p class="text-lg md:text-xl max-w-2xl transform transition-all duration-700 delay-100 translate-y-0 opacity-100">
-                    Desa Panimbang merupakan salah satu desa di Kabupaten Cilacap yang kaya akan sejarah dan budaya. 
-                    Kami memiliki berbagai potensi alam dan masyarakat yang ramah.
-                </p>
+        <div class="bg-cover bg-center h-screen" style="background-image: url('{{ isset($settings['header_background_image']) ? asset('storage/' . $settings['header_background_image']) : asset('img/desa.jpg') }}');">
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div class="relative container mx-auto px-6 h-full flex flex-col justify-center items-center text-white text-center">
+                <!-- Main Title -->
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight transform transition-all duration-500 translate-y-0 opacity-100">
+                    Selamat Datang di<br>
+                    <span class="text-blue-400">Desa Panimbang</span>
+                </h1>
+                
+                <!-- Subtitle -->
+                <div class="max-w-4xl mx-auto mb-8">
+                    <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed transform transition-all duration-700 delay-100 translate-y-0 opacity-100">
+                        Desa Panimbang merupakan salah satu desa di Kabupaten Cilacap yang kaya akan sejarah dan budaya.
+                    </p>
+                </div>
+                
+                <!-- Description -->
+                <div class="max-w-3xl mx-auto mb-10">
+                    <p class="text-lg md:text-xl font-normal leading-relaxed opacity-90 transform transition-all duration-700 delay-200 translate-y-0 opacity-100">
+                        Kami memiliki berbagai potensi alam dan masyarakat yang ramah untuk membangun masa depan yang lebih baik.
+                    </p>
+                </div>
+                
+                <!-- CTA Button (Optional) -->
+                <div class="transform transition-all duration-700 delay-300 translate-y-0 opacity-100">
+                    <button onclick="scrollToSection('peta-informasi')" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Jelajahi Desa Kami
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <section class="py-12 bg-gray-50">
+    <section class="py-12 bg-gray-50" id="peta-informasi">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-8">
                 <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:shadow-xl">
@@ -229,9 +250,9 @@
                     @endphp
                     <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
                         @if($item->gambar)
-                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-48 object-cover">
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-72 object-cover">
                         @else
-                        <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-48 object-cover">
+                        <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-72 object-cover">
                         @endif
                         <div class="p-4">
                             {{-- Kelas warna sekarang dinamis dari variabel $kategoriClasses --}}
@@ -451,6 +472,13 @@
                 observer.observe(section);
             });
         });
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     </script>
 </body>
 </html>

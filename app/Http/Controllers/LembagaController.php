@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\PerangkatDesa;
+use Illuminate\Http\Request;
 
-class LembagaController extends Controller // <-- Nama class-nya sudah sesuai
+class LembagaController extends Controller
 {
-    /**
-     * Menampilkan halaman lembaga desa.
-     */
-    public function lembaga()
+    public function index()
     {
-        $kepalaDesa = PerangkatDesa::where('jabatan', 'like', '%Kepala Desa%')->first();
-        
-        $perangkatLainnya = PerangkatDesa::where('jabatan', 'not like', '%Kepala Desa%')
-                                         ->orderBy('urutan', 'asc')
-                                         ->get();
+        // Ambil Kepala Desa (berdasarkan jabatan atau urutan pertama)
+        $kepalaDesa = PerangkatDesa::where('jabatan', 'LIKE', '%Kepala Desa%')
+                                     ->orWhere('urutan', 1)
+                                     ->first();
 
-        return view('lembaga', compact('kepalaDesa', 'perangkatLainnya'));
+        // Ambil semua perangkat desa lainnya, diurutkan berdasarkan 'urutan'
+        // Jika Kepala Desa ditemukan, kita tidak menampilkannya lagi di daftar bawah
+        $perangkatLainnya = PerangkatDesa::where('id', '!=', $kepalaDesa ? $kepalaDesa->id : 0)
+                                            ->orderBy('urutan', 'asc')
+                                            ->get();
+
+        return view('lembaga', [
+            'kepalaDesa' => $kepalaDesa,
+            'perangkatLainnya' => $perangkatLainnya
+        ]);
     }
 }

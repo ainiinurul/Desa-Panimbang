@@ -31,7 +31,7 @@ Route::get('/pelayanan', function () { return view('pelayanan'); })->name('pelay
 Route::get('/pengaduan', function () { return view('pengaduan'); })->name('pengaduan');
 
 // INI ADALAH ROUTE PUBLIK UNTUK HALAMAN LEMBAGA
-Route::get('/lembaga', [LembagaController::class, 'lembaga'])->name('lembaga');
+Route::get('/lembaga', [LembagaController::class, 'index'])->name('lembaga');
 
 // Rute untuk Berita (Publik)
 Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
