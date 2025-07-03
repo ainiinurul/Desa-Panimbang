@@ -9,18 +9,20 @@ class PerangkatDesa extends Model
 {
     use HasFactory;
 
+    // TAMBAHKAN NAMA KOLOM BARU DI SINI
     protected $fillable = [
         'nama',
         'jabatan',
-        'foto',
-        'urutan',
+        'nip', // <- Baru
+        'tempat_lahir', // <- Baru
+        'tanggal_lahir', // <- Baru
+        'jenis_kelamin', // <- Baru
+        'agama', // <- Baru
         'pendidikan',
         'alamat',
         'telepon',
-        'deskripsi'
-    ];
-
-    protected $casts = [
-        'urutan' => 'integer',
+        'deskripsi',
+        'foto',
+        'urutan', // asumsikan urutan juga ada
     ];
 }
