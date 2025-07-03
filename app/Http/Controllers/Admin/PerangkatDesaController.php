@@ -26,6 +26,10 @@ class PerangkatDesaController extends Controller
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'pendidikan' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string',
+            'telepon' => 'nullable|string|max:20',
+            'deskripsi' => 'nullable|string',
         ]);
 
         $path = $request->file('foto')->store('perangkat-desa', 'public');
@@ -34,6 +38,10 @@ class PerangkatDesaController extends Controller
             'nama' => $request->nama,
             'jabatan' => $request->jabatan,
             'foto' => $path,
+            'pendidikan' => $request->pendidikan,
+            'alamat' => $request->alamat,
+            'telepon' => $request->telepon,
+            'deskripsi' => $request->deskripsi,
         ]);
 
         return redirect()->route('admin.lembaga.index')->with('success', 'Data perangkat desa berhasil ditambahkan.');
@@ -54,9 +62,13 @@ class PerangkatDesaController extends Controller
             'nama' => 'required|string|max:255',
             'jabatan' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'pendidikan' => 'nullable|string|max:255',
+            'alamat' => 'nullable|string',
+            'telepon' => 'nullable|string|max:20',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        $data = $request->only('nama', 'jabatan');
+        $data = $request->only('nama', 'jabatan', 'pendidikan', 'alamat', 'telepon', 'deskripsi');
 
         if ($request->hasFile('foto')) {
             if ($lembaga->foto) { // Menggunakan $lembaga
@@ -83,5 +95,22 @@ class PerangkatDesaController extends Controller
         $lembaga->delete(); // Menggunakan $lembaga
 
         return redirect()->route('admin.lembaga.index')->with('success', 'Data perangkat desa berhasil dihapus.');
+    }
+
+    /**
+     * TAMBAHAN: Method untuk mendapatkan detail perangkat desa (AJAX)
+     */
+    public function detail(PerangkatDesa $lembaga)
+    {
+        return response()->json([
+            'id' => $lembaga->id,
+            'nama' => $lembaga->nama,
+            'jabatan' => $lembaga->jabatan,
+            'foto' => $lembaga->foto,
+            'pendidikan' => $lembaga->pendidikan ?? null,
+            'alamat' => $lembaga->alamat ?? null,
+            'telepon' => $lembaga->telepon ?? null,
+            'deskripsi' => $lembaga->deskripsi ?? null,
+        ]);
     }
 }

@@ -9,15 +9,18 @@ class PerangkatDesa extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'nama',
         'jabatan',
         'foto',
         'urutan',
+        'pendidikan',
+        'alamat',
+        'telepon',
+        'deskripsi'
+    ];
+
+    protected $casts = [
+        'urutan' => 'integer',
     ];
 }

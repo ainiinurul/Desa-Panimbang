@@ -93,4 +93,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     // Route untuk Manajemen Lembaga (INI YANG SUDAH DIPERBAIKI)
     Route::resource('lembaga', PerangkatDesaController::class);
+    
+    // TAMBAHAN: Route untuk detail perangkat desa (AJAX)
+    Route::get('/lembaga/{lembaga}/detail', [PerangkatDesaController::class, 'detail'])->name('lembaga.detail');
 });
