@@ -4,7 +4,15 @@
 
 @section('content')
 <div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-xl font-semibold mb-6">Edit Berita</h2>
+    {{-- Tombol Kembali --}}
+    <div class="flex items-center mb-6">
+        <div class="flex items-center space-x-3">
+            <a href="{{ route('admin.berita.index') }}" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h2 class="text-xl font-semibold text-gray-800">Edit Berita Desa</h2>
+        </div>
+    </div>
 
     @if ($errors->any())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -16,7 +24,8 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.berita.update', $berita->slug) }}" method="POST" enctype="multipart/form-data">
+    {{-- PERBAIKAN: Menggunakan ID sebagai parameter untuk menghindari konflik --}}
+    <form action="{{ route('admin.berita.update', $berita->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

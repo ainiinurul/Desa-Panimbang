@@ -61,16 +61,17 @@
                         </span>
                     </td>
                     <td class="py-3 px-4 flex space-x-2">
+                        {{-- PERBAIKAN: Menggunakan model binding (slug atau sesuai getRouteKeyName()) --}}
                         <a href="{{ route('admin.berita.show', $item) }}" class="text-blue-500 hover:text-blue-700" title="Lihat Berita">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.berita.edit', $item) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit Berita">
+                        <a href="{{ route('admin.berita.edit', $item->id) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit Berita">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form action="{{ route('admin.berita.destroy', $item) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-700" title="Hapus Berita" onclick="return confirm('Anda yakin ingin menghapus berita ini?')">
+                            <button type="submit" class="text-red-500 hover:text-red-700" title="Hapus Berita" onclick="return confirmDelete('{{ $item->judul }}')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>

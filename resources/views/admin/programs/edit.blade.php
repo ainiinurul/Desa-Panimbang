@@ -4,7 +4,15 @@
 
 @section('content')
 <div class="bg-white rounded-lg shadow p-6">
-    <h2 class="text-xl font-semibold mb-6">Edit Program Desa</h2>
+    {{-- Tombol Kembali --}}
+    <div class="flex items-center mb-6">
+        <div class="flex items-center space-x-3">
+            <a href="{{ route('admin.programs.index') }}" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h2 class="text-xl font-semibold text-gray-800">Edit Program Desa</h2>
+        </div>
+    </div>
 
     @if ($errors->any())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">

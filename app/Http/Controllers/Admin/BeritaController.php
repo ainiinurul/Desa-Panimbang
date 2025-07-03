@@ -41,20 +41,18 @@ class BeritaController extends Controller
                 $validated['published_at'] = null;
             }
 
-            $validated['slug'] = Str::slug($request->judul);
+            $validated['slug'] = Str::slug($request->judul); // Tetap buat slug untuk URL publik
             $validated['user_id'] = Auth::id();
 
             if ($request->hasFile('gambar')) {
                 $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
             }
 
-            // Simpan dan log hasil
             $berita = Berita::create($validated);
             Log::info('Berita berhasil disimpan dengan ID: ' . $berita->id);
 
             return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan');
         } catch (\Exception $e) {
-            // Log error untuk debugging
             Log::error('Error saat menyimpan berita: ' . $e->getMessage());
             return redirect()->back()
                 ->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])
@@ -62,20 +60,24 @@ class BeritaController extends Controller
         }
     }
 
-    public function show(Berita $berita)
+    public function show($id)
     {
+        $berita = Berita::findOrFail($id);
         return view('admin.berita.show', compact('berita'));
     }
 
-    public function edit(Berita $berita)
+    public function edit($id)
     {
+        $berita = Berita::findOrFail($id);
         $kategori = ['Kesehatan', 'Pembangunan', 'Ekonomi', 'Pendidikan', 'Keamanan', 'Kegiatan'];
         return view('admin.berita.edit', compact('berita', 'kategori'));
     }
 
-    public function update(Request $request, Berita $berita)
+    public function update(Request $request, $id)
     {
         try {
+            $berita = Berita::findOrFail($id);
+            
             $validated = $request->validate([
                 'judul' => 'required|max:255',
                 'tanggal' => 'required|date',
@@ -86,35 +88,27 @@ class BeritaController extends Controller
                 'published_at' => 'nullable|date'
             ]);
 
-            // Handle scheduled posts
             if ($request->status != 'scheduled') {
                 $validated['published_at'] = null;
             }
 
-            // Handle image upload
             if ($request->hasFile('gambar')) {
-                // Delete old image if exists
                 if ($berita->gambar) {
                     Storage::disk('public')->delete($berita->gambar);
                 }
                 $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
             }
 
-            // Generate slug from title
             $validated['slug'] = Str::slug($request->judul);
-
-            // Log before update
-            Log::info('Updating berita ID: ' . $berita->id . ' with data: ' . json_encode($validated));
             
-            // Update the berita
+            Log::info('Updating berita ID: ' . $id . ' with data: ' . json_encode($validated));
+            
             $berita->update($validated);
             
-            // Log success
-            Log::info('Berita berhasil diupdate dengan ID: ' . $berita->id);
+            Log::info('Berita berhasil diupdate dengan ID: ' . $id);
 
             return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui');
         } catch (\Exception $e) {
-            // Log error for debugging
             Log::error('Error saat update berita: ' . $e->getMessage());
             return redirect()->back()
                 ->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])
@@ -122,12 +116,15 @@ class BeritaController extends Controller
         }
     }
 
-    public function destroy(Berita $berita)
+    public function destroy($id)
     {
         try {
+            $berita = Berita::findOrFail($id);
+            
             if ($berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
             }
+            
             $berita->delete();
             return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus');
         } catch (\Exception $e) {
