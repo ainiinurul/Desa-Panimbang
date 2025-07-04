@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\PelayananController;
 use App\Http\Controllers\Admin\PengaduanController;
 use App\Http\Controllers\Admin\PerangkatDesaController;
 use App\Http\Controllers\LembagaController;
+use App\Http\Controllers\Admin\SejarahController;
+use App\Http\Controllers\SejarahDesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ Route::get('/', [BerandaController::class, 'index'])->name('beranda');
 Route::get('/beranda', [BerandaController::class, 'index']);
 
 // Halaman statis lainnya
-Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
+//Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
 Route::get('/wilayah', function () { return view('wilayah'); })->name('wilayah');
 Route::get('/statistik', function () { return view('statistik'); })->name('statistik');
 Route::get('/pelayanan', function () { return view('pelayanan'); })->name('pelayanan');
@@ -42,6 +44,9 @@ Route::post('/pelayanan/store', [App\Http\Controllers\Admin\PelayananController:
 
 // Rute untuk Pengaduan
 Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pengaduan.store');
+
+// Rute untuk menampilkan halaman sejarah publik
+Route::get('/sejarah', [SejarahDesaController::class, 'index'])->name('sejarah');
 
 
 /*
@@ -96,4 +101,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     
     // TAMBAHAN: Route untuk detail perangkat desa (AJAX)
     Route::get('/lembaga/{lembaga}/detail', [PerangkatDesaController::class, 'detail'])->name('lembaga.detail');
+
+    // RUTE UNTUK MANAJEMEN SEJARAH
+    Route::get('/sejarah', [SejarahController::class, 'index'])->name('sejarah.index');
+    Route::post('/sejarah/update', [SejarahController::class, 'update'])->name('sejarah.update');
 });

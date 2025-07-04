@@ -29,6 +29,12 @@
                     <span>Dashboard</span>
                 </a>
 
+                <!-- 2. Manajemen Sejarah -->
+                <a href="{{ route('admin.sejarah.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.sejarah.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
+                    <i class="fas fa-landmark mr-3 {{ request()->routeIs('admin.sejarah.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                    <span>Manajemen Sejarah</span>
+                </a>
+
                 {{-- 2. Manajemen Beranda (Menu Dropdown) - FINAL --}}
                 <div x-data="{ open: {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'true' : 'false' }} }">
                     {{-- Tombol Utama Dropdown --}}

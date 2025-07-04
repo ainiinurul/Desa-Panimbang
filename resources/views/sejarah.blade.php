@@ -7,6 +7,22 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        /* Custom CSS untuk warna nomor biru */
+        .blue-numbering {
+            counter-reset: item;
+        }
+        .blue-numbering li {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        .blue-numbering li:before {
+            content: counter(item) ". ";
+            counter-increment: item;
+            color: #1d4ed8; /* blue-700 */
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body class="font-sans antialiased text-gray-800">
 <x-navbar></x-navbar>
@@ -14,85 +30,74 @@
     <!-- Header -->
     <header class="bg-blue-900 text-white py-12">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-2 transform transition-all duration-500 opacity-100">Sejarah Desa Panimbang</h1>
-            <p class="text-lg opacity-80">Perjalanan dan perkembangan Desa Panimbang dari masa ke masa</p>
+            {{-- DATA DINAMIS: Mengambil judul utama dari database --}}
+            <h1 class="text-4xl font-bold mb-2">{{ $sejarah->judul_utama ?? 'Sejarah Desa Panimbang' }}</h1>
+            
+            {{-- DATA DINAMIS: Mengambil sub judul dari database --}}
+            <p class="text-lg opacity-80">{{ $sejarah->sub_judul ?? 'Perjalanan dan perkembangan Desa Panimbang dari masa ke masa' }}</p>
         </div>
     </header>
 
     <!-- Sejarah Content -->
     <section class="py-12">
         <div class="container mx-auto px-4">
-            <div class="bg-white rounded-lg shadow-lg p-8 transform transition-all duration-700 hover:shadow-xl">
+            <div class="bg-white rounded-lg shadow-lg p-8">
                 <div class="flex flex-col md:flex-row gap-8">
-                    <!-- Sejarah Text -->
                     <div class="w-full md:w-2/3">
-                        <h2 class="text-2xl font-bold text-blue-800 mb-6">SEJARAH DESA PANIMBANG</h2>
+                        {{-- DATA DINAMIS: Mengambil judul utama dan mengubahnya menjadi huruf kapital --}}
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">{{ strtoupper($sejarah->judul_utama ?? 'SEJARAH DESA PANIMBANG') }}</h2>
+                        
                         <div class="prose max-w-none text-gray-700 leading-relaxed">
-                            <p class="mb-4">
-                                Pada masa pasca Perang Diponegoro (1825–1830), pasukan Diponegoro tersebar ke daerah selatan Brebes. Salah satu di antaranya adalah Aki Pontang, seorang mantan pasukan Diponegoro yang menetap di daerah yang sekarang disebut Dusun Panimbang.
-                            </p>
-                            <p class="mb-4">
-                                Nama Desa Panimbang berasal dari kata Panimbang, karena daerah tersebut menjadi wilayah pertimbangan dan diperhitungkan oleh Belanda. Aki Pontang, yang dikenal sebagai orang sakti, kemudian diangkat sebagai Kepala Desa pertama.
-                            </p>
+                            {{-- DATA DINAMIS: Mengambil paragraf 1 dan 2 dari database --}}
+                            <p class="mb-4">{{ $sejarah->paragraf_1 }}</p>
+                            <p class="mb-4">{{ $sejarah->paragraf_2 }}</p>
+
+                            {{-- DATA DINAMIS: Mengambil silsilah kepala desa dari database --}}
                             <p class="font-semibold text-lg text-blue-700">Berdasarkan wawancara narasumber Silsilah Kepala Desa Panimbang dari Awal :</p>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                    <ul class="list-decimal pl-5 space-y-2">
-                                        <li>Aki Pontang (1830–1855)</li>
-                                        <li>Raksantaka (1855–1880)</li>
-                                        <li>Harmawi (1880–1910)</li>
-                                        <li>Tirta Senaja (1910–1940)</li>
-                                        <li>Sansuhada (1940–1960)</li>
-                                        <li>Parta Sujana (1961–1965)</li>
-                                    </ul>
-                                    <ul class="list-decimal pl-5 space-y-2 start-7">
-                                        <li>Rebin (1968–1989)</li>
-                                        <li>Sutrisno (1989–1997)</li>
-                                        <li>Subandi (1998–2006)</li>
-                                        <li>Jatmiko (2006–2012)</li>
-                                        <li>Sayono S.Pd (2013–2019)</li>
-                                        <li>Jatmiko (2019–sekarang)</li>
-                                    </ul>
-                                </div>
-                            </p>
-                            <p class="font-semibold text-lg text-blue-700">Sebelum pemekaran, wilayah Desa Panimbang terdiri dari tujuh dusun, yaitu:</p>
-                            <ul class="list-decimal pl-5 space-y-2 start-7">
-                                <li>Panimbang</li>
-                                <li>Lengkong</li>
-                                <li>Cibungur</li>
-                                <li>Cikondang</li>
-                                <li>Genteng Wetan</li>
-                                <li>Genteng Kulon</li>
-                                <li>Cikadu</li>
-                            </ul>
-                            <br>
-                            <p class="font-semibold text-lg text-blue-700">Pada tahun 1980, di bawah kepemimpinan Bapak Rebin, Desa Panimbang dimekarkan menjadi dua desa:</p>
-                            <ol class="list-decimal pl-5 space-y-2 mb-6">
-                                <li>Desa Panimbang meliputi Dusun Cikondang, Genteng Wetan, Genteng Kulon dan Cikadu</li>
-                                <li>Desa Mandala meliputi Dusun Panimbang, Lengkong dan Cibungur</li>
+                            <ol class="blue-numbering space-y-2 mb-6 ml-4">
+                                @foreach(explode("\n", $sejarah->silsilah_kepala_desa ?? '') as $item)
+                                    @if(trim($item) !== '')
+                                        <li>{{ trim($item) }}</li>
+                                    @endif
+                                @endforeach
                             </ol>
-                            <p class="mb-4">
-                                Kantor pertama Desa Panimbang terletak di Dusun Panimbang (sekarang Desa Mandala) dan digunakan pada periode kepemimpinan Aki Pontang hingga Raksantaka (1830–1880). Pada tahun 1881, saat kepemimpinan H. Harmawi, kantor desa dipindahkan ke Dusun Cingawel.
-                            </p>
-                            <p class="mb-4">
-                                Namun, karena sering dilanda banjir, kantor desa kembali dipindahkan ke daerah kidul pasar (dekat SDN Panimbang 03). Sayangnya, lokasi ini berada di dekat tebing yang rawan longsor. Selain itu, suasana sekitar yang ramai akibat aktivitas jual-beli di pasar membuat efektivitas pemerintahan desa berkurang.
-                            </p>
-                            <p class="mb-4">
-                                Akhirnya, untuk meningkatkan efektivitas pemerintahan, kantor desa dipindahkan ke RT 02 RW 05 Dusun Genteng Wetan, sementara pasar desa dialihkan ke Dusun Genteng Kulon.
-                            </p>
+
+                            {{-- DATA DINAMIS: Mengambil daftar dusun sebelum pemekaran dari database --}}
+                            <p class="font-semibold text-lg text-blue-700">Sebelum pemekaran, wilayah Desa Panimbang terdiri dari tujuh dusun, yaitu:</p>
+                            <ol class="blue-numbering space-y-2 mb-6 ml-4">
+                                @foreach(explode("\n", $sejarah->sebelum_pemekaran ?? '') as $item)
+                                    @if(trim($item) !== '')
+                                        <li>{{ trim($item) }}</li>
+                                    @endif
+                                @endforeach
+                            </ol>
+
+                            {{-- DATA DINAMIS: Mengambil penjelasan setelah pemekaran dari database --}}
+                            <p class="font-semibold text-lg text-blue-700">Pada tahun 1980, di bawah kepemimpinan Bapak Rebin, Desa Panimbang dimekarkan menjadi dua desa:</p>
+                            <ol class="blue-numbering space-y-2 mb-6 ml-4">
+                                @foreach(explode("\n", $sejarah->setelah_pemekaran ?? '') as $item)
+                                    @if(trim($item) !== '')
+                                        <li>{{ trim($item) }}</li>
+                                    @endif
+                                @endforeach
+                            </ol>
+
+                            {{-- DATA DINAMIS: Mengambil seluruh paragraf sejarah kantor desa dari database --}}
+                            <div class="mb-4">{!! nl2br(e($sejarah->sejarah_kantor_desa)) !!}</div>
                         </div>
                     </div>
                     
-                    <!-- Sidebar with image and additional info -->
+                    {{-- Bagian sidebar ini dibiarkan statis karena isinya jarang berubah --}}
                     <div class="w-full md:w-1/3">
-                        <div class="bg-blue-50 rounded-lg p-6 mb-6 transform transition-all duration-500 hover:shadow-md">
+                        <div class="bg-blue-50 rounded-lg p-6 mb-6">
                             <h3 class="text-xl font-semibold text-blue-800 mb-4">Lambang Desa Panimbang</h3>
                             <div class="flex justify-center mb-4">
-                                <img src="img/lambang_desa.jpg" alt="Lambang Desa Panimbang" class="h-48 w-auto transform transition-all duration-700 hover:scale-105">
+                                <img src="{{ asset('img/lambang_desa.jpg') }}" alt="Lambang Desa Panimbang" class="h-48 w-auto">
                             </div>
                             <p class="text-gray-700 text-sm italic text-center">Lambang Desa Panimbang melambangkan keberagaman dan kerukunan masyarakat</p>
                         </div>
                         
-                        <div class="bg-gray-50 rounded-lg p-6 transform transition-all duration-500 hover:shadow-md">
+                        <div class="bg-gray-50 rounded-lg p-6">
                             <h3 class="text-xl font-semibold text-blue-800 mb-4">Tonggak Sejarah</h3>
                             <div class="space-y-4">
                                 <div class="flex items-center">

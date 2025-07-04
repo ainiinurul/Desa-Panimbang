@@ -65,25 +65,28 @@
                 <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:shadow-xl">
                     <h2 class="text-xl font-semibold p-4 border-b">Informasi Waktu & Cuaca</h2>
                     <div class="p-4 grid grid-cols-2 gap-6">
+                        {{-- Waktu (sudah otomatis dari script bawaan) --}}
                         <div class="text-center p-4 bg-blue-50 rounded-lg transform transition-all duration-500 hover:scale-105">
                             <h3 class="text-lg font-medium mb-2">Waktu</h3>
                             <p class="text-2xl font-bold text-blue-600" id="time">10:25:00</p>
                             <p class="text-gray-600" id="date">Sabtu, 1 Maret 2025</p>
                         </div>
+
+                        {{-- Suhu (akan diisi oleh script cuaca) --}}
                         <div class="text-center p-4 bg-blue-50 rounded-lg transform transition-all duration-500 hover:scale-105">
                             <h3 class="text-lg font-medium mb-2">Suhu</h3>
-                            <div class="flex justify-center">
-                                <svg class="h-10 w-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                </svg>
+                            <div class="flex justify-center items-center h-10 w-10 mx-auto text-yellow-500">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                             </div>
-                            <p class="text-2xl font-bold text-blue-600">22°C</p>
-                            <p class="text-gray-600">Terasa seperti 22°C</p>
+                            <p class="text-2xl font-bold text-blue-600" id="suhu-utama">Memuat...</p>
+                            <p class="text-gray-600 text-sm" id="suhu-terasa">-</p>
                         </div>
+
+                        {{-- Cuaca (akan diisi oleh script cuaca) --}}
                         <div class="col-span-2 text-center p-4 bg-blue-50 rounded-lg transform transition-all duration-500 hover:scale-105">
                             <h3 class="text-lg font-medium mb-2">Cuaca</h3>
-                            <p class="text-xl font-bold text-blue-600">Cerah Berawan</p>
-                            <p class="text-gray-600">Kelembaban: 65%</p>
+                            <p class="text-xl font-bold text-blue-600" id="deskripsi-cuaca">-</p>
+                            <p class="text-gray-600" id="kelembapan">-</p>
                         </div>
                     </div>
                 </div>
@@ -425,39 +428,82 @@
     </footer>
 
     <script>
-        // Update time and date
+        // Fungsi untuk mengambil data cuaca dan menampilkannya
+        function fetchWeather() {
+            // --- KONFIGURASI CUACA ---
+            // Ganti 'KEY_API_KAMU' dengan API Key yang kamu dapatkan dari OpenWeatherMap
+            const apiKey = '56009fc4565363d27f57cb1864a64b9c'; // <-- JANGAN LUPA GANTI DENGAN KEY-MU!
+            const lat = -7.4815; // Latitude untuk Desa Panimbang
+            const lon = 108.8475; // Longitude untuk Desa Panimbang
+            const unit = 'metric';
+            const lang = 'id';
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${unit}&lang=${lang}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error('Gagal mengambil data cuaca');
+                    return response.json();
+                })
+                .then(data => {
+                    const suhu = data.main.temp;
+                    const terasaSeperti = data.main.feels_like;
+                    const deskripsi = data.weather[0].description;
+                    const kelembapan = data.main.humidity;
+
+                    const suhuFormatted = `${Math.round(suhu)}°C`;
+                    const terasaSepertiFormatted = `Terasa seperti ${Math.round(terasaSeperti)}°C`;
+                    const deskripsiFormatted = deskripsi.replace(/\b\w/g, char => char.toUpperCase());
+                    const kelembapanFormatted = `Kelembapan: ${kelembapan}%`;
+
+                    document.getElementById('suhu-utama').textContent = suhuFormatted;
+                    document.getElementById('suhu-terasa').textContent = terasaSepertiFormatted;
+                    document.getElementById('deskripsi-cuaca').textContent = deskripsiFormatted;
+                    document.getElementById('kelembapan').textContent = kelembapanFormatted;
+                })
+                .catch(error => {
+                    console.error('Terjadi masalah:', error);
+                    document.getElementById('deskripsi-cuaca').textContent = 'Gagal memuat data';
+                });
+        }
+
+        // Fungsi untuk memperbarui jam dan tanggal
         function updateTime() {
             const now = new Date();
-            
-            // Format time
             let hours = now.getHours();
             let minutes = now.getMinutes();
             let seconds = now.getSeconds();
-            
             hours = hours < 10 ? '0' + hours : hours;
             minutes = minutes < 10 ? '0' + minutes : minutes;
             seconds = seconds < 10 ? '0' + seconds : seconds;
-            
             document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            // Format date
+
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-            
             const day = days[now.getDay()];
             const date = now.getDate();
             const month = months[now.getMonth()];
             const year = now.getFullYear();
-            
             document.getElementById('date').textContent = `${day}, ${date} ${month} ${year}`;
-            
-            setTimeout(updateTime, 1000);
         }
-        
-        updateTime();
-        
-        // Scroll animations
+
+        // Fungsi untuk scroll ke section
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Event listener utama yang berjalan setelah halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
+            // 1. Jalankan fungsi cuaca
+            fetchWeather();
+            
+            // 2. Jalankan fungsi jam dan atur agar update setiap detik
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // 3. Atur animasi scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -466,19 +512,12 @@
                     }
                 });
             }, { threshold: 0.1 });
-            
+
             document.querySelectorAll('section').forEach(section => {
                 section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
                 observer.observe(section);
             });
         });
-
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
     </script>
 </body>
 </html>
