@@ -710,7 +710,7 @@
             data: {
                 labels: ['IKL', 'IKS', 'IKE'],
                 datasets: [{
-                    label: 'Skor 2024',
+                    label: 'Skor {{ $statistik->idm_tahun ?? date('Y') }}',
                     data: [
                         {{ $statistik->idm_ikl ?? 0 }},
                         {{ $statistik->idm_iks ?? 0 }},
