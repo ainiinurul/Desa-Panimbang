@@ -14,6 +14,10 @@ use App\Http\Controllers\Admin\PerangkatDesaController;
 use App\Http\Controllers\LembagaController;
 use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\SejarahDesaController;
+use App\Http\Controllers\Admin\WilayahController;
+use App\Http\Controllers\WilayahDesaController;
+use App\Http\Controllers\Admin\StatistikController;
+use App\Http\Controllers\StatistikDesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +31,8 @@ Route::get('/beranda', [BerandaController::class, 'index']);
 
 // Halaman statis lainnya
 //Route::get('/sejarah', function () { return view('sejarah'); })->name('sejarah');
-Route::get('/wilayah', function () { return view('wilayah'); })->name('wilayah');
-Route::get('/statistik', function () { return view('statistik'); })->name('statistik');
+//Route::get('/wilayah', function () { return view('wilayah'); })->name('wilayah');
+//Route::get('/statistik', function () { return view('statistik'); })->name('statistik');
 Route::get('/pelayanan', function () { return view('pelayanan'); })->name('pelayanan');
 Route::get('/pengaduan', function () { return view('pengaduan'); })->name('pengaduan');
 
@@ -47,6 +51,12 @@ Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pe
 
 // Rute untuk menampilkan halaman sejarah publik
 Route::get('/sejarah', [SejarahDesaController::class, 'index'])->name('sejarah');
+
+//Route untuk menampilkan halaman wilayah publik
+Route::get('/wilayah', [WilayahDesaController::class, 'index'])->name('wilayah');
+
+//Route untuk menampilkan halaman statistik publik
+Route::get('/statistik', [StatistikDesaController::class, 'index'])->name('statistik');
 
 
 /*
@@ -105,4 +115,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     // RUTE UNTUK MANAJEMEN SEJARAH
     Route::get('/sejarah', [SejarahController::class, 'index'])->name('sejarah.index');
     Route::post('/sejarah/update', [SejarahController::class, 'update'])->name('sejarah.update');
+
+    // RUTE UNTUK MANAJEMEN WILAYAH (TAMBAHKAN INI)
+    Route::get('/wilayah', [WilayahController::class, 'index'])->name('wilayah.index');
+    Route::post('/wilayah/update', [WilayahController::class, 'update'])->name('wilayah.update');
+
+    // RUTE UNTUK MANAJEMEN STATISTIK (TAMBAHKAN INI)
+    Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik.index');
+    Route::post('/statistik/update', [StatistikController::class, 'update'])->name('statistik.update');
 });

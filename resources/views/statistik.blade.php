@@ -35,11 +35,11 @@
                         <div class="mt-4 grid grid-cols-2 gap-4">
                             <div class="text-center p-4 bg-blue-50 rounded-lg">
                                 <p class="text-gray-600">Laki-laki</p>
-                                <p class="text-2xl font-bold text-blue-600">2,547</p>
+                                <p class="text-2xl font-bold text-blue-600">{{ $statistik->penduduk_pria ?? 0 }}</p>
                             </div>
                             <div class="text-center p-4 bg-pink-50 rounded-lg">
                                 <p class="text-gray-600">Perempuan</p>
-                                <p class="text-2xl font-bold text-pink-600">2,683</p>
+                                <p class="text-2xl font-bold text-pink-600">{{ $statistik->penduduk_wanita ?? 0 }}</p>
                             </div>
                         </div>
                     </div>
@@ -51,15 +51,15 @@
                         <div class="mt-4 grid grid-cols-2 gap-4">
                             <div class="text-center p-2 bg-blue-50 rounded-lg">
                                 <p class="text-gray-600">0-14 tahun</p>
-                                <p class="text-xl font-bold text-blue-600">1,285</p>
+                                <p class="text-xl font-bold text-blue-600">{{ $statistik->usia_anak ?? 0 }}</p>
                             </div>
                             <div class="text-center p-2 bg-green-50 rounded-lg">
                                 <p class="text-gray-600">15-64 tahun</p>
-                                <p class="text-xl font-bold text-green-600">3,654</p>
+                                <p class="text-xl font-bold text-green-600">{{ $statistik->usia_produktif ?? 0 }}</p>
                             </div>
                             <div class="text-center p-2 bg-purple-50 rounded-lg col-span-2">
                                 <p class="text-gray-600">65+ tahun</p>
-                                <p class="text-xl font-bold text-purple-600">291</p>
+                                <p class="text-xl font-bold text-purple-600">{{ $statistik->usia_lansia ?? 0 }}</p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-gray-600">SD/MI</p>
-                                <p class="text-2xl font-bold text-blue-600">5</p>
+                                <p class="text-2xl font-bold text-blue-600">{{ $statistik->fasilitas_sd ?? 0 }}</p>
                             </div>
                             <div class="flex flex-col items-center p-4 bg-green-50 rounded-lg">
                                 <div class="text-green-600 mb-2">
@@ -95,7 +95,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-gray-600">SMP/MTs</p>
-                                <p class="text-2xl font-bold text-green-600">1</p>
+                                <p class="text-2xl font-bold text-green-600">{{ $statistik->fasilitas_smp ?? 0 }}</p>
                             </div>
                             <div class="flex flex-col items-center p-4 bg-yellow-50 rounded-lg">
                                 <div class="text-yellow-600 mb-2">
@@ -104,7 +104,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-gray-600">SMA/MA</p>
-                                <p class="text-2xl font-bold text-yellow-600">1</p>
+                                <p class="text-2xl font-bold text-yellow-600">{{ $statistik->fasilitas_sma ?? 0 }}</p>
                             </div>
                             <div class="flex flex-col items-center p-4 bg-purple-50 rounded-lg">
                                 <div class="text-purple-600 mb-2">
@@ -113,49 +113,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-gray-600">PAUD/TK</p>
-                                <p class="text-2xl font-bold text-purple-600">2</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lahan -->
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">3. Lahan</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
-                        <h3 class="text-xl font-semibold mb-4 text-blue-700">Pembagian Lahan</h3>
-                        <div class="h-64">
-                            <canvas id="chartLahan"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
-                        <h3 class="text-xl font-semibold mb-4 text-blue-700">Detail Lahan (Hectare)</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center p-4 bg-blue-50 rounded-lg">
-                                <p class="text-gray-600">Total Wilayah</p>
-                                <p class="text-2xl font-bold text-blue-600">444,23</p>
-                            </div>
-                            <div class="text-center p-4 bg-yellow-50 rounded-lg">
-                                <p class="text-gray-600">Daratan</p>
-                                <p class="text-2xl font-bold text-yellow-600">28,60</p>
-                            </div>
-                            <div class="text-center p-4 bg-green-50 rounded-lg">
-                                <p class="text-gray-600">Sawah</p>
-                                <p class="text-2xl font-bold text-green-600">195,69</p>
-                            </div>
-                            <div class="text-center p-4 bg-purple-50 rounded-lg">
-                                <p class="text-gray-600">Tanah Kas Desa</p>
-                                <p class="text-2xl font-bold text-purple-600">25</p>
-                            </div>
-                            <div class="text-center p-4 bg-indigo-50 rounded-lg">
-                                <p class="text-gray-600">Telaga</p>
-                                <p class="text-2xl font-bold text-indigo-600">75,60</p>
-                            </div>
-                            <div class="text-center p-4 bg-pink-50 rounded-lg">
-                                <p class="text-gray-600">Lain-lain</p>
-                                <p class="text-2xl font-bold text-pink-600">84,40</p>
+                                <p class="text-2xl font-bold text-purple-600">{{ $statistik->fasilitas_paud ?? 0 }}</p>
                             </div>
                         </div>
                     </div>
@@ -164,7 +122,7 @@
 
             <!-- Sarana Prasarana -->
             <div class="mb-16">
-                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">4. Sarana Prasarana</h2>
+                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">3. Sarana & Prasarana</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <div class="flex items-center mb-4">
@@ -178,19 +136,19 @@
                         <ul class="space-y-3">
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Puskesmas</span>
-                                <span class="font-semibold">1</span>
+                                <span class="font-semibold">{{ $statistik->sarana_puskesmas ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Posyandu</span>
-                                <span class="font-semibold">4</span>
+                                <span class="font-semibold">{{ $statistik->sarana_posyandu ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Bidan Desa</span>
-                                <span class="font-semibold">2</span>
+                                <span class="font-semibold">{{ $statistik->sarana_bidan ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Apotek</span>
-                                <span class="font-semibold">2</span>
+                                <span class="font-semibold">{{ $statistik->sarana_apotek ?? 0 }}</span>
                             </li>
                         </ul>
                     </div>
@@ -206,19 +164,19 @@
                         <ul class="space-y-3">
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Masjid</span>
-                                <span class="font-semibold">5</span>
+                                <span class="font-semibold">{{ $statistik->sarana_masjid ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Mushola</span>
-                                <span class="font-semibold">8</span>
+                                <span class="font-semibold">{{ $statistik->sarana_mushola ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Gereja</span>
-                                <span class="font-semibold">0</span>
+                                <span class="font-semibold">{{ $statistik->sarana_gereja ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Pura</span>
-                                <span class="font-semibold">0</span>
+                                <span class="font-semibold">{{ $statistik->sarana_pura ?? 0 }}</span>
                             </li>
                         </ul>
                     </div>
@@ -234,19 +192,19 @@
                         <ul class="space-y-3">
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Jalan Desa (km)</span>
-                                <span class="font-semibold">12.5</span>
+                                <span class="font-semibold">{{ $statistik->sarana_jalan_km ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Jembatan</span>
-                                <span class="font-semibold">3</span>
+                                <span class="font-semibold">{{ $statistik->sarana_jembatan ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Saluran Irigasi (km)</span>
-                                <span class="font-semibold">8.2</span>
+                                <span class="font-semibold">{{ $statistik->sarana_irigasi_km ?? 0 }}</span>
                             </li>
                             <li class="flex justify-between items-center">
                                 <span class="text-gray-700">Menara BTS</span>
-                                <span class="font-semibold">1</span>
+                                <span class="font-semibold">{{ $statistik->sarana_bts ?? 0 }}</span>
                             </li>
                         </ul>
                     </div>
@@ -255,7 +213,7 @@
 
             <!-- APB Desa -->
             <div class="mb-16">
-                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">5. APB Desa</h2>
+                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">4. APB Desa</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-xl font-semibold mb-4 text-blue-700">Anggaran Pendapatan Belanja Desa</h3>
@@ -276,27 +234,27 @@
                             <tbody class="divide-y divide-gray-200">
                                 <tr>
                                     <td class="p-3 text-gray-700">Pendapatan Asli Desa</td>
-                                    <td class="p-3 text-right font-medium">124,500,000</td>
-                                    <td class="p-3 text-right">10%</td>
+                                    <td class="p-3 text-right font-medium">{{ number_format($statistik->apb_pad ?? 0, 0, ',', '.') }}</td>
+                                    <td class="p-3 text-right">{{ $statistik->apb_pad ? round(($statistik->apb_pad / ($statistik->apb_pad + $statistik->apb_dana_desa + $statistik->apb_alokasi_dana + $statistik->apb_bantuan)) * 100, 1) : 0 }}%</td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-gray-700">Dana Desa</td>
-                                    <td class="p-3 text-right font-medium">747,000,000</td>
-                                    <td class="p-3 text-right">60%</td>
+                                    <td class="p-3 text-right font-medium">{{ number_format($statistik->apb_dana_desa ?? 0, 0, ',', '.') }}</td>
+                                    <td class="p-3 text-right">{{ $statistik->apb_dana_desa ? round(($statistik->apb_dana_desa / ($statistik->apb_pad + $statistik->apb_dana_desa + $statistik->apb_alokasi_dana + $statistik->apb_bantuan)) * 100, 1) : 0 }}%</td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-gray-700">Alokasi Dana Desa</td>
-                                    <td class="p-3 text-right font-medium">249,000,000</td>
-                                    <td class="p-3 text-right">20%</td>
+                                    <td class="p-3 text-right font-medium">{{ number_format($statistik->apb_alokasi_dana ?? 0, 0, ',', '.') }}</td>
+                                    <td class="p-3 text-right">{{ $statistik->apb_alokasi_dana ? round(($statistik->apb_alokasi_dana / ($statistik->apb_pad + $statistik->apb_dana_desa + $statistik->apb_alokasi_dana + $statistik->apb_bantuan)) * 100, 1) : 0 }}%</td>
                                 </tr>
                                 <tr>
                                     <td class="p-3 text-gray-700">Bantuan Provinsi</td>
-                                    <td class="p-3 text-right font-medium">124,500,000</td>
-                                    <td class="p-3 text-right">10%</td>
+                                    <td class="p-3 text-right font-medium">{{ number_format($statistik->apb_bantuan ?? 0, 0, ',', '.') }}</td>
+                                    <td class="p-3 text-right">{{ $statistik->apb_bantuan ? round(($statistik->apb_bantuan / ($statistik->apb_pad + $statistik->apb_dana_desa + $statistik->apb_alokasi_dana + $statistik->apb_bantuan)) * 100, 1) : 0 }}%</td>
                                 </tr>
                                 <tr class="bg-blue-50">
                                     <td class="p-3 font-bold text-gray-700">Total</td>
-                                    <td class="p-3 text-right font-bold">1,245,000,000</td>
+                                    <td class="p-3 text-right font-bold">{{ number_format(($statistik->apb_pad ?? 0) + ($statistik->apb_dana_desa ?? 0) + ($statistik->apb_alokasi_dana ?? 0) + ($statistik->apb_bantuan ?? 0), 0, ',', '.') }}</td>
                                     <td class="p-3 text-right font-bold">100%</td>
                                 </tr>
                             </tbody>
@@ -307,24 +265,24 @@
 
             <!-- Posyandu -->
             <div class="mb-16">
-                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">6. Posyandu</h2>
+                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">5. Posyandu</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-xl font-semibold mb-4 text-blue-700">Jumlah Balita</h3>
                         <div class="text-center p-4 bg-blue-50 rounded-lg">
-                            <p class="text-2xl font-bold text-blue-600">150</p>
+                            <p class="text-2xl font-bold text-blue-600">{{ $statistik->posyandu_jumlah_balita ?? 0 }}</p>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-xl font-semibold mb-4 text-blue-700">Jumlah Ibu Hamil</h3>
                         <div class="text-center p-4 bg-green-50 rounded-lg">
-                            <p class="text-2xl font-bold text-green-600">0</p>
+                            <p class="text-2xl font-bold text-green-600">{{ $statistik->posyandu_jumlah_bumil ?? 0 }}</p>
                         </div>
                     </div>
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-xl font-semibold mb-4 text-blue-700">Jumlah Posyandu</h3>
                         <div class="text-center p-4 bg-pink-50 rounded-lg">
-                            <p class="text-2xl font-bold text-pink-600">2</p>
+                            <p class="text-2xl font-bold text-pink-600">{{ $statistik->posyandu_jumlah_posyandu ?? 0 }}</p>
                         </div>
                     </div>
                 </div>
@@ -338,14 +296,14 @@
                 </div>
             </div>
 
-            <!-- Add new section for Indeks Desa Membangun based on Image 2 -->
+            <!-- Indeks Desa Membangun -->
             <div class="mb-16">
-                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">7. Indeks Desa Membangun (IDM)</h2>
+                <h2 class="text-3xl font-bold text-blue-800 mb-8 pb-2 border-b-2 border-blue-200">6. Indeks Desa Membangun (IDM)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-lg font-semibold mb-4 text-blue-700">Skor IDM Saat Ini</h3>
                         <div class="flex justify-between items-center">
-                            <div class="text-4xl font-bold text-blue-600">0.55</div>
+                            <div class="text-4xl font-bold text-blue-600">{{ $statistik->idm_skor ?? 0 }}</div>
                             <div class="bg-orange-100 p-2 rounded-full">
                                 <svg class="h-10 w-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -356,7 +314,7 @@
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-lg font-semibold mb-4 text-blue-700">Status IDM</h3>
                         <div class="flex justify-between items-center">
-                            <div class="text-base font-medium text-gray-600">Sedang Berkembang</div>
+                            <div class="text-base font-medium text-gray-600">{{ $statistik->idm_status ?? 'Belum Ada Data' }}</div>
                             <div class="bg-green-100 p-2 rounded-full">
                                 <svg class="h-10 w-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -367,7 +325,7 @@
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-lg font-semibold mb-4 text-blue-700">Target Status</h3>
                         <div class="flex justify-between items-center">
-                            <div class="text-base font-medium text-gray-600">Maju</div>
+                            <div class="text-base font-medium text-gray-600">{{ $statistik->idm_target ?? 'Belum Ada Data' }}</div>
                             <div class="bg-red-100 p-2 rounded-full">
                                 <svg class="h-10 w-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -378,7 +336,7 @@
                     <div class="bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
                         <h3 class="text-lg font-semibold mb-4 text-blue-700">Skor IDM Minimal</h3>
                         <div class="flex justify-between items-center">
-                            <div class="text-base font-medium text-gray-600">0.50</div>
+                            <div class="text-base font-medium text-gray-600">{{ $statistik->idm_skor_minimal ?? 0 }}</div>
                             <div class="bg-purple-100 p-2 rounded-full">
                                 <svg class="h-10 w-10 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -390,12 +348,7 @@
                 
                 <!-- Add tabs for the years -->
                 <div class="mt-8 bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
-                    <div class="flex border-b border-gray-200 mb-6">
-                        <button class="py-2 px-4 text-blue-600 border-b-2 border-blue-600 font-medium">2024</button>
-                        <button class="py-2 px-4 text-gray-500 font-medium">2023</button>
-                    </div>
-                    
-                    <h3 class="text-xl font-semibold mb-6 text-blue-700">Indeks Desa Membangun (IDM) Tahun 2024</h3>
+                    <h3 class="text-xl font-semibold mb-6 text-blue-700">Indeks Desa Membangun (IDM) Tahun {{ $statistik->idm_tahun ?? date('Y') }}</h3>
                     
                     <!-- Add chart for IDM components -->
                     <div class="h-80">
@@ -406,38 +359,15 @@
                     <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-blue-50 p-4 rounded-lg">
                             <h4 class="font-semibold text-blue-700 mb-2">IKL (Indeks Ketahanan Lingkungan)</h4>
-                            <p class="text-2xl font-bold text-blue-600">0.6 / 60%</p>
+                            <p class="text-2xl font-bold text-blue-600">{{ $statistik->idm_ikl ?? 0 }} / {{ ($statistik->idm_ikl ?? 0) * 100 }}%</p>
                         </div>
                         <div class="bg-green-50 p-4 rounded-lg">
                             <h4 class="font-semibold text-green-700 mb-2">IKS (Indeks Ketahanan Sosial)</h4>
-                            <p class="text-2xl font-bold text-green-600">0.5 / 50%</p>
+                            <p class="text-2xl font-bold text-green-600">{{ $statistik->idm_iks ?? 0 }} / {{ ($statistik->idm_iks ?? 0) * 100 }}%</p>
                         </div>
                         <div class="bg-yellow-50 p-4 rounded-lg">
                             <h4 class="font-semibold text-yellow-700 mb-2">IKE (Indeks Ketahanan Ekonomi)</h4>
-                            <p class="text-2xl font-bold text-yellow-600">0.4 / 40%</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Add location info -->
-                <div class="mt-8 bg-white rounded-lg shadow-md p-6 transform transition-all duration-500 hover:shadow-xl">
-                    <h3 class="text-xl font-semibold mb-4 text-blue-700">Lokasi</h3>
-                    <div class="grid grid-cols-1 gap-2">
-                        <div class="p-3 border-b border-gray-100">
-                            <p class="font-medium">Provinsi</p>
-                            <p class="text-gray-700">Jawa Tengah</p>
-                        </div>
-                        <div class="p-3 border-b border-gray-100">
-                            <p class="font-medium">Kabupaten</p>
-                            <p class="text-gray-700">Cilacap</p>
-                        </div>
-                        <div class="p-3 border-b border-gray-100">
-                            <p class="font-medium">Kecamatan</p>
-                            <p class="text-gray-700">Cimanggu</p>
-                        </div>
-                        <div class="p-3">
-                            <p class="font-medium">Desa</p>
-                            <p class="text-gray-700">Panimbang</p>
+                            <p class="text-2xl font-bold text-yellow-600">{{ $statistik->idm_ike ?? 0 }} / {{ ($statistik->idm_ike ?? 0) * 100 }}%</p>
                         </div>
                     </div>
                 </div>
@@ -606,7 +536,7 @@
 
     <!-- Chart.js Scripts -->
     <script>
-        // Chart for Jenis Kelamin
+        // Chart for Jenis Kelamin - using dynamic data
         const ctxJenisKelamin = document.getElementById('chartJenisKelamin').getContext('2d');
         const chartJenisKelamin = new Chart(ctxJenisKelamin, {
             type: 'doughnut',
@@ -614,7 +544,10 @@
                 labels: ['Laki-laki', 'Perempuan'],
                 datasets: [{
                     label: 'Jumlah Penduduk',
-                    data: [2547, 2683],
+                    data: [
+                        {{ $statistik->penduduk_pria ?? 0 }}, 
+                        {{ $statistik->penduduk_wanita ?? 0 }}
+                    ],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(255, 99, 132, 0.8)'
@@ -637,7 +570,7 @@
             }
         });
 
-        // Chart for Usia
+        // Chart for Usia - using dynamic data
         const ctxUsia = document.getElementById('chartUsia').getContext('2d');
         const chartUsia = new Chart(ctxUsia, {
             type: 'bar',
@@ -645,7 +578,11 @@
                 labels: ['0-14 Tahun', '15-64 Tahun', '65+ Tahun'],
                 datasets: [{
                     label: 'Jumlah Penduduk',
-                    data: [1285, 3654, 291],
+                    data: [
+                        {{ $statistik->usia_anak ?? 0 }}, 
+                        {{ $statistik->usia_produktif ?? 0 }}, 
+                        {{ $statistik->usia_lansia ?? 0 }}
+                    ],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(75, 192, 192, 0.8)',
@@ -675,7 +612,7 @@
             }
         });
 
-        // Chart for Pendidikan
+        // Chart for Pendidikan - using dynamic data
         const ctxPendidikan = document.getElementById('chartPendidikan').getContext('2d');
         const chartPendidikan = new Chart(ctxPendidikan, {
             type: 'pie',
@@ -683,7 +620,12 @@
                 labels: ['SD', 'SMP', 'SMA', 'Perguruan Tinggi'],
                 datasets: [{
                     label: 'Tingkat Pendidikan',
-                    data: [1200, 800, 400, 100],
+                    data: [
+                        {{ $statistik->pendidikan_sd ?? 0 }},
+                        {{ $statistik->pendidikan_smp ?? 0 }},
+                        {{ $statistik->pendidikan_sma ?? 0 }},
+                        {{ $statistik->pendidikan_pt ?? 0 }}
+                    ],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(75, 192, 192, 0.8)',
@@ -710,75 +652,7 @@
             }
         });
 
-        // Chart for Lahan
-        const ctxLahan = document.getElementById('chartLahan').getContext('2d');
-        const chartLahan = new Chart(ctxLahan, {
-            type: 'polarArea',
-            data: {
-                labels: ['Sawah', 'Daratan', 'Tanah Kas Desa', 'Telaga', 'Lain-lain'],
-                datasets: [{
-                    label: 'Luas Lahan (Hectare)',
-                    data: [195.69, 28.60, 25, 75.60, 84.40],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 99, 132, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                    }
-                }
-            }
-        });
-
-        // Chart for APB Desa
-        const ctxAPBDesa = document.getElementById('chartAPBDesa').getContext('2d');
-        const chartAPBDesa = new Chart(ctxAPBDesa, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                datasets: [{
-                    label: 'Anggaran (Rp)',
-                    data: [100000000, 120000000, 110000000, 130000000, 140000000, 150000000, 160000000, 170000000, 180000000, 190000000, 200000000, 210000000],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
-        // Chart for Balita berdasarkan umur
+        // Chart for Balita berdasarkan umur - using dynamic data
         const ctxBalitaUmur = document.getElementById('chartBalitaUmur').getContext('2d');
         const chartBalitaUmur = new Chart(ctxBalitaUmur, {
             type: 'bar',
@@ -787,14 +661,14 @@
                 datasets: [
                     {
                         label: 'Laki-laki',
-                        data: [15, 20, 25, 10], // Jumlah laki-laki per kelompok umur
+                        data: {!! json_encode($statistik->posyandu_chart_pria ?? [0, 0, 0, 0]) !!},
                         backgroundColor: 'rgba(54, 162, 235, 0.8)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
                         label: 'Perempuan',
-                        data: [15, 20, 25, 20], // Jumlah perempuan per kelompok umur
+                        data: {!! json_encode($statistik->posyandu_chart_wanita ?? [0, 0, 0, 0]) !!},
                         backgroundColor: 'rgba(255, 99, 132, 0.8)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
@@ -829,7 +703,7 @@
             }
         });
 
-        // Chart for IDM (Indeks Desa Membangun)
+        // Chart for IDM (Indeks Desa Membangun) - using dynamic data
         const ctxIDM = document.getElementById('chartIDM').getContext('2d');
         const chartIDM = new Chart(ctxIDM, {
             type: 'radar',
@@ -837,7 +711,11 @@
                 labels: ['IKL', 'IKS', 'IKE'],
                 datasets: [{
                     label: 'Skor 2024',
-                    data: [0.6, 0.5, 0.4], // Skor untuk IKL, IKS, dan IKE
+                    data: [
+                        {{ $statistik->idm_ikl ?? 0 }},
+                        {{ $statistik->idm_iks ?? 0 }},
+                        {{ $statistik->idm_ike ?? 0 }}
+                    ],
                     fill: true,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -866,44 +744,48 @@
                 }
             }
         });
-        // JavaScript untuk scroll-triggered animation
-        document.addEventListener("DOMContentLoaded", function() {
-            const countUpElements = document.querySelectorAll('.count-up');
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        startCounting(entry.target);
-                        observer.unobserve(entry.target); // Hentikan observasi setelah animasi dimulai
+        // Chart for APB Desa - using dynamic data (example data, adjust as needed)
+        const ctxAPBDesa = document.getElementById('chartAPBDesa').getContext('2d');
+        const chartAPBDesa = new Chart(ctxAPBDesa, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                datasets: [{
+                    label: 'Anggaran (Rp)',
+                    data: [
+                        {{ ($statistik->apb_pad ?? 0) / 12 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 2 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 3 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 4 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 5 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 6 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 7 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 8 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 9 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 10 }},
+                        {{ ($statistik->apb_pad ?? 0) / 12 * 11 }},
+                        {{ $statistik->apb_pad ?? 0 }}
+                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                });
-            }, {
-                threshold: 0.5 // Trigger saat 50% elemen terlihat di layar
-            });
-
-            countUpElements.forEach(element => {
-                observer.observe(element);
-            });
-
-            function startCounting(element) {
-                const target = +element.getAttribute('data-target');
-                const duration = 2000; // Durasi animasi dalam milidetik
-                const start = 0;
-                const increment = target / (duration / 16); // 16ms per frame
-
-                let current = start;
-                const updateCount = () => {
-                    current += increment;
-                    if (current < target) {
-                        element.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCount);
-                    } else {
-                        element.textContent = target;
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     }
-                };
-
-                updateCount();
+                }
             }
         });
     </script>

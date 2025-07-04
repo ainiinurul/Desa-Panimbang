@@ -22,43 +22,38 @@
     <!-- Wilayah Stats -->
     <section class="py-12 bg-gray-50 counter-section">
         <div class="container mx-auto px-4">
-            <div class="bg-white rounded-lg shadow-lg p-8 transform transition-all duration-700 hover:shadow-xl">
+            <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-2xl font-bold text-blue-800 mb-8 text-center">WILAYAH DESA</h2>
                 
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                    <!-- Stat 1 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="444.23">0</span>
-                        <span class="text-gray-700">Hectare wilayah</span>
+                    {{-- DATA DINAMIS UNTUK STATISTIK WILAYAH --}}
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->total_wilayah ?? 0 }}">{{ number_format($wilayah->total_wilayah ?? 0, 2) }}</span>
+                        <span class="text-gray-700">Hektare wilayah</span>
                     </div>
                     
-                    <!-- Stat 2 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="28.60">0</span>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->daratan ?? 0 }}">{{ number_format($wilayah->daratan ?? 0, 2) }}</span>
                         <span class="text-gray-700">Hectare daratan</span>
                     </div>
                     
-                    <!-- Stat 3 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="195.69">0</span>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->sawah ?? 0 }}">{{ number_format($wilayah->sawah ?? 0, 2) }}</span>
                         <span class="text-gray-700">Hectare sawah</span>
                     </div>
                     
-                    <!-- Stat 4 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="25">0</span>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->tanah_kas_desa ?? 0 }}">{{ number_format($wilayah->tanah_kas_desa ?? 0, 2) }}</span>
                         <span class="text-gray-700">Hectare tanah kas desa</span>
                     </div>
                     
-                    <!-- Stat 5 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="75.60">0</span>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->telaga ?? 0 }}">{{ number_format($wilayah->telaga ?? 0, 2) }}</span>
                         <span class="text-gray-700">Hectare telaga</span>
                     </div>
                     
-                    <!-- Stat 6 -->
-                    <div class="bg-blue-50 rounded-lg p-6 text-center transform transition-all duration-500 hover:shadow-md hover:-translate-y-1">
-                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="84.40">0</span>
+                    <div class="bg-blue-50 rounded-lg p-6 text-center">
+                        <span class="block text-3xl font-bold text-blue-700 mb-2 counter" data-target="{{ $wilayah->lain_lain ?? 0 }}">{{ number_format($wilayah->lain_lain ?? 0, 2) }}</span>
                         <span class="text-gray-700">Hectare lain-lain</span>
                     </div>
                 </div>
@@ -70,41 +65,19 @@
     <section class="py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-8">
-                <!-- Geografis/Topografi -->
-                <div class="w-full md:w-1/2 bg-white rounded-lg shadow-lg p-8 transform transition-all duration-700 hover:shadow-xl">
+                <div class="w-full md:w-1/2 bg-white rounded-lg shadow-lg p-8">
                     <h2 class="text-2xl font-bold text-blue-800 mb-6">Geografis/Topografi dan Jenis Tanah</h2>
+                    {{-- DATA DINAMIS UNTUK DESKRIPSI GEOGRAFIS --}}
                     <div class="prose max-w-none text-gray-700 leading-relaxed">
-                        <p class="mb-4">
-                            Desa Panimbang terletak di daerah dengan topografi dataran rendah hingga berbukit dengan ketinggian sekitar 25–100 mdpl. Wilayah ini memiliki kemiringan rata-rata sekitar 4%, sehingga lebih cenderung ke arah dataran landai.
-                        </p>
-                        <p>Jenis tanah yang dominan di daerah ini adalah tanah vertisol, yaitu tanah liat dengan sifat unik yang dapat mengembang saat basah dan menyusut serta pecah-pecah saat kering. Beberapa ciri utama tanah ini meliputi:</p>
-                            <div>
-                                <ul class="list-disc pl-5 mb-4">
-                                    <li>Tidak memiliki horizon eluviasi dan iluviasi yang jelas.</li>
-                                    <li>Memiliki koefisien mengembang dan menyusut yang tinggi saat kadar air berubah.</li>
-                                    <li>Mengandung bahan induk basaltik atau berkapur.</li>
-                                    <li>Memiliki mikrorelief gligei, dengan konsistensi yang sangat plastis.</li>
-                                </ul>
-                            </div>
-                        <p class="mb-4">
-                            Tanah vertisol seperti ini biasanya ditemukan di daerah dengan iklim musiman yang cukup ekstrem antara musim hujan dan kemarau. Di Pulau Jawa, tanah ini sering digunakan untuk lahan pertanian sawah karena sifatnya yang mampu menyimpan air dengan baik saat musim hujan.
-                        </p>
+                        {!! nl2br(e($wilayah->geografis_deskripsi)) !!}
                     </div>
                 </div>
 
-                <!-- Iklim -->
-                <div class="w-full md:w-1/2 bg-white rounded-lg shadow-lg p-8 transform transition-all duration-700 hover:shadow-xl">
+                <div class="w-full md:w-1/2 bg-white rounded-lg shadow-lg p-8">
                     <h2 class="text-2xl font-bold text-blue-800 mb-6">Iklim</h2>
+                    {{-- DATA DINAMIS UNTUK DESKRIPSI IKLIM --}}
                     <div class="prose max-w-none text-gray-700 leading-relaxed">
-                        <p class="mb-4">
-                            Desa Panimbang memiliki iklim tropis dengan karakteristik musim hujan dan kemarau yang jelas. Suhu rata-rata tahunan berkisar antara 32-36°C, dengan tingkat kelembapan sekitar 55-70%. Berdasarkan data BMKG, daerah ini tergolong memiliki curah hujan yang relatif rendah (21-50 mm per bulan), yang berarti sering mengalami musim kemarau panjang.
-                        </p>
-                        <p class="mb-4">
-                            Ketika musim kemarau, wilayah ini menjadi cukup panas, dengan suhu tinggi yang menyebabkan tanah kering dan pecah-pecah. Sebaliknya, saat musim hujan, tanah akan kembali mengembang karena menyerap air.
-                        </p>
-                        <p>
-                            Secara umum, karakteristik geografi dan iklim di Desa Panimbang sangat mempengaruhi pola pertanian dan penggunaan lahan, dengan adaptasi terhadap kondisi tanah dan curah hujan yang tidak terlalu tinggi.
-                        </p>
+                        {!! nl2br(e($wilayah->iklim_deskripsi)) !!}
                     </div>
                 </div>
             </div>

@@ -29,13 +29,7 @@
                     <span>Dashboard</span>
                 </a>
 
-                <!-- 2. Manajemen Sejarah -->
-                <a href="{{ route('admin.sejarah.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.sejarah.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
-                    <i class="fas fa-landmark mr-3 {{ request()->routeIs('admin.sejarah.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
-                    <span>Manajemen Sejarah</span>
-                </a>
-
-                {{-- 2. Manajemen Beranda (Menu Dropdown) - FINAL --}}
+                {{-- 2. Manajemen Beranda (Menu Dropdown) --}}
                 <div x-data="{ open: {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'true' : 'false' }} }">
                     {{-- Tombol Utama Dropdown --}}
                     <button @click="open = !open" class="flex items-center justify-between w-full py-2.5 px-4 rounded transition duration-200 group {{ request()->routeIs('admin.berita.*') || request()->routeIs('admin.programs.*') || request()->routeIs('admin.settings.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }}">
@@ -60,12 +54,36 @@
                     </div>
                 </div>
 
-                <!-- 3. Manajemen Pelayanan (Menu Utama) -->
+                <!-- 3. Manajemen Desa (Menu Dropdown) - BARU -->
+                <div x-data="{ open: {{ request()->routeIs('admin.sejarah.*') || request()->routeIs('admin.wilayah.*') || request()->routeIs('admin.statistik.*') ? 'true' : 'false' }} }">
+                    {{-- Tombol Utama Dropdown --}}
+                    <button @click="open = !open" class="flex items-center justify-between w-full py-2.5 px-4 rounded transition duration-200 group {{ request()->routeIs('admin.sejarah.*') || request()->routeIs('admin.wilayah.*') || request()->routeIs('admin.statistik.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }}">
+                        <div class="flex items-center">
+                            <i class="fas fa-building mr-3 {{ request()->routeIs('admin.sejarah.*') || request()->routeIs('admin.wilayah.*') || request()->routeIs('admin.statistik.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
+                            <span>Manajemen Desa</span>
+                        </div>
+                        <i class="fas text-sm transition-transform duration-300" :class="open ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                    </button>
+
+                    {{-- Submenu yang bisa buka-tutup --}}
+                    <div x-show="open" x-transition class="pl-8 py-2 space-y-1">
+                        <a href="{{ route('admin.sejarah.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.sejarah.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Sejarah Desa
+                        </a>
+                        <a href="{{ route('admin.wilayah.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.wilayah.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Wilayah Desa
+                        </a>
+                        <a href="{{ route('admin.statistik.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.statistik.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Statistik Desa
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. Manajemen Pelayanan (Menu Dropdown) -->
                 <div x-data="{ open: {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'true' : 'false' }} }">
                     {{-- Tombol Utama Dropdown --}}
                     <button @click="open = !open" class="flex items-center justify-between w-full py-2.5 px-4 rounded transition duration-200 group {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }}">
                         <div class="flex items-center">
-                            {{-- Ganti ikonnya menjadi lebih sesuai --}}
                             <i class="fas fa-hands-helping mr-3 {{ request()->routeIs('admin.pelayanan.*') || request()->routeIs('admin.pengaduan.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                             <span>Manajemen Warga</span>
                         </div>
@@ -83,20 +101,19 @@
                     </div>
                 </div>
                 
+                <!-- 5. Manajemen Lembaga (Menu Utama) -->
                 <a href="{{ route('admin.lembaga.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.lembaga.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
                     <i class="fas fa-sitemap mr-3 {{ request()->routeIs('admin.lembaga.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Manajemen Lembaga</span>
                 </a>
 
-                <!-- 5. Manajemen Pengguna (Menu Utama) -->
+                <!-- 6. Manajemen Pengguna (Menu Utama) -->
                 <a href="{{ route('admin.user.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 {{ request()->routeIs('admin.user.*') ? 'bg-blue-700 shadow-md' : 'hover:bg-blue-700 hover:shadow-md' }} group">
                     <i class="fas fa-users mr-3 {{ request()->routeIs('admin.user.*') ? 'text-white' : 'text-blue-300 group-hover:text-white' }}"></i>
                     <span>Manajemen Pengguna</span>
                 </a>
 
-                
-
-                <!-- 5. Logout (Menu Utama) -->
+                <!-- 7. Logout (Menu Utama) -->
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
                     <button type="submit" class="flex items-center w-full py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:shadow-md group text-left">
