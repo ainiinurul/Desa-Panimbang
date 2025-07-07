@@ -62,7 +62,7 @@
                     </td>
                     <td class="py-3 px-4 flex space-x-2">
                         {{-- PERBAIKAN: Menggunakan model binding (slug atau sesuai getRouteKeyName()) --}}
-                        <a href="{{ route('admin.berita.show', $item) }}" class="text-blue-500 hover:text-blue-700" title="Lihat Berita">
+                        <a href="{{ route('admin.berita.show', $berita) }}" class="text-blue-500 hover:text-blue-700 mr-2" title="Lihat Detail">
                             <i class="fas fa-eye"></i>
                         </a>
                         <a href="{{ route('admin.berita.edit', $item->id) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit Berita">

@@ -87,7 +87,7 @@ class BerandaController extends Controller
                         ->take(3)
                         ->get();
         
-        return view('berita.show', compact('berita', 'related'));
+        return view('pages.berita-detail', compact('berita', 'related'));
     }
 
     

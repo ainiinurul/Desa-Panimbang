@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <!-- Logo & Title -->
             <div class="flex items-center space-x-3">
-                <img src="img/logo_cilacap.png" alt="Logo Cilacap" class="h-14 w-auto">
+                <img src="{{ asset('img/logo_cilacap.png') }}" alt="Logo Cilacap" class="h-14 w-auto">
                 <div class="flex flex-col">
                     <span class="font-bold text-lg text-blue-800">DESA PANIMBANG</span>
                     <span class="text-xs text-gray-600">KAB. CILACAP</span>
@@ -23,7 +23,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                    <div x-show="open" @click.away="open = false" x-cloak class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                         <a href="/sejarah" class="{{ request()->is('sejarah*') ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-blue-50' }} block px-4 py-2">Sejarah</a>
                         <a href="/wilayah" class="{{ request()->is('wilayah*') ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-blue-50' }} block px-4 py-2">Wilayah</a>
                         <a href="/statistik" class="{{ request()->is('statistik*') ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-blue-50' }} block px-4 py-2">Statistik</a>
@@ -45,7 +45,7 @@
                         </svg>
                         <span class="font-medium">{{ Auth::user()->name }}</span>
                     </button>
-                    <div x-show="openAuth" @click.away="openAuth = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <div x-show="openAuth" @click.away="openAuth = false" x-cloak class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                         @if(Auth::user()->role == 'admin')
                             <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Dashboard</a>
                         @endif

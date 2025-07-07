@@ -26,6 +26,7 @@ class BeritaController extends Controller
 
     public function store(Request $request)
     {
+        // Method store sudah benar, tidak perlu diubah
         try {
             $validated = $request->validate([
                 'judul' => 'required|max:255',
@@ -41,7 +42,7 @@ class BeritaController extends Controller
                 $validated['published_at'] = null;
             }
 
-            $validated['slug'] = Str::slug($request->judul); // Tetap buat slug untuk URL publik
+            $validated['slug'] = Str::slug($request->judul);
             $validated['user_id'] = Auth::id();
 
             if ($request->hasFile('gambar')) {
@@ -60,24 +61,27 @@ class BeritaController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Berita $berita)
     {
-        $berita = Berita::findOrFail($id);
-        return view('admin.berita.show', compact('berita'));
+        return view('admin.berita.show', [
+            'title' => 'Detail Berita',
+            'berita' => $berita,
+        ]);
     }
 
-    public function edit($id)
+    // --- UBAH METHOD DI BAWAH INI ---
+
+    public function edit(Berita $berita) // Ubah dari $id menjadi Berita $berita
     {
-        $berita = Berita::findOrFail($id);
+        // Baris Berita::findOrFail($id) tidak diperlukan lagi
         $kategori = ['Kesehatan', 'Pembangunan', 'Ekonomi', 'Pendidikan', 'Keamanan', 'Kegiatan'];
         return view('admin.berita.edit', compact('berita', 'kategori'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Berita $berita) // Ubah dari $id menjadi Berita $berita
     {
+        // Baris Berita::findOrFail($id) tidak diperlukan lagi
         try {
-            $berita = Berita::findOrFail($id);
-            
             $validated = $request->validate([
                 'judul' => 'required|max:255',
                 'tanggal' => 'required|date',
@@ -101,12 +105,8 @@ class BeritaController extends Controller
 
             $validated['slug'] = Str::slug($request->judul);
             
-            Log::info('Updating berita ID: ' . $id . ' with data: ' . json_encode($validated));
-            
             $berita->update($validated);
             
-            Log::info('Berita berhasil diupdate dengan ID: ' . $id);
-
             return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui');
         } catch (\Exception $e) {
             Log::error('Error saat update berita: ' . $e->getMessage());
@@ -116,11 +116,10 @@ class BeritaController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Berita $berita) // Ubah dari $id menjadi Berita $berita
     {
+        // Baris Berita::findOrFail($id) tidak diperlukan lagi
         try {
-            $berita = Berita::findOrFail($id);
-            
             if ($berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
             }

@@ -182,7 +182,8 @@
                     @endphp
 
                     <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col">
-                        <a href="{{ $program->link ? url($program->link) : '#' }}" target="_blank" rel="noopener noreferrer">
+                        {{-- 1. UBAH LINK GAMBAR --}}
+                        <a href="{{ route('program.show', $program->slug) }}">
                             @if($program->gambar)
                                 <img src="{{ asset('storage/' . $program->gambar) }}" alt="{{ $program->judul }}" class="w-full h-48 object-cover">
                             @else
@@ -193,14 +194,16 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <span class="inline-block px-3 py-1 text-xs mb-2 rounded-full self-start {{ $kategoriClasses }}">{{ $program->kategori }}</span>
                             <h3 class="text-xl font-semibold mb-2 mt-2">
-                                <a href="{{ $program->link ? url($program->link) : '#' }}" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors duration-300">{{ $program->judul }}</a>
+                                {{-- 2. UBAH LINK JUDUL --}}
+                                <a href="{{ route('program.show', $program->slug) }}" class="hover:text-blue-600 transition-colors duration-300">
+                                    {{ $program->judul }}
+                                </a>
                             </h3>
                             <p class="text-gray-600 mb-4 flex-grow">{{ Str::limit(strip_tags($program->deskripsi), 100) }}</p>
                             <div class="flex justify-between items-center text-sm text-gray-500 mt-auto">
                                 <span>Periode: {{ $program->periode }}</span>
-                                @if($program->link)
-                                    <a href="{{ url($program->link) }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya →</a>
-                                @endif
+                                {{-- 3. UBAH LINK SELENGKAPNYA --}}
+                                <a href="{{ route('program.show', $program->slug) }}" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya →</a>
                             </div>
                         </div>
                     </div>
@@ -251,20 +254,28 @@
                                 break;
                         }
                     @endphp
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl cursor-pointer">
-                        @if($item->gambar)
-                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-72 object-cover">
-                        @else
-                        <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-72 object-cover">
-                        @endif
-                        <div class="p-4">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-xl flex flex-col">
+                        {{-- Link pada Gambar --}}
+                        <a href="{{ route('berita.show', $item->slug) }}">
+                            @if($item->gambar)
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-72 object-cover">
+                            @else
+                            <img src="{{ asset('img/berita/default.jpg') }}" alt="Default Image" class="w-full h-72 object-cover">
+                            @endif
+                        </a>
+                        <div class="p-4 flex flex-col flex-grow">
                             {{-- Kelas warna sekarang dinamis dari variabel $kategoriClasses --}}
-                            <span class="inline-block px-3 py-1 {{ $kategoriClasses }} rounded-full text-xs mb-2">{{ $item->kategori }}</span>
-                            <h3 class="text-xl font-semibold mb-2">{{ $item->judul }}</h3>
-                            <p class="text-gray-600 mb-4">{{ Str::limit($item->deskripsi, 150) }}</p>
-                            <div class="flex justify-between items-center">
+                            <span class="inline-block px-3 py-1 {{ $kategoriClasses }} rounded-full text-xs mb-2 self-start">{{ $item->kategori }}</span>
+                            <h3 class="text-xl font-semibold mb-2">
+                                {{-- Link pada Judul --}}
+                                <a href="{{ route('berita.show', $item->slug) }}" class="hover:text-blue-600 transition-colors duration-300">
+                                    {{ $item->judul }}
+                                </a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 flex-grow">{{ Str::limit(strip_tags($item->deskripsi), 100) }}</p>
+                            <div class="flex justify-between items-center mt-auto">
                                 <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</span>
-                                <a href="{{ route('berita.show', $item->slug) }}" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya</a>
+                                <a href="{{ route('berita.show', $item->slug) }}" class="text-blue-600 hover:text-blue-800 font-medium">Selengkapnya →</a>
                             </div>
                         </div>
                     </div>

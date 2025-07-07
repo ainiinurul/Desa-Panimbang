@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProgramController extends Controller
 {
@@ -32,6 +33,8 @@ class ProgramController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
+        $validatedData['slug'] = Str::slug($request->judul, '-');
+
         if ($request->file('gambar')) {
             $validatedData['gambar'] = $request->file('gambar')->store('program-images', 'public');
         }
@@ -39,6 +42,14 @@ class ProgramController extends Controller
         Program::create($validatedData);
 
         return redirect('/admin/programs')->with('success', 'Program baru berhasil ditambahkan!');
+    }
+
+    public function show(Program $program)
+    {
+        return view('admin.programs.show', [
+            'title' => 'Detail Program',
+            'program' => $program,
+        ]);
     }
 
     public function edit(Program $program)
@@ -57,6 +68,8 @@ class ProgramController extends Controller
             'link' => 'nullable|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
+
+        $validatedData['slug'] = Str::slug($request->judul, '-');
 
         if ($request->file('gambar')) {
             // Hapus gambar lama jika ada

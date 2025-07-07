@@ -78,7 +78,7 @@
                         </span>
                     </td>
                     <td class="py-3 px-4 flex space-x-2">
-                        <a href="{{ route('admin.programs.show', $program) }}" class="text-blue-500 hover:text-blue-700" title="Lihat Program">
+                        <a href="{{ route('admin.programs.show', $program) }}" class="text-blue-500 hover:text-blue-700 mr-2" title="Lihat Detail">
                             <i class="fas fa-eye"></i>
                         </a>
                         <a href="{{ route('admin.programs.edit', $program) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit Program">

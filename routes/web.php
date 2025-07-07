@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\WilayahController;
 use App\Http\Controllers\WilayahDesaController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\StatistikDesaController;
+use App\Http\Controllers\ProgramDesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::get('/pengaduan', function () { return view('pengaduan'); })->name('penga
 
 // INI ADALAH ROUTE PUBLIK UNTUK HALAMAN LEMBAGA
 Route::get('/lembaga', [LembagaController::class, 'index'])->name('lembaga');
+
+//Rute untuk Program (Publik)
+Route::get('/program', [ProgramDesaController::class, 'index'])->name('program');
+Route::get('/program/{program:slug}', [ProgramDesaController::class, 'show'])->name('program.show');
 
 // Rute untuk Berita (Publik)
 Route::get('/berita', [BerandaController::class, 'allBerita'])->name('berita.index');
@@ -81,7 +86,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Manajemen Berita
-    Route::resource('berita', BeritaController::class);
+    Route::resource('berita', BeritaController::class)->parameters(['berita' => 'berita']);
 
     // Manajemen User
     Route::resource('user', UserController::class)->except(['show']);
