@@ -31,6 +31,8 @@ class ProgramController extends Controller
             'periode' => 'required|max:255',
             'link' => 'nullable|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'status' => 'required|in:published,draft,scheduled',
+            'published_at' => 'required_if:status,scheduled|nullable|date',
         ]);
 
         $validatedData['slug'] = Str::slug($request->judul, '-');
@@ -56,6 +58,9 @@ class ProgramController extends Controller
     {
         $kategori = ['Kesehatan', 'Pembangunan', 'Ekonomi', 'Pendidikan', 'Keamanan', 'Kegiatan', 'Pemerintahan'];
         return view('admin.programs.edit', compact('program', 'kategori'));
+
+        $statusOptions = ['published' => 'Published', 'draft' => 'Draft', 'scheduled' => 'Scheduled'];
+        return view('admin.programs.edit', compact('program', 'kategori', 'statusOptions'));
     }
 
     public function update(Request $request, Program $program)
@@ -67,6 +72,8 @@ class ProgramController extends Controller
             'periode' => 'required|max:255',
             'link' => 'nullable|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'status' => 'required|in:published,draft,scheduled',
+            'published_at' => 'required_if:status,scheduled|nullable|date',
         ]);
 
         $validatedData['slug'] = Str::slug($request->judul, '-');

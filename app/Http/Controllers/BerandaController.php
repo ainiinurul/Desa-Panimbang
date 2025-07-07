@@ -28,7 +28,16 @@ class BerandaController extends Controller
             ->get();
 
         // 2. Mengambil data program desa
-        $programDesa = Program::latest()->get();
+        $programDesa = Program::where(function($query) {
+            $query->where('status', 'published')
+                ->orWhere(function($q) {
+                    $q->where('status', 'scheduled')
+                        ->where('published_at', '<=', \Carbon\Carbon::now());
+                });
+        })
+        ->latest('published_at')
+        ->take(6) // Ambil 6 program saja
+        ->get();
 
         // 3. Mengambil SEMUA pengaturan website (TERMASUK VISI & MISI)
         $settings = Setting::all()->pluck('value', 'key')->toArray();
