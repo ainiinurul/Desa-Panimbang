@@ -3,30 +3,43 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Berita;
+use App\Models\Statistik;
+use App\Models\Wilayah;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Hitung total berita berdasarkan status
+        // Data Berita
         $totalBerita = Berita::count();
         $publishedBerita = Berita::where('status', 'published')->count();
         $scheduledBerita = Berita::where('status', 'scheduled')->count();
         $draftBerita = Berita::where('status', 'draft')->count();
-        
-        // Data untuk chart/statistik jika diperlukan
-        $beritaByKategori = Berita::selectRaw('kategori, count(*) as total')
+
+        $beritaByKategori = Berita::select('kategori', DB::raw('count(*) as total'))
             ->groupBy('kategori')
             ->get();
-            
-        return view('admin.dashboard', compact(
-            'totalBerita', 
-            'publishedBerita', 
-            'scheduledBerita', 
-            'draftBerita',
-            'beritaByKategori'
-        ));
+
+        $latestBerita = Berita::latest()->take(5)->get();
+
+        // Ambil data dari tabel Statistik & Wilayah
+        $statistik = Statistik::first();
+        $wilayah = Wilayah::first();
+
+        // Menyiapkan data untuk dikirim ke view
+        $data = [
+            'totalBerita' => $totalBerita,
+            'publishedBerita' => $publishedBerita,
+            'scheduledBerita' => $scheduledBerita,
+            'draftBerita' => $draftBerita,
+            'beritaByKategori' => $beritaByKategori,
+            'latestBerita' => $latestBerita,
+            'statistik' => $statistik,
+            'wilayah' => $wilayah,
+        ];
+
+        return view('admin.dashboard', $data);
     }
 }

@@ -3,102 +3,126 @@
 @section('title', 'Dashboard Admin')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-    <!-- Total Berita Card -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="bg-blue-100 p-3 rounded-full mr-4">
-                <i class="fas fa-newspaper text-blue-500"></i>
+    {{-- Bagian Welcome Banner --}}
+    <div class="mb-8 bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold">Selamat Datang Kembali, {{ Auth::user()->name }}!</h2>
+        <p class="mt-1">Berikut adalah ringkasan data terbaru dari Desa Panimbang.</p>
+    </div>
+
+    {{-- Ringkasan Data Utama (4 Kartu) --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Total Penduduk</p>
+                <h3 class="text-3xl font-bold">{{ number_format(($statistik->penduduk_pria ?? 0) + ($statistik->penduduk_wanita ?? 0)) }}</h3>
             </div>
+            <div class="bg-blue-100 p-4 rounded-full">
+                <i class="fas fa-users text-2xl text-blue-500"></i>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Luas Wilayah</p>
+                <h3 class="text-3xl font-bold">{{ number_format($wilayah->total_wilayah ?? 0, 2) }} Ha</h3>
+            </div>
+            <div class="bg-green-100 p-4 rounded-full">
+                <i class="fas fa-map-marked-alt text-2xl text-green-500"></i>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between">
             <div>
                 <p class="text-gray-600">Total Berita</p>
-                <h3 class="text-2xl font-bold">{{ $totalBerita }}</h3>
+                <h3 class="text-3xl font-bold">{{ $totalBerita }}</h3>
+            </div>
+            <div class="bg-yellow-100 p-4 rounded-full">
+                <i class="fas fa-newspaper text-2xl text-yellow-500"></i>
             </div>
         </div>
-    </div>
-
-    <!-- Published Berita Card -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="bg-green-100 p-3 rounded-full mr-4">
-                <i class="fas fa-check-circle text-green-500"></i>
-            </div>
+        <div class="bg-white rounded-lg shadow p-6 flex items-center justify-between">
             <div>
-                <p class="text-gray-600">Published</p>
-                <h3 class="text-2xl font-bold">{{ $publishedBerita }}</h3>
+                <p class="text-gray-600">Total Anggaran</p>
+                <h3 class="text-3xl font-bold">Rp {{ number_format(($statistik->apb_pad ?? 0) + ($statistik->apb_dana_desa ?? 0) + ($statistik->apb_alokasi_dana ?? 0) + ($statistik->apb_bantuan ?? 0)) }}</h3>
+            </div>
+            <div class="bg-purple-100 p-4 rounded-full">
+                <i class="fas fa-wallet text-2xl text-purple-500"></i>
             </div>
         </div>
     </div>
 
-    <!-- Scheduled Berita Card -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                <i class="fas fa-clock text-yellow-500"></i>
-            </div>
-            <div>
-                <p class="text-gray-600">Scheduled</p>
-                <h3 class="text-2xl font-bold">{{ $scheduledBerita }}</h3>
+    {{-- Bagian Grafik dan Berita Terbaru --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Populasi Berdasarkan Kelompok Usia</h3>
+            <div class="h-80">
+                <canvas id="chartPopulasiUsia"></canvas>
             </div>
         </div>
-    </div>
 
-    <!-- Draft Berita Card -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="bg-gray-100 p-3 rounded-full mr-4">
-                <i class="fas fa-file-alt text-gray-500"></i>
-            </div>
-            <div>
-                <p class="text-gray-600">Draft</p>
-                <h3 class="text-2xl font-bold">{{ $draftBerita }}</h3>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Berita per Kategori -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold mb-4">Berita per Kategori</h3>
-        <div class="space-y-4">
-            @foreach($beritaByKategori as $item)
-            <div class="flex items-center justify-between">
-                <span class="text-gray-700">{{ $item->kategori }}</span>
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    {{ $item->total }}
-                </span>
-            </div>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Berita Terbaru -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-semibold mb-4">Berita Terbaru</h3>
-        <div class="space-y-4">
-            @php
-                $latestBerita = App\Models\Berita::latest()->take(5)->get();
-            @endphp
-            
-            @forelse($latestBerita as $berita)
-            <div class="border-b pb-2 last:border-b-0">
-                <div class="flex justify-between items-center">
-                    <p class="font-medium">{{ Str::limit($berita->judul, 40) }}</p>
-                    <span class="text-xs 
-                        @if($berita->status == 'published') bg-green-100 text-green-800 
-                        @elseif($berita->status == 'scheduled') bg-yellow-100 text-yellow-800 
-                        @else bg-gray-100 text-gray-800 @endif
-                        px-2.5 py-0.5 rounded-full">
-                        {{ ucfirst($berita->status) }}
-                    </span>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Berita Terbaru</h3>
+            <div class="space-y-4">
+                @forelse($latestBerita as $berita)
+                <div class="border-b pb-2 last:border-b-0">
+                    <a href="{{ route('admin.berita.edit', $berita->id) }}" class="font-medium text-blue-600 hover:underline">{{ Str::limit($berita->judul, 40) }}</a>
+                    <div class="flex justify-between items-center mt-1">
+                        <p class="text-xs text-gray-500">{{ $berita->created_at->format('d M Y') }}</p>
+                        <span class="text-xs @if($berita->status == 'published') bg-green-100 text-green-800 @else bg-gray-100 text-gray-800 @endif px-2.5 py-0.5 rounded-full">
+                            {{ ucfirst($berita->status) }}
+                        </span>
+                    </div>
                 </div>
-                <p class="text-xs text-gray-500">{{ $berita->formatted_tanggal }}</p>
+                @empty
+                <p class="text-gray-500 text-center py-10">Belum ada berita</p>
+                @endforelse
             </div>
-            @empty
-            <p class="text-gray-500 text-center">Belum ada berita</p>
-            @endforelse
         </div>
     </div>
-</div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('chartPopulasiUsia').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Anak (0-14)', 'Produktif (15-64)', 'Lansia (65+)'],
+                datasets: [{
+                    label: 'Jumlah Penduduk',
+                    data: @json([
+                        $statistik->usia_anak ?? 0,
+                        $statistik->usia_produktif ?? 0,
+                        $statistik->usia_lansia ?? 0
+                    ]),
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    });
+</script>
 @endsection
