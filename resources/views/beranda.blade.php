@@ -6,6 +6,7 @@
     <title>Desa Panimbang - Kabupaten Cilacap</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="font-sans antialiased text-gray-800">
@@ -104,7 +105,7 @@
                 </div>
                 <div class="w-full md:w-2/3">
                     <h2 class="text-3xl font-bold text-blue-800 mb-4">"Selamat Datang di Website Desa Kami"</h2>
-                    <p class="text-gray-700 mb-6 leading-relaxed">{!! formatContent($settings['sambutan_kepala_desa'] ?? 'Sambutan belum diatur.') !!}</p>
+                    <p class="prose max-w-none text-gray-700 mb-6 leading-relaxed">{!! formatContent($settings['sambutan_kepala_desa'] ?? 'Sambutan belum diatur.') !!}</p>
                     <p class="text-right font-semibold text-blue-700">{{ $settings['nama_kepala_desa'] ?? '' }},<br>Kepala Desa Panimbang</p>
                 </div>
             </div>
@@ -130,15 +131,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="bg-blue-50 rounded-lg p-6 transform transition-all duration-500 hover:shadow-lg">
                             <h3 class="text-2xl font-bold text-blue-800 mb-4">Visi</h3>
-                            <div class="text-gray-700 leading-relaxed">
+                            <div class="prose max-w-none text-gray-700 leading-relaxed">
                                 {!! formatContent($settings['visi_desa'] ?? 'Visi belum diatur.') !!}
                             </div>
                         </div>
                         
                         <div class="bg-blue-50 rounded-lg p-6 transform transition-all duration-500 hover:shadow-lg">
                             <h3 class="text-2xl font-bold text-blue-800 mb-4">Misi</h3>
-                            <div class="text-gray-700 leading-relaxed space-y-3">
-                                {!! formatContent($settings['misi_desa'] ?? 'Misi belum diatur.') !!}
+                            <div class="prose max-w-none text-gray-700 leading-relaxed space-y-3">
+                                {!! $settings['misi_desa'] ?? 'Misi belum diatur.' !!}
                             </div>
                         </div>
                     </div>

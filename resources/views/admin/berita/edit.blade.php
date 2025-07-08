@@ -107,14 +107,14 @@
                             </div>
                         </div>
 
-                        {{-- Deskripsi --}}
+                        {{-- Deskripsi dengan TinyMCE --}}
                         <div>
                             <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">
                                 Deskripsi Berita
                                 <span class="text-red-500">*</span>
                             </label>
-                            <textarea name="deskripsi" id="deskripsi" rows="6" 
-                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+                            <textarea name="deskripsi" id="deskripsi" rows="10" 
+                                      class="tinymce-editor w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
                                       placeholder="Tulis konten berita di sini..."
                                       required>{{ old('deskripsi', $berita->deskripsi) }}</textarea>
                         </div>
@@ -219,52 +219,116 @@
     </div>
 </div>
 
+<!-- TinyMCE CDN -->
+<script src="https://cdn.tiny.cloud/1/s34kxbmrwl21bvruxzffhbsldltsq5kxpjxzpigtqy2m9m0h/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const statusSelect = document.getElementById('status');
-        const publishedAtContainer = document.getElementById('published_at_container');
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '.tinymce-editor',
+        height: 400,
+        menubar: true,
+        plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons'
+        ],
+        toolbar: 'undo redo | blocks | ' +
+                 'bold italic underline strikethrough | forecolor backcolor | ' +
+                 'alignleft aligncenter alignright alignjustify | ' +
+                 'bullist numlist outdent indent | ' +
+                 'removeformat | link image media table | ' +
+                 'emoticons charmap | preview code fullscreen help',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; font-size: 14px; line-height: 1.6; }',
         
-        statusSelect.addEventListener('change', function() {
-            if (this.value === 'scheduled') {
-                publishedAtContainer.classList.remove('hidden');
-                publishedAtContainer.classList.add('animate-fadeIn');
-            } else {
-                publishedAtContainer.classList.add('hidden');
-                publishedAtContainer.classList.remove('animate-fadeIn');
-            }
-        });
-
-        // Set initial state
-        if (statusSelect.value === 'scheduled') {
-            publishedAtContainer.classList.remove('hidden');
+        // Konfigurasi untuk bahasa Indonesia
+        language: 'id',
+        
+        // Pengaturan gambar
+        image_advtab: true,
+        image_uploadtab: true,
+        
+        // Pengaturan untuk responsive
+        mobile: {
+            theme: 'mobile',
+            plugins: ['autosave', 'lists', 'autolink'],
+            toolbar: ['undo', 'bold', 'italic', 'styleselect']
+        },
+        
+        // Custom style formats
+        style_formats: [
+            {title: 'Heading 1', block: 'h1'},
+            {title: 'Heading 2', block: 'h2'},
+            {title: 'Heading 3', block: 'h3'},
+            {title: 'Heading 4', block: 'h4'},
+            {title: 'Heading 5', block: 'h5'},
+            {title: 'Heading 6', block: 'h6'},
+            {title: 'Paragraph', block: 'p'},
+            {title: 'Blockquote', block: 'blockquote'},
+            {title: 'Div', block: 'div'},
+            {title: 'Pre', block: 'pre'},
+            {title: 'Code', inline: 'code'}
+        ],
+        
+        // Pengaturan paste
+        paste_data_images: true,
+        paste_as_text: false,
+        paste_word_valid_elements: "b,strong,i,em,h1,h2,h3,h4,h5,h6,p,ol,ul,li,a[href],span,div,br",
+        
+        // Validasi HTML
+        valid_elements: '*[*]',
+        extended_valid_elements: '*[*]',
+        
+        // Setup function untuk kustomisasi lebih lanjut
+        setup: function(editor) {
+            editor.on('change', function() {
+                editor.save();
+            });
         }
-
-        // File input enhancement
-        const fileInput = document.getElementById('gambar');
-        const fileLabel = document.querySelector('label[for="gambar"]');
-        
-        fileInput.addEventListener('change', function(e) {
-            const fileName = e.target.files[0]?.name;
-            if (fileName) {
-                fileLabel.innerHTML = `<span class="text-green-600 font-medium">✓ ${fileName}</span>`;
-            }
-        });
-
-        // Form validation enhancement
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(e) {
-            const submitBtn = document.querySelector('button[type="submit"]');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menyimpan...';
-            submitBtn.disabled = true;
-        });
-
-        // Auto-resize textarea
-        const textarea = document.getElementById('deskripsi');
-        textarea.addEventListener('input', function() {
-            this.style.height = 'auto';
-            this.style.height = this.scrollHeight + 'px';
-        });
     });
+
+    // Status select functionality
+    const statusSelect = document.getElementById('status');
+    const publishedAtContainer = document.getElementById('published_at_container');
+    
+    statusSelect.addEventListener('change', function() {
+        if (this.value === 'scheduled') {
+            publishedAtContainer.classList.remove('hidden');
+            publishedAtContainer.classList.add('animate-fadeIn');
+        } else {
+            publishedAtContainer.classList.add('hidden');
+            publishedAtContainer.classList.remove('animate-fadeIn');
+        }
+    });
+
+    // Set initial state
+    if (statusSelect.value === 'scheduled') {
+        publishedAtContainer.classList.remove('hidden');
+    }
+
+    // File input enhancement
+    const fileInput = document.getElementById('gambar');
+    const fileLabel = document.querySelector('label[for="gambar"]');
+    
+    fileInput.addEventListener('change', function(e) {
+        const fileName = e.target.files[0]?.name;
+        if (fileName) {
+            fileLabel.innerHTML = `<span class="text-green-600 font-medium">✓ ${fileName}</span>`;
+        }
+    });
+
+    // Form validation enhancement
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        // Trigger TinyMCE to save content to textarea
+        tinymce.triggerSave();
+        
+        const submitBtn = document.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menyimpan...';
+        submitBtn.disabled = true;
+    });
+});
 </script>
 
 <style>
