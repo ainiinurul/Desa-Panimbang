@@ -65,7 +65,30 @@
                     </td>
                     <td class="py-3 px-4">{{ $program->judul }}</td>
                     <td class="py-3 px-4">
-                        <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                        <span class="px-3 py-1 text-xs font-medium rounded-full
+                            @switch($program->kategori)
+                                @case('Kesehatan')
+                                    bg-green-100 text-green-800
+                                    @break
+                                @case('Pendidikan')
+                                    bg-yellow-100 text-yellow-800
+                                    @break
+                                @case('Pembangunan')
+                                    bg-indigo-100 text-indigo-800
+                                    @break
+                                @case('Ekonomi')
+                                    bg-purple-100 text-purple-800
+                                    @break
+                                @case('Keamanan')
+                                    bg-red-100 text-red-800
+                                    @break
+                                @case('Kegiatan')
+                                    bg-pink-100 text-pink-800
+                                    @break
+                                @default
+                                    bg-gray-100 text-gray-800
+                            @endswitch
+                        ">
                             {{ $program->kategori }}
                         </span>
                     </td>

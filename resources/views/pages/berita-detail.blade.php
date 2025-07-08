@@ -75,19 +75,47 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
-        /* Badge styling */
+        /* Badge styling - removed static styling karena akan dinamis */
         .badge {
-            background: linear-gradient(135deg, #EBF8FF 0%, #DBEAFE 100%);
-            border: 1px solid #93C5FD;
             transition: all 0.3s ease;
         }
         
         .badge:hover {
-            background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
             transform: scale(1.05);
         }
     </style>
 </head>
+
+@php
+    // Logika untuk menentukan kelas warna Tailwind CSS berdasarkan kategori
+    $kategoriClasses = '';
+    switch (strtolower($berita->kategori)) {
+        case 'pembangunan':
+            $kategoriClasses = 'bg-indigo-100 text-indigo-800 border-indigo-300';
+            break;
+        case 'ekonomi':
+            $kategoriClasses = 'bg-purple-100 text-purple-800 border-purple-300';
+            break;
+        case 'kesehatan':
+            $kategoriClasses = 'bg-green-100 text-green-800 border-green-300';
+            break;
+        case 'pendidikan':
+            $kategoriClasses = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+            break;
+        case 'keamanan':
+            $kategoriClasses = 'bg-red-100 text-red-800 border-red-300';
+            break;
+        case 'kegiatan':
+            $kategoriClasses = 'bg-pink-100 text-pink-800 border-pink-300';
+            break;
+        case 'pemerintahan':
+            $kategoriClasses = 'bg-gray-100 text-gray-800 border-gray-300';
+            break;
+        default:
+            $kategoriClasses = 'bg-blue-100 text-blue-800 border-blue-300';
+            break;
+    }
+@endphp
 
 <main class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
 
@@ -103,20 +131,23 @@
                     <div class="news-card content-fade-in p-8 mb-8">
                         
                         {{-- News Title --}}
-                        <div class="mb-8">
-                            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6">
+                        <div class="text-center mb-8">
+                            <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
                                 {{ $berita->judul }}
                             </h1>
+                            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                                Berita terkini dari Desa Panimbang untuk masyarakat
+                            </p>
                         </div>
 
                         {{-- News Meta Info --}}
-                        <div class="flex flex-wrap gap-6 mb-8">
+                        <div class="flex flex-wrap justify-center gap-6 mb-8">
                             <div class="flex items-center space-x-2">
                                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z"></path>
                                 </svg>
                                 <span class="text-sm text-gray-500 font-medium">Kategori:</span>
-                                <span class="badge px-4 py-2 text-blue-800 rounded-full text-sm font-semibold">
+                                <span class="badge px-4 py-2 rounded-full text-sm font-semibold border {{ $kategoriClasses }}">
                                     {{ $berita->kategori }}
                                 </span>
                             </div>
@@ -126,7 +157,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3a2 2 0 012-2h4a2 2 0 012 2v4m-6 4v10m6-10v10m-3-16h.01M12 8h.01"></path>
                                 </svg>
                                 <span class="text-sm text-gray-500 font-medium">Tanggal:</span>
-                                <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                                <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold border border-green-300">
                                     {{ \Carbon\Carbon::parse($berita->tanggal)->isoFormat('dddd, D MMMM Y') }}
                                 </span>
                             </div>

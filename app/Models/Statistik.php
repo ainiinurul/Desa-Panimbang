@@ -23,6 +23,7 @@ class Statistik extends Model
         'posyandu_chart_pria', 'posyandu_chart_wanita',
         'idm_skor', 'idm_status', 'idm_target', 'idm_skor_minimal',
         'idm_ikl', 'idm_iks', 'idm_ike',
+        'idm_tahun',
     ];
 
     /**

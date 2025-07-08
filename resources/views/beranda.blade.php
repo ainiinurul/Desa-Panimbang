@@ -6,7 +6,7 @@
     <title>Desa Panimbang - Kabupaten Cilacap</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body class="font-sans antialiased text-gray-800">
@@ -160,21 +160,23 @@
                         $kategoriClasses = '';
                         switch (strtolower($program->kategori)) {
                             case 'pembangunan':
-                                $kategoriClasses = 'bg-blue-100 text-blue-800';
+                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
                                 break;
                             case 'ekonomi':
-                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
+                                $kategoriClasses = 'bg-purple-100 text-purple-800';
                                 break;
                             case 'kesehatan':
                                 $kategoriClasses = 'bg-green-100 text-green-800';
                                 break;
                             case 'pendidikan':
-                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
+                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
                                 break;
                             case 'keamanan':
                                 $kategoriClasses = 'bg-red-100 text-red-800';
                                 break;
                             case 'kegiatan':
+                                $kategoriClasses = 'bg-pink-100 text-pink-800';
+                                break;
                             case 'pemerintahan':
                             default:
                                 $kategoriClasses = 'bg-gray-100 text-gray-800';
@@ -232,16 +234,16 @@
                         $kategoriClasses = '';
                         switch (strtolower($item->kategori)) {
                             case 'pembangunan':
-                                $kategoriClasses = 'bg-blue-100 text-blue-800';
+                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
                                 break;
                             case 'kesehatan':
                                 $kategoriClasses = 'bg-green-100 text-green-800';
                                 break;
                             case 'ekonomi':
-                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
+                                $kategoriClasses = 'bg-purple-100 text-purple-800';
                                 break;
                             case 'pendidikan':
-                                $kategoriClasses = 'bg-indigo-100 text-indigo-800';
+                                $kategoriClasses = 'bg-yellow-100 text-yellow-800';
                                 break;
                             case 'keamanan':
                                 $kategoriClasses = 'bg-red-100 text-red-800';
@@ -249,9 +251,12 @@
                             case 'pemerintahan':
                                 $kategoriClasses = 'bg-gray-100 text-gray-800';
                                 break;
+                            case 'kegiatan':
+                                $kategoriClasses = 'bg-pink-100 text-pink-800';
+                                break;
                             default:
                                 // Warna default jika kategori tidak ada dalam daftar di atas.
-                                $kategoriClasses = 'bg-purple-100 text-purple-800';
+                                $kategoriClasses = 'bg-pink-100 text-pink-800';
                                 break;
                         }
                     @endphp

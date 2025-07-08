@@ -39,6 +39,7 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="py-3 px-4 text-left">No</th>
+                    <th class="py-3 px-4 text-left">Gambar</th>
                     <th class="py-3 px-4 text-left">Judul</th>
                     <th class="py-3 px-4 text-left">Kategori</th>
                     <th class="py-3 px-4 text-left">Tanggal</th>
@@ -50,8 +51,44 @@
                 @forelse($berita as $item)
                 <tr class="border-b berita-row" data-judul="{{ strtolower($item->judul) }}" data-kategori="{{ strtolower($item->kategori) }}">
                     <td class="py-3 px-4">{{ $loop->iteration }}</td>
+                    <td class="py-3 px-4">
+                        @if($item->gambar)
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Berita" class="w-12 h-12 object-cover rounded">
+                        @else
+                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-image text-gray-400"></i>
+                            </div>
+                        @endif
+                    </td>
                     <td class="py-3 px-4">{{ $item->judul }}</td>
-                    <td class="py-3 px-4">{{ $item->kategori }}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-3 py-1 text-xs font-medium rounded-full
+                            @switch($item->kategori)
+                                @case('Kesehatan')
+                                    bg-green-100 text-green-800
+                                    @break
+                                @case('Pendidikan')
+                                    bg-yellow-100 text-yellow-800
+                                    @break
+                                @case('Pembangunan')
+                                    bg-indigo-100 text-indigo-800
+                                    @break
+                                @case('Ekonomi')
+                                    bg-purple-100 text-purple-800
+                                    @break
+                                @case('Keamanan')
+                                    bg-red-100 text-red-800
+                                    @break
+                                @case('Kegiatan')
+                                    bg-pink-100 text-pink-800
+                                    @break
+                                @default
+                                    bg-gray-100 text-gray-800
+                            @endswitch
+                        ">
+                            {{ $item->kategori }}
+                        </span>
+                    </td>
                     <td class="py-3 px-4">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d M Y') : 'Tanggal tidak tersedia' }}</td>
                     <td class="py-3 px-4">
                         <span class="px-2 py-1 text-xs rounded-full 
@@ -79,7 +116,7 @@
                 </tr>
                 @empty
                 <tr id="emptyRow">
-                    <td colspan="6" class="py-8 px-4 text-center text-gray-500">
+                    <td colspan="7" class="py-8 px-4 text-center text-gray-500">
                         <i class="fas fa-newspaper text-4xl mb-2 text-gray-300"></i>
                         <p>Belum ada berita.</p>
                     </td>
