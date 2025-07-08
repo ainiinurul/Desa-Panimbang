@@ -57,23 +57,66 @@
                 <canvas id="chartPopulasiUsia"></canvas>
             </div>
         </div>
+        {{-- KARTU BARU DENGAN TAB BERITA & PROGRAM --}}
+        <div x-data="{ activeTab: 'berita' }" class="bg-white rounded-lg shadow">
+            {{-- Header dengan Tombol Tab --}}
+            <div class="flex border-b">
+                <button @click="activeTab = 'berita'" 
+                        :class="{'border-blue-500 text-blue-600': activeTab === 'berita', 'border-transparent text-gray-500 hover:text-gray-700': activeTab !== 'berita'}"
+                        class="flex-1 font-medium px-4 py-3 border-b-2 focus:outline-none transition-colors duration-300">
+                    Berita Terbaru
+                </button>
+                <button @click="activeTab = 'program'"
+                        :class="{'border-blue-500 text-blue-600': activeTab === 'program', 'border-transparent text-gray-500 hover:text-gray-700': activeTab !== 'program'}"
+                        class="flex-1 font-medium px-4 py-3 border-b-2 focus:outline-none transition-colors duration-300">
+                    Program Terbaru
+                </button>
+            </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold mb-4 text-gray-800">Berita Terbaru</h3>
-            <div class="space-y-4">
-                @forelse($latestBerita as $berita)
-                <div class="border-b pb-2 last:border-b-0">
-                    <a href="{{ route('admin.berita.edit', $berita->id) }}" class="font-medium text-blue-600 hover:underline">{{ Str::limit($berita->judul, 40) }}</a>
-                    <div class="flex justify-between items-center mt-1">
-                        <p class="text-xs text-gray-500">{{ $berita->created_at->format('d M Y') }}</p>
-                        <span class="text-xs @if($berita->status == 'published') bg-green-100 text-green-800 @else bg-gray-100 text-gray-800 @endif px-2.5 py-0.5 rounded-full">
-                            {{ ucfirst($berita->status) }}
-                        </span>
+            {{-- Konten Tab --}}
+            <div class="p-6">
+                {{-- Panel Berita --}}
+                <div x-show="activeTab === 'berita'" class="space-y-4">
+                    @forelse($latestBerita as $berita)
+                    <div class="border-b pb-2 last:border-b-0">
+                        <a href="{{ route('admin.berita.show', $berita->id) }}" class="font-medium text-blue-600 hover:underline">{{ Str::limit($berita->judul, 40) }}</a>
+                        <div class="flex justify-between items-center mt-1">
+                            <p class="text-xs text-gray-500 leading-5">{{ $berita->created_at->format('d M Y') }}</p>
+                            <span class="text-xs @if($berita->status == 'published') bg-green-100 text-green-800 @else bg-yellow-100 text-yellow-800 @endif px-2.5 py-0.5 rounded-full leading-5 h-5 flex items-center">
+                                {{ ucfirst($berita->status) }}
+                            </span>
+                        </div>
                     </div>
+                    @empty
+                    <p class="text-gray-500 text-center py-10">Belum ada berita</p>
+                    @endforelse
                 </div>
-                @empty
-                <p class="text-gray-500 text-center py-10">Belum ada berita</p>
-                @endforelse
+
+                {{-- Panel Program --}}
+                <div x-show="activeTab === 'program'" class="space-y-4" style="display: none;">
+                    @forelse($latestPrograms as $program)
+                    <div class="border-b pb-2 last:border-b-0">
+                        {{-- Ganti 'nama' jika nama field di tabel program Anda berbeda --}}
+                        <a href="{{ route('admin.programs.show', $program->id) }}" class="font-medium text-blue-600 hover:underline">{{ Str::limit($program->judul, 40) }}</a>
+                        <div class="flex justify-between items-center mt-1">
+                            <p class="text-xs text-gray-500 leading-5">{{ $program->created_at->format('d M Y') }}</p>
+                            {{-- Ganti status jika ada, atau hapus span jika tidak ada --}}
+                            <span class="text-xs px-2.5 py-0.5 rounded-full capitalize leading-5 h-5 flex items-center
+                                @if($program->status == 'published') 
+                                    bg-green-100 text-green-800 
+                                @elseif($program->status == 'scheduled')
+                                    bg-yellow-100 text-yellow-800
+                                @else 
+                                    bg-gray-100 text-gray-800 
+                                @endif">
+                                {{ $program->status }}
+                            </span>
+                        </div>
+                    </div>
+                    @empty
+                    <p class="text-gray-500 text-center py-10">Belum ada program</p>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>

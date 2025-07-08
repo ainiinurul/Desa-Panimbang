@@ -77,17 +77,17 @@
                             {{ $program->status }}
                         </span>
                     </td>
-                    <td class="py-3 px-4 flex space-x-2">
+                    <td class="py-3 px-4">
                         <a href="{{ route('admin.programs.show', $program) }}" class="text-blue-500 hover:text-blue-700 mr-2" title="Lihat Detail">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('admin.programs.edit', $program) }}" class="text-yellow-500 hover:text-yellow-700" title="Edit Program">
+                        <a href="{{ route('admin.programs.edit', $program) }}" class="text-yellow-500 hover:text-yellow-700 mr-2" title="Edit Program">
                             <i class="fas fa-edit"></i>
                         </a>
                         <form action="{{ route('admin.programs.destroy', $program) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-700" title="Hapus Program" onclick="return confirm('Anda yakin ingin menghapus program ini?')">
+                            <button type="submit" class="text-red-500 hover:text-red-700" title="Hapus Program" onclick="return confirmDelete('{{ $program->judul }}')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
+use App\Models\Program;
 use App\Models\Statistik;
 use App\Models\Wilayah;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             ->get();
 
         $latestBerita = Berita::latest()->take(5)->get();
+        $latestPrograms = Program::latest()->take(5)->get();
 
         // Ambil data dari tabel Statistik & Wilayah
         $statistik = Statistik::first();
@@ -36,6 +38,7 @@ class DashboardController extends Controller
             'draftBerita' => $draftBerita,
             'beritaByKategori' => $beritaByKategori,
             'latestBerita' => $latestBerita,
+            'latestPrograms' => $latestPrograms, 
             'statistik' => $statistik,
             'wilayah' => $wilayah,
         ];

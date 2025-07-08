@@ -15,11 +15,49 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .profile-dropdown {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .profile-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 2px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .status-indicator {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .notification-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+            60% { transform: translateY(-3px); }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <div class="bg-gradient-to-b from-blue-800 to-blue-900 text-white w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20 shadow-xl">
+        <div class="bg-gradient-to-b from-blue-800 to-blue-900 text-white w-70 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out z-20 shadow-xl">
             <div class="flex items-center space-x-2 px-4 py-3 border-b border-blue-700">
                 <img src="{{ asset('img/logo_cilacap.png') }}" alt="Logo" class="h-10">
                 <span class="text-xl font-bold">Admin Desa</span>
@@ -146,36 +184,90 @@
                         <button id="sidebar-toggle" class="md:hidden text-gray-600 focus:outline-none hover:text-blue-600 transition-colors mr-4">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
-                        <!-- Header yang diperbaiki -->
-                        <div class="flex items-center bg-gradient-to-r from-blue-600 to-blue-800 px-4 py-2 rounded-lg shadow">
-                            <div class="text-white">
-                                <h1 class="text-xl font-bold tracking-wide">DASHBOARD ADMIN</h1>
-                                <p class="text-xs font-light opacity-90">Sistem Manajemen Desa Panimbang</p>
+                        <!-- Header -->
+                        <div class="flex items-center bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-3 rounded-lg shadow-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="bg-white bg-opacity-20 p-2 rounded-full">
+                                    <i class="fas fa-home text-white text-lg"></i>
+                                </div>
+                                <div class="text-white">
+                                    <h1 class="text-lg font-semibold tracking-wide">Sistem Manajemen Desa Panimbang</h1>
+                                    <p class="text-xs font-light opacity-75">Portal Administrasi Digital</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-6">
-                        <!-- Notifikasi -->
-                        <div class="relative">
-                            <button class="text-gray-600 hover:text-blue-600 focus:outline-none transition-colors relative">
-                                <i class="fas fa-bell text-xl"></i>
-                                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-                            </button>
-                        </div>
-                        <!-- Dropdown Profile User -->
+                    <!-- RIGHT SIDE - IMPROVED USER PROFILE SECTION -->
+                    <div class="flex items-center space-x-4">
+                        <!-- Divider -->
+                        <div class="w-px h-8 bg-gray-300"></div>
+
+                        <!-- User Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                                <span class="text-gray-700 font-medium hidden sm:block">{{ Auth::user()->name }}</span>
-                                <img class="h-8 w-8 rounded-full border-2 border-blue-500" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=4A90E2&color=fff" alt="Profile">
-                                <i class="fas fa-chevron-down text-xs text-gray-500 transition-transform" :class="{'rotate-180': open}"></i>
+                            <button @click="open = !open" class="flex items-center space-x-3 bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 px-4 py-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 group">
+                                <!-- Avatar with Status Indicator -->
+                                <div class="relative">
+                                    <img class="profile-avatar h-10 w-10 rounded-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=667eea&color=fff&size=40" alt="Profile">
+                                    <div class="status-indicator absolute -bottom-0.5 -right-0.5 h-3 w-3 bg-green-400 rounded-full border-2 border-white"></div>
+                                </div>
+                                
+                                <!-- User Info -->
+                                <div class="hidden sm:block text-left">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-sm font-semibold text-gray-800">{{ Auth::user()->name }}</span>
+                                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full font-medium capitalize">{{ Auth::user()->role }}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-0.5">Online sekarang</p>
+                                </div>
+                                
+                                <!-- Chevron -->
+                                <i class="fas fa-chevron-down text-xs text-gray-500 transition-transform duration-200 group-hover:text-blue-600" :class="{'rotate-180': open}"></i>
                             </button>
-                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Profile</a>
-                                <a href="{{ route('admin.settings.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Settings</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Logout</button>
-                                </form>
+                            
+                            <!-- Dropdown Menu -->
+                            <div x-show="open" 
+                                 @click.away="open = false" 
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 transform scale-100"
+                                 x-transition:leave-end="opacity-0 transform scale-95"
+                                 class="profile-dropdown absolute right-0 mt-3 w-64 rounded-xl shadow-2xl py-2 z-50 border border-gray-200">
+                                
+                                <!-- User Info Header -->
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <div class="flex items-center space-x-3">
+                                        <img class="h-12 w-12 rounded-full object-cover ring-2 ring-blue-500" src="https://ui-avatars.com/api/?name=Aini+Nurul+Apreliza&background=667eea&color=fff&size=48" alt="Profile">
+                                        <div>
+                                            <p class="font-semibold text-gray-800">{{ Auth::user()->name }}</p>
+                                            <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                                            <div class="flex items-center space-x-1 mt-1">
+                                                <div class="h-2 w-2 bg-green-400 rounded-full"></div>
+                                                <span class="text-xs text-green-600 font-medium">Online</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Menu Items -->
+                                <div class="py-1">
+                                    <a href="{{ route('admin.profile.show') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                                        <i class="fas fa-user-circle mr-3 text-gray-400"></i>
+                                        Profil Saya
+                                    </a>
+                                </div>
+                                
+                                <!-- Divider -->
+                                <div class="border-t border-gray-100 my-1"></div>
+                                
+                                <!-- Logout Button -->
+                                <div class="py-1">
+                                    <button class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        <i class="fas fa-sign-out-alt mr-3 text-red-400"></i>
+                                        Keluar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

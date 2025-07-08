@@ -84,7 +84,18 @@
         <option value="Kasi Pemerintahan" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kasi Pemerintahan' ? 'selected' : '' }}>Kasi Pemerintahan</option>
         <option value="Kasi Kesejahteraan" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kasi Kesejahteraan' ? 'selected' : '' }}>Kasi Kesejahteraan</option>
         <option value="Kasi Pelayanan" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kasi Pelayanan' ? 'selected' : '' }}>Kasi Pelayanan</option>
-        <option value="Kadus" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kadus' ? 'selected' : '' }}>Kepala Dusun (Kadus)</option>
+        
+        {{-- KEPALA DUSUN DENGAN KETERANGAN --}}
+        <optgroup label="Kepala Dusun">
+            <option value="Kepala Dusun Panimbang" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Panimbang' ? 'selected' : '' }}>Kepala Dusun Panimbang</option>
+            <option value="Kepala Dusun Lengkong" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Lengkong' ? 'selected' : '' }}>Kepala Dusun Lengkong</option>
+            <option value="Kepala Dusun Cibungur" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Cibungur' ? 'selected' : '' }}>Kepala Dusun Cibungur</option>
+            <option value="Kepala Dusun Cikondang" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Cikondang' ? 'selected' : '' }}>Kepala Dusun Cikondang</option>
+            <option value="Kepala Dusun Genteng Wetan" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Genteng Wetan' ? 'selected' : '' }}>Kepala Dusun Genteng Wetan</option>
+            <option value="Kepala Dusun Genteng Kulon" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Genteng Kulon' ? 'selected' : '' }}>Kepala Dusun Genteng Kulon</option>
+            <option value="Kepala Dusun Cikadu" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Kepala Dusun Cikadu' ? 'selected' : '' }}>Kepala Dusun Cikadu</option>
+        </optgroup>
+
         <option value="Ketua RT" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Ketua RT' ? 'selected' : '' }}>Ketua RT</option>
         <option value="Ketua RW" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Ketua RW' ? 'selected' : '' }}>Ketua RW</option>
         <option value="Lainnya" {{ old('jabatan', $perangkat->jabatan ?? '') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
