@@ -6,7 +6,7 @@
             "use": "@vercel/php"
         }
     ],
-    "buildCommand": "vite build",
+    "buildCommand": "php artisan config:clear && php artisan route:clear && php artisan view:clear && vite build",
     "routes": [
         {
             "src": "/build/(.*)",
