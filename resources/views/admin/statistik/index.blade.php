@@ -72,7 +72,7 @@
                     <input type="number" name="pendidikan_smp" id="pendidikan_smp" value="{{ old('pendidikan_smp', $statistik->pendidikan_smp) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
                 <div>
-                    <label for="pendidikan_sma" class="block text-sm font-medium text-gray-700">SMA</label>
+                    <label for="pendidikan_sma" class="block text-sm font-medium text-gray-700">SMA/SMK/MA</label>
                     <input type="number" name="pendidikan_sma" id="pendidikan_sma" value="{{ old('pendidikan_sma', $statistik->pendidikan_sma) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
                 <div>
@@ -95,7 +95,7 @@
                     <input type="number" name="fasilitas_smp" id="fasilitas_smp" value="{{ old('fasilitas_smp', $statistik->fasilitas_smp) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
                 <div>
-                    <label for="fasilitas_sma" class="block text-sm font-medium text-gray-700">SMA/MA</label>
+                    <label for="fasilitas_sma" class="block text-sm font-medium text-gray-700">SMA/SMK/MA</label>
                     <input type="number" name="fasilitas_sma" id="fasilitas_sma" value="{{ old('fasilitas_sma', $statistik->fasilitas_sma) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
             </div>
