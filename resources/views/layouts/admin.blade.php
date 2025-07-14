@@ -83,14 +83,14 @@
 
                     {{-- Submenu yang bisa buka-tutup --}}
                     <div x-show="open" x-transition class="pl-8 py-2 space-y-1">
+                        <a href="{{ route('admin.settings.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.settings.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
+                            › Pengaturan Website
+                        </a>
                         <a href="{{ route('admin.programs.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.programs.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
                             › Program Desa
                         </a>
                         <a href="{{ route('admin.berita.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.berita.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
                             › Berita
-                        </a>
-                        <a href="{{ route('admin.settings.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.settings.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
-                            › Pengaturan Website
                         </a>
                     </div>
                 </div>

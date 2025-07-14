@@ -98,8 +98,4 @@ class BerandaController extends Controller
         
         return view('pages.berita-detail', compact('berita', 'related'));
     }
-
-    
-
-    // FUNGSI INDEX KEDUA YANG DUPLIKAT SUDAH DIHAPUS DARI SINI
 }
