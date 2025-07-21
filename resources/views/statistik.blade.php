@@ -383,7 +383,7 @@
                 <!-- Kolom 1: Info Kontak -->
                 <div>
                     <div class="flex items-center mb-4">
-                        <img src="images/logo_cilacap.png" alt="Logo Cilacap" class="h-14 w-auto mr-3">
+                        <img src="img/logo_cilacap.png" alt="Logo Cilacap" class="h-14 w-auto mr-3">
                         <div>
                             <h3 class="text-lg font-bold">DESA PANIMBANG</h3>
                             <p class="text-sm">Kabupaten Cilacap, Jawa Tengah</p>

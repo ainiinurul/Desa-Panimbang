@@ -66,6 +66,41 @@
     @enderror
 </div>
 
+{{-- Tempat Lahir --}}
+<div class="space-y-2">
+    <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">
+        Tempat Lahir
+    </label>
+    <input type="text" 
+            name="tempat_lahir" 
+            id="tempat_lahir" 
+            value="{{ old('tempat_lahir', $perangkat->tempat_lahir ?? '') }}"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('tempat_lahir') border-red-500 @enderror"
+            placeholder="Masukkan kota kelahiran">
+    @error('tempat_lahir')
+        <p class="text-red-500 text-sm mt-1">
+            <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+        </p>
+    @enderror
+</div>
+
+{{-- Tanggal Lahir --}}
+<div class="space-y-2">
+    <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">
+        Tanggal Lahir
+    </label>
+    <input type="date" 
+            name="tanggal_lahir" 
+            id="tanggal_lahir" 
+            value="{{ old('tanggal_lahir', $perangkat->tanggal_lahir ?? '') }}"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('tanggal_lahir') border-red-500 @enderror">
+    @error('tanggal_lahir')
+        <p class="text-red-500 text-sm mt-1">
+            <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}
+        </p>
+    @enderror
+</div>
+
 {{-- Jabatan --}}
 <div class="space-y-2">
     <label for="jabatan" class="block text-sm font-medium text-gray-700">

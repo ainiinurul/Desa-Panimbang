@@ -207,6 +207,17 @@ function showLembagaDetail(lembagaId) {
     fetch(`/admin/lembaga/${lembagaId}/detail`)
         .then(response => response.json())
         .then(data => {
+            // -- PENAMBAHAN LOGIKA UNTUK FORMAT TANGGAL --
+            let formattedTanggalLahir = '-';
+            if (data.tanggal_lahir) {
+                const date = new Date(data.tanggal_lahir);
+                formattedTanggalLahir = date.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
             detailContent.innerHTML = `
                 <div class="flex flex-col items-center mb-6">
                     <img src="/storage/${data.foto}" alt="${data.nama}" class="h-32 w-32 object-cover rounded-full mb-4 shadow-lg">
@@ -214,6 +225,15 @@ function showLembagaDetail(lembagaId) {
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-2 text-sm">
                     <div class="md:col-span-1 font-semibold text-gray-500">Nama Lengkap</div><div class="md:col-span-2 text-gray-800">: ${data.nama || '-'}</div>
                     <div class="md:col-span-1 font-semibold text-gray-500">Jabatan</div><div class="md:col-span-2 text-gray-800">: ${data.jabatan || '-'}</div>
+                    
+                    {{-- ====================================================== --}}
+                    {{-- KODE BARU DITAMBAHKAN DI SINI --}}
+                    ${data.tempat_lahir || data.tanggal_lahir ? `
+                        <div class="md:col-span-1 font-semibold text-gray-500">Tempat, Tgl Lahir</div>
+                        <div class="md:col-span-2 text-gray-800">: ${data.tempat_lahir || ''}${data.tempat_lahir && data.tanggal_lahir ? ', ' : ''}${formattedTanggalLahir}</div>
+                    ` : ''}
+                    {{-- ====================================================== --}}
+
                     ${data.pendidikan ? `<div class="md:col-span-1 font-semibold text-gray-500">Pendidikan</div><div class="md:col-span-2 text-gray-800">: ${data.pendidikan}</div>` : ''}
                     ${data.alamat ? `<div class="md:col-span-1 font-semibold text-gray-500">Alamat</div><div class="md:col-span-2 text-gray-800">: ${data.alamat}</div>` : ''}
                     ${data.telepon ? `<div class="md:col-span-1 font-semibold text-gray-500">No. Telepon</div><div class="md:col-span-2 text-gray-800">: ${data.telepon}</div>` : ''}
