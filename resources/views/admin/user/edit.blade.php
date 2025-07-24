@@ -55,12 +55,12 @@
         </div>
 
         <div class="flex items-center justify-between">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200">
-                Simpan Perubahan
-            </button>
             <a href="{{ route('admin.user.index') }}" class="text-gray-600 hover:text-gray-800">
                 Kembali
             </a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200">
+                Simpan Perubahan
+            </button>
         </div>
     </form>
 </div>
