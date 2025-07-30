@@ -470,25 +470,6 @@
                 observer.observe(section);
             });
         });
-
-        // Form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const nik = document.getElementById('nik').value;
-            const noKK = document.getElementById('no_kk').value;
-            const nama = document.getElementById('nama').value;
-            const jenisPermohonan = document.getElementById('jenis_permohonan').value;
-            
-            if (!nik || !noKK || !nama || !jenisPermohonan) {
-                alert('Mohon lengkapi semua field yang wajib diisi!');
-                return;
-            }
-            
-            // Simulasi pengiriman data
-            alert('Permohonan Anda telah berhasil dikirim. Silakan cek status permohonan melalui WhatsApp dalam 1x24 jam.');
-            this.reset();
-        });
     </script>
 </body>
 </html>

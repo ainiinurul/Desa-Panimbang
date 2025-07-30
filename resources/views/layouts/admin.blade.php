@@ -90,7 +90,7 @@
                             › Program Desa
                         </a>
                         <a href="{{ route('admin.berita.index') }}" class="block py-2 px-4 rounded text-sm transition-colors {{ request()->routeIs('admin.berita.*') ? 'text-white font-semibold' : 'hover:bg-blue-700' }}">
-                            › Berita
+                            › Berita Desa
                         </a>
                     </div>
                 </div>
@@ -263,10 +263,14 @@
                                 
                                 <!-- Logout Button -->
                                 <div class="py-1">
-                                    <button class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                        <i class="fas fa-sign-out-alt mr-3 text-red-400"></i>
-                                        Keluar
-                                    </button>
+                                    {{-- BUNGKUS TOMBOL DENGAN FORM --}}
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                            <i class="fas fa-sign-out-alt mr-3 text-red-400"></i>
+                                            <span>Keluar</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
